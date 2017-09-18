@@ -7,7 +7,12 @@
 		{
 			"Name": "ProjectLogogram",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"CoreUObject",
+				"UMG",
+				"Engine"
+			]
 		}
 	]
 }
