@@ -44,30 +44,5 @@ private:
 	UPROPERTY()
 	int32 FinalID = 0;
 
-	const int32 Primitive_Pos = 0;
-	const int32 Container_Pos = 5;
-	const int32 LDecorator_Pos = 5;
-	const int32 BDecorator_Pos = 9;
-	const int32 RDecorator_Pos = 13;
-	const int32 HasContainer_Pos = 15;
-
-	const int32 Primitive_Mask = 31 << Primitive_Pos; // 5 bits
-	const int32 Container_Mask = 1023 << Container_Pos; // 10 bits
-	const int32 LDecorator_Mask = 15 << LDecorator_Pos; // 4 bits
-	const int32 BDecorator_Mask = 15 << BDecorator_Pos; // 4 bits
-	const int32 RDecorator_Mask = 3 << RDecorator_Pos; // 2 bits
-
-	const int32 MakeContainer = 1 << HasContainer_Pos;
-	const int32 MakeNonContainer = !MakeContainer;
-	
-	void InsertPrimitive(int32 ID);
-
-	void InsertContainer(int32 ID);
-
-	void InsertLDecorator(int32 ID);
-
-	void InsertBDecorator(int32 ID);
-
-	void InsertRDecorator(int32 ID);
 
 };
