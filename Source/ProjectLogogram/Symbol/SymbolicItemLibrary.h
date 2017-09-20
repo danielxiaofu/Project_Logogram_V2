@@ -17,10 +17,9 @@ public:
 
 	FSymbolicItemData()
 		: Type(0)
-		, HasContainer(0)
 		, Container(0)
-		, BDecorator(0)
-		, LDecorator(0)
+		, Element(0)
+		, Material(0)
 		, Primitive(0)
 	{}
 
@@ -28,16 +27,13 @@ public:
 	int32 Type;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SymbolicItem")
-	int32 HasContainer;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SymbolicItem")
 	int32 Container;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SymbolicItem")
-	int32 BDecorator;
+	int32 Element;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SymbolicItem")
-	int32 LDecorator;
+	int32 Material;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "SymbolicItem")
 	int32 Primitive;

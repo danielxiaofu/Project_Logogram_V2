@@ -14,18 +14,10 @@ void USymbolicItemLibrary::AddSymbolicItem(FSymbolicItemData ItemData, FString N
 
 	int32 FinalID = 0;
 
-	if (ItemData.HasContainer == 1)
-	{
-		USymbolBitCombiner::InsertPrimitive(FinalID, ItemData.Primitive);
-		USymbolBitCombiner::MakeIDContainer(FinalID);
-		USymbolBitCombiner::InsertContainer(FinalID, ItemData.Container);
-	}
-	else
-	{
-		USymbolBitCombiner::InsertPrimitive(FinalID, ItemData.Primitive);
-		USymbolBitCombiner::InsertLDecorator(FinalID, ItemData.LDecorator);
-		USymbolBitCombiner::InsertBDecorator(FinalID, ItemData.BDecorator);
-	}
+	USymbolBitCombiner::InsertPrimitive(FinalID, ItemData.Primitive, false);
+	USymbolBitCombiner::InsertContainer(FinalID, ItemData.Container, false);
+	USymbolBitCombiner::InsertMaterial(FinalID, ItemData.Material, false);
+	USymbolBitCombiner::InsertElement(FinalID, ItemData.Element, false);
 
 	Item.ID = FinalID;
 

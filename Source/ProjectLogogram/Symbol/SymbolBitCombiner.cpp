@@ -2,86 +2,132 @@
 
 #include "SymbolBitCombiner.h"
 
-void USymbolBitCombiner::InsertPrimitive(int32& FinalID, int32 PrimitiveID)
+void USymbolBitCombiner::Lock(int32& TargetID, int32 TypePosition)
 {
-	int32 Primitive = (FinalID & Primitive_Mask) >> Primitive_Pos;
+	int32 LockBit = 1 << (TypePosition + 3);
+	TargetID = TargetID | LockBit;
+}
 
-	if (Primitive != 0)
-		UE_LOG(LogTemp, Warning, TEXT("Insert aborted, primitive already exists, primitive=%d"), Primitive)
+void USymbolBitCombiner::UnLock(int32& TargetID, int32 TypePosition)
+{
+	int32 UnLockBit = ~(1 << (TypePosition + 3));
+	TargetID = TargetID & UnLockBit;
+}
+
+bool USymbolBitCombiner::IsLocked(int32& TargetID, int32 TypePosition)
+{
+	int32 CheckBit = 1 << (TypePosition + 3);
+	int32 Result = TargetID & CheckBit;
+
+	return Result == 0 ? false : true;
+}
+
+void USymbolBitCombiner::InsertPrimitive(int32& FinalID, int32 PrimitiveID, bool PerformLock)
+{
+	if (PerformLock)
+	{
+		// RoL 1. When a type insertion is requested, if it's locked, reject request, otherwise accept request and lock this type.
+		if (IsLocked(FinalID, Primitive_Pos))
+		{
+			int32 Primitive = (FinalID & Primitive_Mask) >> Primitive_Pos;
+			UE_LOG(LogTemp, Warning, TEXT("Insert primitive rejected, primitive exists, primitive=%d"), Primitive)
+		}
+		else
+		{
+			FinalID = FinalID | (PrimitiveID << Primitive_Pos);
+			Lock(FinalID, Primitive_Pos);
+			// RoL 4. When a primitive is inserted: if container is not locked, unlock element and material, otherwise lock material and element (all locked).
+			if (!IsLocked(FinalID, Container_Pos))
+			{
+				UnLock(FinalID, Element_Pos);
+				UnLock(FinalID, Material_Pos);
+			}
+			else
+			{
+				Lock(FinalID, Element_Pos);
+				Lock(FinalID, Material_Pos);
+			}
+		}
+	}
 	else
 		FinalID = FinalID | (PrimitiveID << Primitive_Pos);
-
+	
 }
 
-void USymbolBitCombiner::InsertContainer(int32 & FinalID, int32 ContainerID)
+void USymbolBitCombiner::InsertContainer(int32 & FinalID, int32 ContainerID, bool PerformLock)
 {
-	int32 Container = (FinalID & Container_Mask) >> Container_Pos;
-	int32 HasContainer = (FinalID & MakeContainer) >> HasContainer_Pos;
-
-	if (HasContainer == 0)
-		UE_LOG(LogTemp, Warning, TEXT("Insert aborted, trying to insert container to a non-container symbol"))
-	else if (Container != 0)
-		UE_LOG(LogTemp, Warning, TEXT("Insert aborted, container already exists, container=%d"), Container)
-	else
+	if (PerformLock)
 	{
-		FinalID = FinalID | (ContainerID << Container_Pos);
-		FinalID = FinalID | MakeContainer;
+		// RoL 1.
+		if (IsLocked(FinalID, Container_Pos))
+		{
+			int32 Container = (FinalID & Container_Mask) >> Container_Pos;
+			UE_LOG(LogTemp, Warning, TEXT("Insert container rejected, container exists, container=%d"), Container)
+		}
+		else
+		{
+			FinalID = FinalID | (ContainerID << Container_Pos);
+			Lock(FinalID, Container_Pos);
+			// RoL 3. When a container is inserted: unlock element; Lock material; If primitive is locked, lock element (all locked).
+			UnLock(FinalID, Element_Pos);
+			Lock(FinalID, Material_Pos);
+			if (IsLocked(FinalID, Primitive_Pos))
+				Lock(FinalID, Element_Pos);
+		}
 	}
-}
-
-void USymbolBitCombiner::InsertLDecorator(int32 & FinalID, int32 DecoratorID)
-{
-	int32 LDecorator = (FinalID & LDecorator_Mask) >> LDecorator_Pos;
-	int32 HasContainer = (FinalID & MakeContainer) >> HasContainer_Pos;
-
-	if (HasContainer != 0)
-		UE_LOG(LogTemp, Warning, TEXT("Insert aborted, trying to insert decorator to a container symbol"))
-
-	else if (LDecorator != 0)
-		UE_LOG(LogTemp, Warning, TEXT("Insert aborted, ldecorator already exists, ldecorator=%d"), LDecorator)
 	else
-		{
-			FinalID = FinalID | (DecoratorID << LDecorator_Pos);
-			
-			FinalID = FinalID & MakeNonContainer;
-		}
+		FinalID = FinalID | (ContainerID << Container_Pos);
+	
 }
 
-void USymbolBitCombiner::InsertBDecorator(int32 & FinalID, int32 DecoratorID)
+void USymbolBitCombiner::InsertMaterial(int32 & FinalID, int32 MaterialID, bool PerformLock)
 {
-	int32 BDecorator = (FinalID & BDecorator_Mask) >> BDecorator_Pos;
-	int32 HasContainer = (FinalID & MakeContainer) >> HasContainer_Pos;
-
-	if (HasContainer != 0)
-		UE_LOG(LogTemp, Warning, TEXT("Insert aborted, trying to insert decorator to a container symbol"))
-		if (BDecorator != 0)
-			UE_LOG(LogTemp, Warning, TEXT("Insert aborted, bdecorator already exists, bdecorator=%d"), BDecorator)
+	if (PerformLock)
+	{
+		// RoL 1.
+		if (IsLocked(FinalID, MaterialID))
+		{
+			int32 Material = (FinalID & Material_Mask) >> Material_Pos;
+			UE_LOG(LogTemp, Warning, TEXT("Insert material rejected, material exists, material=%d"), Material)
+		}
 		else
 		{
-			FinalID = FinalID | (DecoratorID << BDecorator_Pos);
-			FinalID = FinalID & MakeNonContainer;
-		}
+			FinalID = FinalID | (MaterialID << Material_Pos);
+			Lock(FinalID, Material_Pos);
+			// RoL 6. When a material is inserted: lock container.
+			Lock(FinalID, Material_Pos);
+		}	
+	}
+	else
+		FinalID = FinalID | (MaterialID << Material_Pos);
+	
 }
 
-void USymbolBitCombiner::InsertRDecorator(int32 & FinalID, int32 DecoratorID)
+void USymbolBitCombiner::InsertElement(int32 & FinalID, int32 ElementID, bool PerformLock)
 {
-	int32 RDecorator = (FinalID & RDecorator_Mask) >> RDecorator_Pos;
-	int32 HasContainer = (FinalID & MakeContainer) >> HasContainer_Pos;
-
-	if (HasContainer != 0)
-		UE_LOG(LogTemp, Warning, TEXT("Insert aborted, trying to insert decorator to a container symbol"))
-		if (RDecorator != 0)
-			UE_LOG(LogTemp, Warning, TEXT("Insert aborted, rdecorator already exists, rdecorator=%d"), RDecorator)
+	if (PerformLock)
+	{
+		// RoL 1.
+		if (IsLocked(FinalID, Element_Pos))
+		{
+			int32 Element = (FinalID & Element_Mask) >> Element_Pos;
+			UE_LOG(LogTemp, Warning, TEXT("Insert element rejected, element exists, element=%d"), Element)
+		}
 		else
 		{
-			FinalID = FinalID | (DecoratorID << RDecorator_Pos);
-			FinalID = FinalID & MakeNonContainer;
+			FinalID = FinalID | (ElementID << Element_Pos);
+			Lock(FinalID, Element_Pos);
+			// RoL 5. When an element is inserted: if container is locked, lock primitive (all locked); if primitive is locked, lock container.
+			if (IsLocked(FinalID, Container_Pos))
+				Lock(FinalID, Primitive_Pos);
+			if (IsLocked(FinalID, Primitive_Pos))
+				Lock(FinalID, Container_Pos);
 		}
+	}
+	else
+		FinalID = FinalID | (ElementID << Element_Pos);
+
 }
 
-void USymbolBitCombiner::MakeIDContainer(int32 & FinalID)
-{
-	FinalID = FinalID | MakeContainer;
-}
 
 

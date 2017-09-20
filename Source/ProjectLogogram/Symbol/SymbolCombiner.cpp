@@ -37,19 +37,16 @@ void USymbolCombiner::OnButtonClicked(ESymbolType SymbolType, int32 ID)
 	switch (SymbolType)
 	{
 	case ESymbolType::VE_Primitive:
-		USymbolBitCombiner::InsertPrimitive(FinalID, ID);
+		USymbolBitCombiner::InsertPrimitive(FinalID, ID, true);
 		break;
 	case ESymbolType::VE_Container:
-		USymbolBitCombiner::InsertContainer(FinalID, ID);
+		USymbolBitCombiner::InsertContainer(FinalID, ID, true);
 		break;
-	case ESymbolType::VE_LDecorator:
-		USymbolBitCombiner::InsertLDecorator(FinalID, ID);
+	case ESymbolType::VE_Material:
+		USymbolBitCombiner::InsertMaterial(FinalID, ID, true);
 		break;
-	case ESymbolType::VE_BDecorator:
-		USymbolBitCombiner::InsertBDecorator(FinalID, ID);
-		break;
-	case ESymbolType::VE_RDecorator:
-		USymbolBitCombiner::InsertRDecorator(FinalID, ID);
+	case ESymbolType::VE_Element:
+		USymbolBitCombiner::InsertElement(FinalID, ID, true);
 		break;
 	case ESymbolType::VE_Undefined:
 		break;

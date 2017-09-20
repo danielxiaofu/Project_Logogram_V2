@@ -11,9 +11,8 @@ enum class ESymbolType : uint8
 {
 	VE_Primitive UMETA(DisplayName = "Primitive"),
 	VE_Container UMETA(DisplayName = "Container"),
-	VE_LDecorator UMETA(DisplayName = "LDecorator"),
-	VE_BDecorator UMETA(DisplayName = "BDecorator"),
-	VE_RDecorator UMETA(DisplayName = "RDecorator"),
+	VE_Material UMETA(DisplayName = "Material"),
+	VE_Element UMETA(DisplayName = "Element"),
 	VE_Undefined UMETA(DisplayName = "Undefined")
 
 };
