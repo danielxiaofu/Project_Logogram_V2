@@ -21,9 +21,17 @@ void USymbolicItemLibrary::AddSymbolicItem(FSymbolicItemData ItemData, FString N
 
 	Item.ID = FinalID;
 
-	SymbolicItems.Add(Item.ID, Item);
+	FSymbolicItem AddedItem = SymbolicItems.Emplace(Item.ID, Item);
 
-	UE_LOG(LogTemp, Warning, TEXT("Item added, Name=%s, ID=%d"), *Name, Item.ID)
+	UE_LOG(LogTemp, Warning, TEXT("Item added, Name=%s, ID=%d, MapSize=%d"), *(AddedItem.Name), AddedItem.ID, SymbolicItems.Num())
+
+}
+
+FSymbolicItem USymbolicItemLibrary::GetSymbolicItem(int32 ID)
+{
+	FSymbolicItem Result = SymbolicItems.FindRef(ID);
+	
+	return Result;
 }
 
 void USymbolicItemLibrary::ClearItemData()

@@ -42,7 +42,7 @@ public:
 USTRUCT(BlueprintType)
 struct FSymbolicItem
 {
-	GENERATED_USTRUCT_BODY()
+	GENERATED_BODY()
 
 	FSymbolicItem()
 		: ID(0)
@@ -77,6 +77,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "SymbolicItem")
 	static void AddSymbolicItem(FSymbolicItemData ItemData, FString Name);
+
+	UFUNCTION()
+	static FSymbolicItem GetSymbolicItem(int32 ID);
 
 	UFUNCTION(BlueprintCallable, Category = "SymbolicItem")
 	static void ClearItemData();

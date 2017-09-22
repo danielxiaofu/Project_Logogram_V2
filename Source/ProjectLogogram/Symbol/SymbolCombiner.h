@@ -7,6 +7,8 @@
 #include "SymbolTypeEnum.h"
 #include "SymbolCombiner.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnItemCreated, FString, Name);
+
 /** This class is responsible for recieving click events from symbol button 
 * and combine those symbols' ID together to determine the item they represent
 */
@@ -24,6 +26,9 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
+	UPROPERTY(BlueprintAssignable, Category = "SymbolCombiner")
+	FOnItemCreated OnItemCreated;
+
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
@@ -32,6 +37,10 @@ public:
 	* @param ID id of the symbol
 	*/
 	void OnButtonClicked(ESymbolType SymbolType, int32 ID);
+
+	// Reset ID back to 0
+	UFUNCTION(BlueprintCallable, Category = "SymbolCombiner")
+	void ResetID();
 
 private:
 

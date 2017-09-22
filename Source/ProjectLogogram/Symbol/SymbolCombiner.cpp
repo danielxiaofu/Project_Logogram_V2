@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "SymbolCombiner.h"
+#include "SymbolicItemLibrary.h"
 #include "SymbolBitCombiner.h"
 
 // Sets default values for this component's properties
@@ -53,4 +54,15 @@ void USymbolCombiner::OnButtonClicked(ESymbolType SymbolType, int32 ID)
 	default:
 		break;
 	}
+
+	int32 UnlockedID = USymbolBitCombiner::GetUnlockedID(FinalID);
+	FSymbolicItem Item = USymbolicItemLibrary::GetSymbolicItem(UnlockedID);
+
+	UE_LOG(LogTemp, Warning, TEXT("Result item = %s"), *(Item.Name))
+	OnItemCreated.Broadcast(Item.Name);
+}
+
+void USymbolCombiner::ResetID()
+{
+	FinalID = 0;
 }

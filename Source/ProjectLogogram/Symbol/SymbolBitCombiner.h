@@ -1,9 +1,10 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
+#include "SymbolTypeEnum.h"
 #include "SymbolBitCombiner.generated.h"
 
 /** This class takes ID of symbols and combine them in one 16-bit int
@@ -17,10 +18,13 @@
  * 2. Element and material are locked by default, container and primitive are unlocked by default
  * 3. When a container is inserted: unlock element; Lock material; If primitive is locked, lock element (all locked).
  * 4. When a primitive is inserted: if container is not locked, unlock element and material, otherwise lock material and element (all locked).
- * 5. When an element is inserted: if container is locked, lock primitive (all locked); if primitive is locked, lock container.
+ * 5. When an element is inserted: lock container and primitive.
  * 6. When a material is inserted: lock container.
  * These rules are just for the programmer, players don't have to memorize.
  */
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FLockDelegate, ESymbolType, LockedType, bool, IsLock);
+
 UCLASS()
 class PROJECTLOGOGRAM_API USymbolBitCombiner : public UObject
 {
@@ -58,6 +62,13 @@ private:
 	static bool IsLocked(int32& TargetID, int32 TypePosition);
 
 public:
+
+	/** Called when a type is locked or unlocked
+	 * @param LockedType the type performed lock or unlock
+	 * @param IsLock true if the type is locked, false if the type is unlocked
+	 */
+	static FLockDelegate LockDelegate;
+
 	static void InsertPrimitive(int32& FinalID, int32 PrimitiveID, bool PerformLock);
 	
 	static void InsertContainer(int32& FinalID, int32 ContainerID, bool PerformLock);
@@ -66,4 +77,9 @@ public:
 
 	static void InsertElement(int32& FinalID, int32 ElementID, bool PerformLock);
 
+	/** Get a type unlocked version of the ID
+	* @param TargetID the ID to get unlocked version from
+	* @return unlocked ID
+	*/
+	static int32 GetUnlockedID(int32 TargetID);
 };

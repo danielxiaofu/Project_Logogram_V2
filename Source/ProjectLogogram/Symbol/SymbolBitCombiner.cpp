@@ -2,24 +2,70 @@
 
 #include "SymbolBitCombiner.h"
 
+FLockDelegate USymbolBitCombiner::LockDelegate;
+
 void USymbolBitCombiner::Lock(int32& TargetID, int32 TypePosition)
 {
 	int32 LockBit = 1 << (TypePosition + 3);
 	TargetID = TargetID | LockBit;
+	switch (TypePosition)
+	{
+	case(Container_Pos):
+		LockDelegate.Broadcast(ESymbolType::VE_Container, true);
+		break;
+	case(Primitive_Pos):
+		LockDelegate.Broadcast(ESymbolType::VE_Primitive, true);
+		break;
+	case(Element_Pos):
+		LockDelegate.Broadcast(ESymbolType::VE_Element, true);
+		break;
+	case(Material_Pos):
+		LockDelegate.Broadcast(ESymbolType::VE_Material, true);
+		break;
+	default:
+		break;
+	}
 }
 
 void USymbolBitCombiner::UnLock(int32& TargetID, int32 TypePosition)
 {
 	int32 UnLockBit = ~(1 << (TypePosition + 3));
 	TargetID = TargetID & UnLockBit;
+	switch (TypePosition)
+	{
+	case(Container_Pos):
+		LockDelegate.Broadcast(ESymbolType::VE_Container, false);
+		break;
+	case(Primitive_Pos):
+		LockDelegate.Broadcast(ESymbolType::VE_Primitive, false);
+		break;
+	case(Element_Pos):
+		LockDelegate.Broadcast(ESymbolType::VE_Element, false);
+		break;
+	case(Material_Pos):
+		LockDelegate.Broadcast(ESymbolType::VE_Material, false);
+		break;
+	default:
+		break;
+	}
 }
 
 bool USymbolBitCombiner::IsLocked(int32& TargetID, int32 TypePosition)
 {
 	int32 CheckBit = 1 << (TypePosition + 3);
-	int32 Result = TargetID & CheckBit;
+	int32 Result = (TargetID & CheckBit) >> (TypePosition + 3);
+	if (Result == 1)
+		return true;
+	else
+		return false;
 
-	return Result == 0 ? false : true;
+}
+
+int32 USymbolBitCombiner::GetUnlockedID(int32 TargetID)
+{
+	int32 LockBit = (1 << (Container_Pos + 3)) + (1 << (Primitive_Pos + 3)) + (1 << (Material_Pos + 3)) + (1 << (Element_Pos + 3));
+	int32 UnlockBit = ~LockBit;
+	return TargetID & UnlockBit;
 }
 
 void USymbolBitCombiner::InsertPrimitive(int32& FinalID, int32 PrimitiveID, bool PerformLock)
@@ -95,7 +141,7 @@ void USymbolBitCombiner::InsertMaterial(int32 & FinalID, int32 MaterialID, bool 
 			FinalID = FinalID | (MaterialID << Material_Pos);
 			Lock(FinalID, Material_Pos);
 			// RoL 6. When a material is inserted: lock container.
-			Lock(FinalID, Material_Pos);
+			Lock(FinalID, Container_Pos);
 		}	
 	}
 	else
@@ -117,11 +163,9 @@ void USymbolBitCombiner::InsertElement(int32 & FinalID, int32 ElementID, bool Pe
 		{
 			FinalID = FinalID | (ElementID << Element_Pos);
 			Lock(FinalID, Element_Pos);
-			// RoL 5. When an element is inserted: if container is locked, lock primitive (all locked); if primitive is locked, lock container.
-			if (IsLocked(FinalID, Container_Pos))
-				Lock(FinalID, Primitive_Pos);
-			if (IsLocked(FinalID, Primitive_Pos))
-				Lock(FinalID, Container_Pos);
+			// RoL 5. When an element is inserted: lock container and primitive.
+			Lock(FinalID, Primitive_Pos);
+			Lock(FinalID, Container_Pos);
 		}
 	}
 	else
