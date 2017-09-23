@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "Components/Button.h"
 #include "SymbolTypeEnum.h"
+#include "UI/GlobalButtonStyle.h"
+#include "FCustomButtonStyle.h"
 #include "SymbolButton.generated.h"
 
 class USymbolCombiner;
@@ -24,6 +26,8 @@ class PROJECTLOGOGRAM_API USymbolButton : public UButton
 #endif
 	
 public:
+
+	const struct FGlobalStyle* ButtonStyle;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 ID;

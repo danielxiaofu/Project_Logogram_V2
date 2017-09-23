@@ -7,9 +7,9 @@
 #include "SymbolTypeEnum.h"
 #include "SymbolBitCombiner.generated.h"
 
-/** This class takes ID of symbols and combine them in one 16-bit int
+/** This class takes ID of symbols and combines them into one 16-bit int
  * This 16-bit int represents the combination of all symbols of chosen, ID of each type is stored
- * in the following two formats (order starts from LSB)
+ * in the following format (order starts from LSB)
  * 1~4th: PrimitiveID, 5~8th: MaterialID, 9~12th: ElementID, 13~16th Container.
  * Each type has 4bits, the 4th bit (MSB) being 1 means this type portion is locked.
  * If a type is locked, this ID will not accept insertion of that type

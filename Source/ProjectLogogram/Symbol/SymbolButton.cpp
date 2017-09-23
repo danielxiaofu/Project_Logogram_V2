@@ -11,12 +11,15 @@
 
 USymbolButton::USymbolButton()
 {
-	//SlateWidgetStyleAsset'/Game/StonePlateUI/UI/ButtonSlates/SymbolButtonWidgetStyle.SymbolButtonWidgetStyle'
-	ConstructorHelpers::FObjectFinder<USlateWidgetStyleAsset> SymbolStyle(TEXT("/Game/StonePlate/UI/ButtonSlates/SymbolButtonWidgetStyle.SymbolButtonWidgetStyle"));
+	FCustomButtonStyle::Initialize();
+	ButtonStyle = &FCustomButtonStyle::Get().GetWidgetStyle<FGlobalStyle>("CustomButtonWidgetStyleAsset");
+
+	//SlateWidgetStyleAsset'/Game/StonePlate/UI/ButtonSlates/CustomButtonWidgetStyleAsset.CustomButtonWidgetStyleAsset'
+	//ConstructorHelpers::FObjectFinder<USlateWidgetStyleAsset> SymbolStyle(TEXT("/Game/StonePlate/UI/ButtonSlates/CustomButtonWidgetStyleAsset.CustomButtonWidgetStyleAsset"));
 
 	SButton::FArguments ButtonDefaults;
 
-	ButtonDefaults.ButtonStyle(SymbolStyle.Object);
+	ButtonDefaults.ButtonStyle(&ButtonStyle->CustomButtonStyle);
 	if(ButtonDefaults._ButtonStyle)
 		WidgetStyle = *ButtonDefaults._ButtonStyle;
 
