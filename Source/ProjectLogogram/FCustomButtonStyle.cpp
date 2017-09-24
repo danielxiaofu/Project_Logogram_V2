@@ -38,7 +38,7 @@ FName FCustomButtonStyle::GetStyleSetName()
 
 TSharedRef<class FSlateStyleSet> FCustomButtonStyle::Create()
 {
-	TSharedRef<FSlateStyleSet> StyleRef = FSlateGameResources::New(FCustomButtonStyle::GetStyleSetName(), "/Game/UI/Styles", "/Game/UI/Styles");
+	TSharedRef<FSlateStyleSet> StyleRef = FSlateGameResources::New(FCustomButtonStyle::GetStyleSetName(), "/Game/StonePlate/UI/ButtonSlates", "/Game/StonePlate/UI/ButtonSlates");
 
 	return StyleRef;
 }

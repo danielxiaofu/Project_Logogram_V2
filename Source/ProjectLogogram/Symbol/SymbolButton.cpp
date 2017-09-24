@@ -11,20 +11,24 @@
 
 USymbolButton::USymbolButton()
 {
-	FCustomButtonStyle::Initialize();
-	ButtonStyle = &FCustomButtonStyle::Get().GetWidgetStyle<FGlobalStyle>("CustomButtonWidgetStyleAsset");
+
+	//FCustomButtonStyle::Initialize();
+	//ButtonStyle = &FCustomButtonStyle::Get().GetWidgetStyle<FGlobalStyle>("CustomButtonWidgetStyleAsset");
 
 	//SlateWidgetStyleAsset'/Game/StonePlate/UI/ButtonSlates/CustomButtonWidgetStyleAsset.CustomButtonWidgetStyleAsset'
 	//ConstructorHelpers::FObjectFinder<USlateWidgetStyleAsset> SymbolStyle(TEXT("/Game/StonePlate/UI/ButtonSlates/CustomButtonWidgetStyleAsset.CustomButtonWidgetStyleAsset"));
+	//ConstructorHelpers::FObjectFinder<UGlobalButtonStyle> GlobalStyleObj(TEXT("/Game/StonePlate/UI/ButtonSlates/CustomButtonWidgetStyleAsset.CustomButtonWidgetStyleAsset"));
 
-	SButton::FArguments ButtonDefaults;
 
-	ButtonDefaults.ButtonStyle(&ButtonStyle->CustomButtonStyle);
+	//FGlobalStyle GlobalStyle = static_cast<FGlobalStyle>(*(SymbolStyle.Object));
+
+	/*SButton::FArguments ButtonDefaults;
+
+	ButtonDefaults.ButtonStyle();
 	if(ButtonDefaults._ButtonStyle)
-		WidgetStyle = *ButtonDefaults._ButtonStyle;
+		WidgetStyle = *ButtonDefaults._ButtonStyle;*/
 
 	OnClicked.AddDynamic(this, &USymbolButton::OnSelfClicked);
-	SetIsEnabled(!IsLocked);
 }
 
 #if WITH_EDITOR
