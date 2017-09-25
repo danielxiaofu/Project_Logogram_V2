@@ -6,6 +6,32 @@
 #include "GameFramework/Character.h"
 #include "ProjectLogogramCharacter.generated.h"
 
+USTRUCT(BlueprintType)
+struct FCharacterStat
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CharacterStat")
+	float MaxHealth;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CharacterStat")
+	float MaxStamina;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "CharacterStat")
+	float Health;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "CharacterStat")
+	float Stamina;
+
+	FCharacterStat()
+		:MaxHealth(100)
+		,MaxStamina(100)
+		,Health(100)
+		,Stamina(100)
+	{}
+	
+};
+
 UCLASS(config=Game)
 class AProjectLogogramCharacter : public ACharacter
 {
@@ -28,6 +54,9 @@ public:
 	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stat)
+	FCharacterStat Stat;
 
 protected:
 
@@ -58,6 +87,11 @@ protected:
 	/** Handler for when a touch input stops. */
 	void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
 
+	// Stat related function
+	void ModifyHealth(float amount);
+
+	// End of Stat related function
+
 protected:
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -68,5 +102,10 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+	// Stat related function
+	void ApplyHeal(float amount);
+
+	// End of Stat related function
 };
 

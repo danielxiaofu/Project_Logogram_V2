@@ -76,6 +76,11 @@ void AProjectLogogramCharacter::SetupPlayerInputComponent(class UInputComponent*
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AProjectLogogramCharacter::OnResetVR);
 }
 
+void AProjectLogogramCharacter::ApplyHeal(float amount)
+{
+	ModifyHealth(FMath::Abs(amount));
+}
+
 
 void AProjectLogogramCharacter::OnResetVR()
 {
@@ -90,6 +95,11 @@ void AProjectLogogramCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVec
 void AProjectLogogramCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
 {
 		StopJumping();
+}
+
+void AProjectLogogramCharacter::ModifyHealth(float amount)
+{
+	Stat.Health += amount;
 }
 
 void AProjectLogogramCharacter::TurnAtRate(float Rate)
