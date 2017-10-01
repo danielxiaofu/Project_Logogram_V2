@@ -6,11 +6,12 @@
 #include "UObject/NoExportTypes.h"
 #include "StatusEnum.generated.h"
 
-UENUM(BlurprintTyle)
-enum class EStatus : uint8
+UENUM(BlueprintType)
+enum class ECharStatus : uint8
 {
+	VE_Undefined UMETA(DisplayName = "Undefined"),
 	VE_Health	UMETA(DisplayName = "Health"),
-	VE_Stamina	UMETA(DisplayName = "Stamina"),
+	VE_Stamina	UMETA(DisplayName = "Stamina")
 };
 
 /**

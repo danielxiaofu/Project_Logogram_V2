@@ -4,32 +4,55 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Status/StatModifier.h"
 #include "ProjectLogogramCharacter.generated.h"
+
+USTRUCT(BlueprintType)
+struct FCharStatEntry
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CharacterStat")
+	float MaxAmount = 100;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "CharacterStat")
+	float Amount = 100;
+
+	void Modify(EModifierBias Bias, float ByAmount) {
+		switch (Bias)
+		{
+		case EModifierBias::VE_Increase:
+			Amount += ByAmount;
+			Amount = Amount > MaxAmount ? MaxAmount : Amount;
+			break;
+		case EModifierBias::VE_Decrease:
+			Amount -= ByAmount;
+			Amount = Amount < 0 ? 0 : Amount;
+			break;
+		default:
+			break;
+		}
+	}
+
+	void Initialize() {
+		Amount = MaxAmount;
+	}
+};
 
 USTRUCT(BlueprintType)
 struct FCharacterStat
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CharacterStat")
-	float MaxHealth;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "CharacterStat")
+	TMap<ECharStatus, FCharStatEntry> StatusMap;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CharacterStat")
-	float MaxStamina;
+	UPROPERTY()
+	TArray<FCharStatModifier> Modifiers;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "CharacterStat")
-	float Health;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "CharacterStat")
-	float Stamina;
-
-	FCharacterStat()
-		:MaxHealth(100)
-		,MaxStamina(100)
-		,Health(100)
-		,Stamina(100)
-	{}
+	FCharStatModifier& AddModifier(FCharStatModifier Modifier);
 	
+	void UpdateModifiers(float Delta);
 };
 
 UCLASS(config=Game)
@@ -55,7 +78,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Stat)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CharacterStat)
 	FCharacterStat Stat;
 
 protected:
@@ -88,7 +111,7 @@ protected:
 	void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
 
 	// Stat related function
-	void ModifyHealth(float amount);
+	
 
 	// End of Stat related function
 
@@ -98,13 +121,18 @@ protected:
 	// End of APawn interface
 
 public:
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
 	// Stat related function
-	void ApplyHeal(float amount);
+	UFUNCTION(BlueprintCallable, Category = "CharacterStat")
+	FCharStatModifier& AddModifier(FCharStatModifier Modifier);
+
 
 	// End of Stat related function
 };

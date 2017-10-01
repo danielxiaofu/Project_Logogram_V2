@@ -19,7 +19,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ItemSystem)
 	FName Name;
 	
-	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ItemSystem)
+	int32 ID;
 
 
 };

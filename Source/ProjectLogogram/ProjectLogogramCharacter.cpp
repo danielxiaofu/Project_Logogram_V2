@@ -9,6 +9,38 @@
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
 
+FCharStatModifier& FCharacterStat::AddModifier(FCharStatModifier Modifier)
+{
+	if (Modifier.LifeSpan == 0)
+	{
+		StatusMap.FindRef(Modifier.TargetStatus).Modify(Modifier.Bias, Modifier.Amount);
+		Modifier.Kill();
+	}
+	return Modifiers[Modifiers.Add(Modifier)];
+}
+
+void FCharacterStat::UpdateModifiers(float Delta)
+{
+
+	// Remove dead modifiers
+	for (int32 i = Modifiers.Num() - 1; i >= 0; i--)
+	{
+		if (!Modifiers[i].IsAlive)
+			Modifiers.RemoveAt(i);
+	}
+
+	for (FCharStatModifier& Modifier : Modifiers)
+	{
+		if (Modifier.IsAlive)
+		{
+			StatusMap.FindRef(Modifier.TargetStatus).Modify(Modifier.Bias, Modifier.ModifyRate * Delta);
+			Modifier.LifeSpan -= Delta;
+			if (Modifier.LifeSpan <= 0)
+				Modifier.Kill();
+		}
+	}
+}
+
 //////////////////////////////////////////////////////////////////////////
 // AProjectLogogramCharacter
 
@@ -76,9 +108,15 @@ void AProjectLogogramCharacter::SetupPlayerInputComponent(class UInputComponent*
 	PlayerInputComponent->BindAction("ResetVR", IE_Pressed, this, &AProjectLogogramCharacter::OnResetVR);
 }
 
-void AProjectLogogramCharacter::ApplyHeal(float amount)
+void AProjectLogogramCharacter::Tick(float DeltaTime)
 {
-	ModifyHealth(FMath::Abs(amount));
+	Stat.UpdateModifiers(DeltaTime);
+}
+
+FCharStatModifier & AProjectLogogramCharacter::AddModifier(FCharStatModifier Modifier)
+{
+	// TODO: insert return statement here
+	return Stat.AddModifier(Modifier);
 }
 
 
@@ -95,11 +133,6 @@ void AProjectLogogramCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVec
 void AProjectLogogramCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
 {
 		StopJumping();
-}
-
-void AProjectLogogramCharacter::ModifyHealth(float amount)
-{
-	Stat.Health += amount;
 }
 
 void AProjectLogogramCharacter::TurnAtRate(float Rate)
