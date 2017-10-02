@@ -7,36 +7,21 @@
 #include "Status/StatModifier.h"
 #include "ProjectLogogramCharacter.generated.h"
 
+class UCharStatusEntry;
+
+// A struct version of CharStatusEntry 
 USTRUCT(BlueprintType)
-struct FCharStatEntry
+struct FCharStatEntryStruct
 {
 	GENERATED_BODY()
+
+	// Type of status, should be same as the key
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CharacterStat")
+	ECharStatus StatType = ECharStatus::VE_Undefined;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CharacterStat")
 	float MaxAmount = 100;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "CharacterStat")
-	float Amount = 100;
-
-	void Modify(EModifierBias Bias, float ByAmount) {
-		switch (Bias)
-		{
-		case EModifierBias::VE_Increase:
-			Amount += ByAmount;
-			Amount = Amount > MaxAmount ? MaxAmount : Amount;
-			break;
-		case EModifierBias::VE_Decrease:
-			Amount -= ByAmount;
-			Amount = Amount < 0 ? 0 : Amount;
-			break;
-		default:
-			break;
-		}
-	}
-
-	void Initialize() {
-		Amount = MaxAmount;
-	}
 };
 
 USTRUCT(BlueprintType)
@@ -44,15 +29,23 @@ struct FCharacterStat
 {
 	GENERATED_BODY()
 
+	// Map of CharStatEntryStruct, for data-driven initialization
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "CharacterStat")
-	TMap<ECharStatus, FCharStatEntry> StatusMap;
+	TMap<ECharStatus, FCharStatEntryStruct> StatEntryMap;
+
+	// Actual map that stores CharStat
+	UPROPERTY()
+	TMap<ECharStatus, UCharStatusEntry*> StatusMap;
 
 	UPROPERTY()
 	TArray<FCharStatModifier> Modifiers;
 
+	void InitializeStatusObject();
+
 	FCharStatModifier& AddModifier(FCharStatModifier Modifier);
 	
 	void UpdateModifiers(float Delta);
+
 };
 
 UCLASS(config=Game)
@@ -124,14 +117,19 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	virtual void BeginPlay() override;
+
 	/** Returns CameraBoom subobject **/
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
 
+	UFUNCTION(BlueprintCallable, Category = "CharacterStat")
+	float GetHealth() const;
+
 	// Stat related function
 	UFUNCTION(BlueprintCallable, Category = "CharacterStat")
-	FCharStatModifier& AddModifier(FCharStatModifier Modifier);
+	FCharStatModifier& AddStatModifier(FCharStatModifier Modifier);
 
 
 	// End of Stat related function

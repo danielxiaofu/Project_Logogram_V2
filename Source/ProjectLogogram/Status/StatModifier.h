@@ -45,7 +45,8 @@ struct FCharStatModifier : public FBaseStatModifier
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatModifier)
 	float LifeSpan;
 
-	UPROPERTY()
+	// Should equal to Amount / LifeSpan
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatModifier)
 	float ModifyRate;
 
 	UPROPERTY()

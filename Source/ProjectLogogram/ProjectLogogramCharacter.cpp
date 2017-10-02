@@ -8,12 +8,24 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Status/CharStatusEntry.h"
+
+void FCharacterStat::InitializeStatusObject()
+{
+	for (auto& Elem : StatEntryMap)
+	{
+		FCharStatEntryStruct CharStat = Elem.Value;
+		UCharStatusEntry* NewStatEntry = NewObject<UCharStatusEntry>();
+		NewStatEntry->Initialize(CharStat.StatType, CharStat.MaxAmount);
+		StatusMap.Add(NewStatEntry->StatType, NewStatEntry);
+	}
+}
 
 FCharStatModifier& FCharacterStat::AddModifier(FCharStatModifier Modifier)
 {
 	if (Modifier.LifeSpan == 0)
 	{
-		StatusMap.FindRef(Modifier.TargetStatus).Modify(Modifier.Bias, Modifier.Amount);
+		StatusMap.FindRef(Modifier.TargetStatus)->ApplyModification(Modifier.Bias, Modifier.Amount);
 		Modifier.Kill();
 	}
 	return Modifiers[Modifiers.Add(Modifier)];
@@ -33,7 +45,8 @@ void FCharacterStat::UpdateModifiers(float Delta)
 	{
 		if (Modifier.IsAlive)
 		{
-			StatusMap.FindRef(Modifier.TargetStatus).Modify(Modifier.Bias, Modifier.ModifyRate * Delta);
+			StatusMap.FindRef(Modifier.TargetStatus)->ApplyModification(Modifier.Bias, Modifier.ModifyRate * Delta);
+			
 			Modifier.LifeSpan -= Delta;
 			if (Modifier.LifeSpan <= 0)
 				Modifier.Kill();
@@ -110,12 +123,24 @@ void AProjectLogogramCharacter::SetupPlayerInputComponent(class UInputComponent*
 
 void AProjectLogogramCharacter::Tick(float DeltaTime)
 {
+	Super::Tick(DeltaTime);
 	Stat.UpdateModifiers(DeltaTime);
 }
 
-FCharStatModifier & AProjectLogogramCharacter::AddModifier(FCharStatModifier Modifier)
+void AProjectLogogramCharacter::BeginPlay()
 {
-	// TODO: insert return statement here
+	Super::BeginPlay();
+	Stat.InitializeStatusObject();
+}
+
+float AProjectLogogramCharacter::GetHealth() const
+{
+	return Stat.StatusMap.FindRef(ECharStatus::VE_Health)->Amount;
+}
+
+FCharStatModifier & AProjectLogogramCharacter::AddStatModifier(FCharStatModifier Modifier)
+{
+	Modifier.Initialize();
 	return Stat.AddModifier(Modifier);
 }
 
