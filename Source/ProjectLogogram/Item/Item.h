@@ -6,6 +6,8 @@
 #include "UObject/NoExportTypes.h"
 #include "Item.generated.h"
 
+class UStaticMesh;
+
 /**
  * 
  */
@@ -22,5 +24,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ItemSystem)
 	int32 ID;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ItemSystem)
+	UStaticMesh* WorldMesh;
 
 };
+

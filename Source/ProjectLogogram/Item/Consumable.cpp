@@ -8,4 +8,11 @@ void UConsumable::SetTarget(AProjectLogogramCharacter* TargetCharacter)
 	Target = TargetCharacter;
 }
 
+void UConsumable::Use()
+{
+	if(!Target)
+	{
+
+	}
+}
 

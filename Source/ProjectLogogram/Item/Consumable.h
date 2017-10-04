@@ -25,8 +25,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Consumable)
 	void SetTarget(AProjectLogogramCharacter* TargetCharacter);
 
+	UFUNCTION(BlueprintCallable, Category = Consumable)
+	void Use();
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Consumable)
 	AProjectLogogramCharacter* Target = nullptr;
+
 	
 };
