@@ -19,18 +19,21 @@ class PROJECTLOGOGRAM_API UConsumable : public UItem
 	
 public:
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Consumable)
-	TArray<FCharStatModifier> StatModifiers;
-
 	UFUNCTION(BlueprintCallable, Category = Consumable)
-	void SetTarget(AProjectLogogramCharacter* TargetCharacter);
+	void Initialize(AProjectLogogramCharacter* TargetCharacter, FName ItemName, int32 ItemID, TArray<FCharStatModifier> Modifiers);
 
 	UFUNCTION(BlueprintCallable, Category = Consumable)
 	void Use();
 
+	UFUNCTION(BlueprintCallable, Category = ItemSystem)
+	EItemType GetType() override;
+
+
 protected:
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Consumable)
 	AProjectLogogramCharacter* Target = nullptr;
 
-	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Consumable)
+	TArray<FCharStatModifier> StatModifiers;
 };

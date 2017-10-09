@@ -7,6 +7,7 @@
 #include "WorldItemActor.generated.h"
 
 class UItem;
+class AProjectLogogramCharacter;
 
 // World representation of item object
 UCLASS(Blueprintable)
@@ -18,13 +19,16 @@ public:
 	// Sets default values for this actor's properties
 	AWorldItemActor();
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
-	TSubclassOf<UItem> Item;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ItemSystem)
+	FName Name;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Item)
-	UItem* ItemReference;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ItemSystem)
+	int32 ID;
 
 protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = ItemSystem)
+	UItem* ItemReference;
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
@@ -32,6 +36,10 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	
+	/** Called when this item is picked by a character
+	* @param NewOwner the character who picked up the item
+	*/
+	UFUNCTION()
+	virtual void OnItemPickUp(AProjectLogogramCharacter* NewOwner);
 	
 };

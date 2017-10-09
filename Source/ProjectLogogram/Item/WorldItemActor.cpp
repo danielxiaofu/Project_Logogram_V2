@@ -25,3 +25,8 @@ void AWorldItemActor::Tick(float DeltaTime)
 
 }
 
+void AWorldItemActor::OnItemPickUp(AProjectLogogramCharacter * NewOwner)
+{
+	check(0 && "Must override this");
+}
+
