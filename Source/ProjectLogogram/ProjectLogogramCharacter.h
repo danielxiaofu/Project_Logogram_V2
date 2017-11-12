@@ -29,7 +29,7 @@ struct FCharacterStat
 {
 	GENERATED_BODY()
 
-	// Map of CharStatEntryStruct, for data-driven initialization
+	// Map of CharStatEntryStruct, exposed in blueprint for data-driven purpose
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "CharacterStat")
 	TMap<ECharStatus, FCharStatEntryStruct> StatEntryMap;
 
@@ -40,8 +40,13 @@ struct FCharacterStat
 	UPROPERTY()
 	TArray<FCharStatModifier> Modifiers;
 
+	// Copy every element from StatEntryMap to StatusMap
 	void InitializeStatusObject();
 
+	/** Add a modifier to actor
+	 * @param Modifier modifier to add
+	 * return reference to added modifier
+	 */
 	FCharStatModifier& AddModifier(FCharStatModifier Modifier);
 	
 	void UpdateModifiers(float Delta);

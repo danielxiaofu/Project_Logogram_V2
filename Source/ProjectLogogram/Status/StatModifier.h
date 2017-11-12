@@ -14,6 +14,9 @@ enum class EModifierBias : uint8
 	VE_Decrease UMETA(DisplayName = "Decrease")
 };
 
+/** 
+*/
+
 USTRUCT(BlueprintType)
 struct FBaseStatModifier
 {
@@ -22,13 +25,10 @@ struct FBaseStatModifier
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatModifier)
 	EModifierBias Bias;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatModifier)
-	float Amount;
-
 	FBaseStatModifier()
 	{
 		Bias = EModifierBias::VE_Increase;
-		Amount = 0;
+	
 	}
 
 };
@@ -38,16 +38,28 @@ struct FCharStatModifier : public FBaseStatModifier
 {
 	GENERATED_BODY()
 
+	// What kind of status does this modifier apply to
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatModifier)
 	ECharStatus TargetStatus;
 
-	// How long does it take to modify the stat by amount, 0 means instant. Unit is sec.
+	// How long does it take to modify the stat, 0 means instant. Unit is sec.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatModifier)
 	float LifeSpan;
 
-	// Should equal to Amount / LifeSpan
+	// How much amount does it modify by per second. If life span is 0, this will be the total amount that got modified  
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatModifier)
 	float ModifyRate;
+
+	// If is true, the modifier will last forever until someone call its kill function
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatModifier)
+	bool NoLife;
+
+	/** If is true, the modifier will immediatly apply its effect when it is added to a target.
+	 * Amount of modification equals ModifyRate.
+	 * Same behavior can be achieved by setting LifeSpan to 0.
+	 */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatModifier)
+	bool Instant;
 
 	UPROPERTY()
 	bool IsAlive;
@@ -58,6 +70,8 @@ struct FCharStatModifier : public FBaseStatModifier
 		LifeSpan = 0;
 		ModifyRate = 0;
 		IsAlive = true;
+		NoLife = false;
+		Instant = false;
 	}
 
 	void Activate()
@@ -68,12 +82,6 @@ struct FCharStatModifier : public FBaseStatModifier
 	void Kill()
 	{
 		IsAlive = false;
-	}
-
-	void Initialize()
-	{
-		if (LifeSpan != 0)
-			ModifyRate = Amount / LifeSpan;
 	}
 
 };

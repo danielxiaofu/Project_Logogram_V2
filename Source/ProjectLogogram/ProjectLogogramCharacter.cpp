@@ -23,12 +23,15 @@ void FCharacterStat::InitializeStatusObject()
 
 FCharStatModifier& FCharacterStat::AddModifier(FCharStatModifier Modifier)
 {
+	// If a 0 life modifier is added, instantly apply its effect and kill
 	if (Modifier.LifeSpan == 0)
 	{
-		StatusMap.FindRef(Modifier.TargetStatus)->ApplyModification(Modifier.Bias, Modifier.Amount);
+		StatusMap.FindRef(Modifier.TargetStatus)->ApplyModification(Modifier.Bias, Modifier.ModifyRate);
 		Modifier.Kill();
 	}
-	return Modifiers[Modifiers.Add(Modifier)];
+
+	int32 index = Modifiers.Add(Modifier);
+	return Modifiers[index];
 }
 
 void FCharacterStat::UpdateModifiers(float Delta)
@@ -140,7 +143,6 @@ float AProjectLogogramCharacter::GetHealth() const
 
 FCharStatModifier & AProjectLogogramCharacter::AddStatModifier(FCharStatModifier Modifier)
 {
-	Modifier.Initialize();
 	return Stat.AddModifier(Modifier);
 }
 
