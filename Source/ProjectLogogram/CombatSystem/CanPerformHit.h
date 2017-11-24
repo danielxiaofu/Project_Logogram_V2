@@ -1,8 +1,9 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
 #include "CoreMinimal.h"
+#include "CombatUtility.h"
 #include "CanPerformHit.generated.h"
 
 /** This interface defines functions that allows an actor to send
@@ -30,9 +31,10 @@ public:
 
 	/** Called when the hit window of this actor is turn on
 	 * @param EventCaller the UCanPerformAttack interface who called this event
+	 * @param HitStrength strength of this hit
 	 */
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "CanPerformHit")
-	void OnHitWindowOn(const TScriptInterface<ICanPerformAttack>& EventCaller);
+	void OnHitWindowOn(const TScriptInterface<ICanPerformAttack>& EventCaller, EHitStrength HitStrength);
 
 	/** Called when the hit window of this actor is turn off
 	 *
@@ -43,10 +45,12 @@ public:
 	/** Tick when hit window is on 
 	 */
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "CanPerformHit")
-	void OnHitWindowTick();
+	void OnHitWindowTick(float Delta);
 
 	/** Called when hits an actor and hit window is on
-	*/
+	 * @param OtherActor the actor that is hit
+	 * @param HitStrength strength of this hit
+	 */
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "CanPerformHit")
-	void OnOtherActorHit(AActor* OtherActor);
+	void OnOtherActorHit(AActor* OtherActor, EHitStrength HitStrength);
 };

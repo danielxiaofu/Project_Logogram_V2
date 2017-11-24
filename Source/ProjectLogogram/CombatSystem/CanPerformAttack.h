@@ -39,4 +39,9 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "CanPerformAttack")
 	void AnimNotify_AttackEnd();
 
+	/** Tick between AttackBegin and AttackEnd
+	*/
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "CanPerformAttack")
+	void AnimNotify_AttackTick(float DeltaTime);
+
 };
