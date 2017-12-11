@@ -9,6 +9,7 @@
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Status/CharStatusEntry.h"
+#include "CombatSystem/CombatAnimationSet.h"
 
 void FCharacterStat::InitializeStatusObject()
 {
@@ -135,6 +136,15 @@ void AProjectLogogramCharacter::BeginPlay()
 	Super::BeginPlay();
 	Stat.InitializeStatusObject();
 	CanMove = true;
+
+	// Instantiate CombatAnimSet classes
+	for (TSubclassOf<UCombatAnimationSet> AnimSet : CombatAnimationSetClasses)
+	{
+		CombatAnimationSets.Add(NewObject<UCombatAnimationSet>(this, AnimSet));
+		FString Name = CombatAnimationSets.Top()->Name;
+		UE_LOG(LogTemp, Warning, TEXT("%s"), *Name)
+	}
+	
 }
 
 float AProjectLogogramCharacter::GetHealth() const

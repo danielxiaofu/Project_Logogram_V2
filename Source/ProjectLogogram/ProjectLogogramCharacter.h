@@ -8,6 +8,7 @@
 #include "ProjectLogogramCharacter.generated.h"
 
 class UCharStatusEntry;
+class UCombatAnimationSet;
 
 // A struct version of CharStatusEntry 
 USTRUCT(BlueprintType)
@@ -79,11 +80,20 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CharacterStat)
 	FCharacterStat Stat;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = CombatAnimationSet)
+	TArray<TSubclassOf<UCombatAnimationSet>> CombatAnimationSetClasses;
+
 protected:
 
 	/** Whether this character can process move input */
 	UPROPERTY(BlueprintReadOnly, Category = CharacterMovement)
 	bool CanMove;
+
+	UPROPERTY(BlueprintReadOnly, Category = CombatAnimationSet)
+	TArray<UCombatAnimationSet*> CombatAnimationSets;
+
+	UPROPERTY(BlueprintReadOnly, Category = CombatAnimationSet)
+	UCombatAnimationSet* ActiveCombatAnimationSet;
 
 	/** Resets HMD orientation in VR. */
 	void OnResetVR();
@@ -146,8 +156,8 @@ public:
 	/** Set whether this character can accept movement input */
 	UFUNCTION(BlueprintCallable, Category = "CharacterMovement")
 	void SetCanMove(bool CanCharacterMove) { CanMove = CanCharacterMove; }
-
-
 	// End of Stat related function
+
+
 };
 
