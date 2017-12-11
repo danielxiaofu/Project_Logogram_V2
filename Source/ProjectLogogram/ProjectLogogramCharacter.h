@@ -81,6 +81,10 @@ public:
 
 protected:
 
+	/** Whether this character can process move input */
+	UPROPERTY(BlueprintReadOnly, Category = CharacterMovement)
+	bool CanMove;
+
 	/** Resets HMD orientation in VR. */
 	void OnResetVR();
 
@@ -89,6 +93,9 @@ protected:
 
 	/** Called for side to side input */
 	void MoveRight(float Value);
+
+	/** Called for jump input*/
+	void RequestJump();
 
 	/** 
 	 * Called via input to turn at a given rate. 
@@ -135,6 +142,10 @@ public:
 	// Stat related function
 	UFUNCTION(BlueprintCallable, Category = "CharacterStat")
 	FCharStatModifier& AddStatModifier(FCharStatModifier Modifier);
+
+	/** Set whether this character can accept movement input */
+	UFUNCTION(BlueprintCallable, Category = "CharacterMovement")
+	void SetCanMove(bool CanCharacterMove) { CanMove = CanCharacterMove; }
 
 
 	// End of Stat related function

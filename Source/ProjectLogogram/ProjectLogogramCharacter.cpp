@@ -102,7 +102,7 @@ void AProjectLogogramCharacter::SetupPlayerInputComponent(class UInputComponent*
 {
 	// Set up gameplay key bindings
 	check(PlayerInputComponent);
-	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ACharacter::Jump);
+	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AProjectLogogramCharacter::RequestJump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &AProjectLogogramCharacter::MoveForward);
@@ -134,6 +134,7 @@ void AProjectLogogramCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	Stat.InitializeStatusObject();
+	CanMove = true;
 }
 
 float AProjectLogogramCharacter::GetHealth() const
@@ -176,6 +177,9 @@ void AProjectLogogramCharacter::LookUpAtRate(float Rate)
 
 void AProjectLogogramCharacter::MoveForward(float Value)
 {
+	if (!CanMove)
+		return;
+
 	if ((Controller != NULL) && (Value != 0.0f))
 	{
 		// find out which way is forward
@@ -190,6 +194,9 @@ void AProjectLogogramCharacter::MoveForward(float Value)
 
 void AProjectLogogramCharacter::MoveRight(float Value)
 {
+	if (!CanMove)
+		return;
+
 	if ( (Controller != NULL) && (Value != 0.0f) )
 	{
 		// find out which way is right
@@ -201,4 +208,12 @@ void AProjectLogogramCharacter::MoveRight(float Value)
 		// add movement in that direction
 		AddMovementInput(Direction, Value);
 	}
+}
+
+void AProjectLogogramCharacter::RequestJump()
+{
+	if (!CanMove)
+		return;
+
+	Jump();
 }
