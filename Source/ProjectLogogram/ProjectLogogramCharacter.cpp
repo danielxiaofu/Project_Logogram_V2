@@ -10,6 +10,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Status/CharStatusEntry.h"
 #include "CombatSystem/CombatAnimationSet.h"
+#include "Item/WorldWeaponActor.h"
 
 void FCharacterStat::InitializeStatusObject()
 {
@@ -106,6 +107,8 @@ void AProjectLogogramCharacter::SetupPlayerInputComponent(class UInputComponent*
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AProjectLogogramCharacter::RequestJump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
+	PlayerInputComponent->BindAction("Attack", IE_Pressed, this, &AProjectLogogramCharacter::OnAttack);
+
 	PlayerInputComponent->BindAxis("MoveForward", this, &AProjectLogogramCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AProjectLogogramCharacter::MoveRight);
 
@@ -140,8 +143,9 @@ void AProjectLogogramCharacter::BeginPlay()
 	// Instantiate CombatAnimSet classes
 	for (TSubclassOf<UCombatAnimationSet> AnimSet : CombatAnimationSetClasses)
 	{
-		CombatAnimationSets.Add(NewObject<UCombatAnimationSet>(this, AnimSet));
-		FString Name = CombatAnimationSets.Top()->Name;
+		UCombatAnimationSet* NewAnimSet = NewObject<UCombatAnimationSet>(this, AnimSet);
+		CombatAnimationSets.Add(NewAnimSet->WeaponType, NewAnimSet);
+		FString Name = NewAnimSet->Name;
 		UE_LOG(LogTemp, Warning, TEXT("%s"), *Name)
 	}
 	
@@ -155,6 +159,16 @@ float AProjectLogogramCharacter::GetHealth() const
 FCharStatModifier & AProjectLogogramCharacter::AddStatModifier(FCharStatModifier Modifier)
 {
 	return Stat.AddModifier(Modifier);
+}
+
+UCombatAnimationSet * AProjectLogogramCharacter::GetActiveAnimationSet()
+{
+	if (ActiveMain)
+	{
+		ActiveCombatAnimationSet = CombatAnimationSets[ActiveMain->WeaponType];
+		return ActiveCombatAnimationSet;
+	}
+	return nullptr;
 }
 
 

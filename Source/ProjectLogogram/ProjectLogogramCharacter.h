@@ -5,10 +5,13 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Status/StatModifier.h"
+#include "Item/WeaponTypeEnum.h"
 #include "ProjectLogogramCharacter.generated.h"
 
 class UCharStatusEntry;
 class UCombatAnimationSet;
+class AWorldWeaponActor;
+
 
 // A struct version of CharStatusEntry 
 USTRUCT(BlueprintType)
@@ -83,6 +86,14 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = CombatAnimationSet)
 	TArray<TSubclassOf<UCombatAnimationSet>> CombatAnimationSetClasses;
 
+	/** Current equiped main weapon*/
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Weapon)
+	AWorldWeaponActor* ActiveMain;
+
+	/** Current equiped secondary weapon */
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Weapon)
+	AWorldWeaponActor* ActiveSecondary;
+
 protected:
 
 	/** Whether this character can process move input */
@@ -90,9 +101,9 @@ protected:
 	bool CanMove;
 
 	UPROPERTY(BlueprintReadOnly, Category = CombatAnimationSet)
-	TArray<UCombatAnimationSet*> CombatAnimationSets;
+	TMap<EWeaponType, UCombatAnimationSet*> CombatAnimationSets;
 
-	UPROPERTY(BlueprintReadOnly, Category = CombatAnimationSet)
+	UPROPERTY()
 	UCombatAnimationSet* ActiveCombatAnimationSet;
 
 	/** Resets HMD orientation in VR. */
@@ -158,6 +169,12 @@ public:
 	void SetCanMove(bool CanCharacterMove) { CanMove = CanCharacterMove; }
 	// End of Stat related function
 
+	/** Handler for when an attack input fires. */
+	UFUNCTION(BlueprintImplementableEvent, Category = "Attack")
+	void OnAttack();
 
+	/** return the combat animation set based on active weapon in right hand. */
+	UFUNCTION(BlueprintCallable, Category = "CombatAnimationSet")
+	UCombatAnimationSet* GetActiveAnimationSet();
 };
 
