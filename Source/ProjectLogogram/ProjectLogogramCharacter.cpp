@@ -187,6 +187,16 @@ void AProjectLogogramCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVec
 		StopJumping();
 }
 
+void AProjectLogogramCharacter::SpecialModeOn()
+{
+
+}
+
+void AProjectLogogramCharacter::SpecialModeOff()
+{
+
+}
+
 void AProjectLogogramCharacter::TurnAtRate(float Rate)
 {
 	// calculate delta for this frame from the rate information

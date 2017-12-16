@@ -136,6 +136,12 @@ protected:
 	/** Handler for when a touch input stops. */
 	void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
 
+	/** Called via input to turn on special mode (e.g. guard, aim) */
+	void SpecialModeOn();
+
+	/** Called via input to turn off special mode (e.g. guard, aim) */
+	void SpecialModeOff();
+
 	// Stat related function
 	
 
