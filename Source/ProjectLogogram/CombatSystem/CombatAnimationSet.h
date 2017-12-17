@@ -8,6 +8,7 @@
 #include "CombatAnimationSet.generated.h"
 
 class UAnimMontage;
+class UBlendSpace1D;
 
 /** This class stores the combat animation montages for one type of weapon
  * 
@@ -34,6 +35,11 @@ public:
 	*/
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CombatAnimation")
 	UAnimMontage* SheathAnimation;
+
+	/** Animation played before the character plays hold animation, leave this blank if you want to directly transfer to hold
+	*/
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CombatAnimation")
+	UAnimMontage* EnterHold;
 
 	/** Animation played when the character performs attack combo
 	*/
