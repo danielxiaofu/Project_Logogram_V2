@@ -136,11 +136,17 @@ protected:
 	/** Handler for when a touch input stops. */
 	void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
 
-	/** Called via input to turn on special mode (e.g. guard, aim) */
-	void SpecialModeOn();
+	/** Called when the character enters special mode */
+	UFUNCTION(BlueprintCallable, Category = "SpecialMode")
+	void OnSpecialModeEnter();
 
-	/** Called via input to turn off special mode (e.g. guard, aim) */
-	void SpecialModeOff();
+	/** Called when the character finishes leaving special mode */
+	UFUNCTION(BlueprintCallable, Category = "SpecialMode")
+	void OnSpecialModeLeave();
+
+	/* Called to set whether the character rotates towards acceleration direction*/
+	UFUNCTION(BlueprintImplementableEvent, Category = "Rotation")
+	void EnableMovementOrientation(bool Enable);
 
 	// Stat related function
 	

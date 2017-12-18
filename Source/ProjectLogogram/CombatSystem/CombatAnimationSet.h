@@ -36,7 +36,7 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CombatAnimation")
 	UAnimMontage* SheathAnimation;
 
-	/** Animation played before the character plays hold animation, leave this blank if you want to directly transfer to hold
+	/** Animation played before the character plays hold animation
 	*/
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CombatAnimation")
 	UAnimMontage* EnterHold;

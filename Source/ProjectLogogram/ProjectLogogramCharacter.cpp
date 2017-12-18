@@ -187,15 +187,16 @@ void AProjectLogogramCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVec
 		StopJumping();
 }
 
-void AProjectLogogramCharacter::SpecialModeOn()
+void AProjectLogogramCharacter::OnSpecialModeEnter()
 {
-
+	EnableMovementOrientation(false);
 }
 
-void AProjectLogogramCharacter::SpecialModeOff()
+void AProjectLogogramCharacter::OnSpecialModeLeave()
 {
-
+	EnableMovementOrientation(true);
 }
+
 
 void AProjectLogogramCharacter::TurnAtRate(float Rate)
 {
