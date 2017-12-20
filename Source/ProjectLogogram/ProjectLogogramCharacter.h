@@ -12,6 +12,12 @@ class UCharStatusEntry;
 class UCombatAnimationSet;
 class AWorldWeaponActor;
 
+UENUM(BlueprintType)
+enum class EJumpMode : uint8
+{
+	VE_JUMP UMETA(DisplayName = "Jump"),
+	VE_DODGE UMETA(DisplayName ="Dodge")
+};
 
 // A struct version of CharStatusEntry 
 USTRUCT(BlueprintType)
@@ -86,13 +92,24 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = CombatAnimationSet)
 	TArray<TSubclassOf<UCombatAnimationSet>> CombatAnimationSetClasses;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SelfRotate")
+	float SpecialModeRotateSpeed;
+
 	/** Current equiped main weapon*/
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Weapon)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon")
 	AWorldWeaponActor* ActiveMain;
 
 	/** Current equiped secondary weapon */
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = Weapon)
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon")
 	AWorldWeaponActor* ActiveSecondary;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Jump")
+	EJumpMode JumpMode;
+
+	/** Whether to rotate character with camera in XY plane*/
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnlym Category = "SelfRotation")
+	bool RotateWithCamera;
+
 
 protected:
 
@@ -136,17 +153,13 @@ protected:
 	/** Handler for when a touch input stops. */
 	void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
 
-	/** Called when the character enters special mode */
-	UFUNCTION(BlueprintCallable, Category = "SpecialMode")
-	void OnSpecialModeEnter();
-
-	/** Called when the character finishes leaving special mode */
-	UFUNCTION(BlueprintCallable, Category = "SpecialMode")
-	void OnSpecialModeLeave();
-
 	/* Called to set whether the character rotates towards acceleration direction*/
-	UFUNCTION(BlueprintImplementableEvent, Category = "Rotation")
+	UFUNCTION(BlueprintImplementableEvent, Category = "SelfRotation")
 	void EnableMovementOrientation(bool Enable);
+
+	/* Rotate the character to match same forward rotation as the camera*/
+	UFUNCTION()
+	void RotateWithCamera();
 
 	// Stat related function
 	
@@ -188,5 +201,13 @@ public:
 	/** return the combat animation set based on active weapon in right hand. */
 	UFUNCTION(BlueprintCallable, Category = "CombatAnimationSet")
 	UCombatAnimationSet* GetActiveAnimationSet();
+
+	/** Called when the character enters special mode */
+	UFUNCTION(BlueprintCallable, Category = "SpecialMode")
+	void OnSpecialModeEnter();
+
+	/** Called when the character finishes leaving special mode */
+	UFUNCTION(BlueprintCallable, Category = "SpecialMode")
+	void OnSpecialModeLeave();
 };
 
