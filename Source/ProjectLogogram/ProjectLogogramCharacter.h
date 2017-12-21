@@ -92,7 +92,8 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = CombatAnimationSet)
 	TArray<TSubclassOf<UCombatAnimationSet>> CombatAnimationSetClasses;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SelfRotate")
+	/* Self-rotation speed in special mode (degrees per second) */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "SelfRotation")
 	float SpecialModeRotateSpeed;
 
 	/** Current equiped main weapon*/
@@ -107,8 +108,8 @@ public:
 	EJumpMode JumpMode;
 
 	/** Whether to rotate character with camera in XY plane*/
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnlym Category = "SelfRotation")
-	bool RotateWithCamera;
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SelfRotation")
+	bool bRotateWithCamera;
 
 
 protected:
@@ -123,6 +124,10 @@ protected:
 	UPROPERTY()
 	UCombatAnimationSet* ActiveCombatAnimationSet;
 
+	/* Total yaw input calculated by adding turn and turn-at-rate*/
+	UPROPERTY()
+	float TotalYawInput;
+
 	/** Resets HMD orientation in VR. */
 	void OnResetVR();
 
@@ -134,6 +139,12 @@ protected:
 
 	/** Called for jump input*/
 	void RequestJump();
+
+	/**
+	* Called via input to turn.
+	* @param Val	Value to add to the yaw input
+	*/
+	void Turn(float Val);
 
 	/** 
 	 * Called via input to turn at a given rate. 
@@ -160,6 +171,10 @@ protected:
 	/* Rotate the character to match same forward rotation as the camera*/
 	UFUNCTION()
 	void RotateWithCamera();
+
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "SelfRotation")
+	void OnYawInputRecieved(float Val);
 
 	// Stat related function
 	

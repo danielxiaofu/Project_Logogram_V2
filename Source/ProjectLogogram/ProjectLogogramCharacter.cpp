@@ -96,7 +96,7 @@ AProjectLogogramCharacter::AProjectLogogramCharacter()
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 
-	RotateWithCamera = false;
+	bRotateWithCamera = false;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -117,7 +117,7 @@ void AProjectLogogramCharacter::SetupPlayerInputComponent(class UInputComponent*
 	// We have 2 versions of the rotation bindings to handle different kinds of devices differently
 	// "turn" handles devices that provide an absolute delta, such as a mouse.
 	// "turnrate" is for devices that we choose to treat as a rate of change, such as an analog joystick
-	PlayerInputComponent->BindAxis("Turn", this, &APawn::AddControllerYawInput);
+	PlayerInputComponent->BindAxis("Turn", this, &AProjectLogogramCharacter::Turn);
 	PlayerInputComponent->BindAxis("TurnRate", this, &AProjectLogogramCharacter::TurnAtRate);
 	PlayerInputComponent->BindAxis("LookUp", this, &APawn::AddControllerPitchInput);
 	PlayerInputComponent->BindAxis("LookUpRate", this, &AProjectLogogramCharacter::LookUpAtRate);
@@ -134,6 +134,12 @@ void AProjectLogogramCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	Stat.UpdateModifiers(DeltaTime);
+
+	if (bRotateWithCamera)
+		RotateWithCamera();
+
+	OnYawInputRecieved(TotalYawInput);
+	TotalYawInput = 0.0;
 }
 
 void AProjectLogogramCharacter::BeginPlay()
@@ -191,26 +197,59 @@ void AProjectLogogramCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVec
 
 void AProjectLogogramCharacter::RotateWithCamera()
 {
-
+	FVector ActorForward = GetActorForwardVector();
+	ActorForward.Z = 0.0;
+	ActorForward.Normalize();
+	float ActorYaw = ActorForward.Rotation().Yaw + 180.0;
+	FVector CameraForward = FollowCamera->GetForwardVector();
+	CameraForward.Z = 0.0;
+	CameraForward.Normalize();
+	float CameraYaw = CameraForward.Rotation().Yaw + 180.0;
+	float Difference1 = CameraYaw - ActorYaw;
+	float Difference2 = 360.0 - fabsf(Difference1);
+	Difference2 *= (Difference1 > 0.0 ? -1.0 : 1.0);
+	float MinDifference = fabs(Difference1) < fabs(Difference2) ? Difference1 : Difference2;
+	float ResultYaw;
+	if (fabs(MinDifference) < GetWorld()->GetDeltaSeconds() * SpecialModeRotateSpeed)
+		ResultYaw = CameraYaw;
+	else
+	{
+		ResultYaw = ActorYaw += (GetWorld()->GetDeltaSeconds() * SpecialModeRotateSpeed * (MinDifference > 0.0 ? 1.0 : -1.0));
+		if (ResultYaw < 0.0)
+			ResultYaw += 360.0;
+		else if (ResultYaw >= 360.0)
+			ResultYaw -= 360.0;
+	}
+		
+	ResultYaw -= 180.0;
+	SetActorRotation(FRotator(GetActorRotation().Pitch, ResultYaw, GetActorRotation().Roll));
 }
 
 void AProjectLogogramCharacter::OnSpecialModeEnter()
 {
 	JumpMode = EJumpMode::VE_DODGE;
 	EnableMovementOrientation(false);
+	bRotateWithCamera = true;
 }
 
 void AProjectLogogramCharacter::OnSpecialModeLeave()
 {
 	JumpMode = EJumpMode::VE_JUMP;
 	EnableMovementOrientation(true);
+	bRotateWithCamera = false;
 }
 
+void AProjectLogogramCharacter::Turn(float Val)
+{
+	AddControllerYawInput(Val);
+	TotalYawInput += Val;
+}
 
 void AProjectLogogramCharacter::TurnAtRate(float Rate)
 {
 	// calculate delta for this frame from the rate information
 	AddControllerYawInput(Rate * BaseTurnRate * GetWorld()->GetDeltaSeconds());
+	TotalYawInput += Rate;
 }
 
 void AProjectLogogramCharacter::LookUpAtRate(float Rate)
