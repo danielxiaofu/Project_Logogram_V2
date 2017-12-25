@@ -164,17 +164,15 @@ protected:
 	/** Handler for when a touch input stops. */
 	void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
 
-	/* Called to set whether the character rotates towards acceleration direction*/
-	UFUNCTION(BlueprintImplementableEvent, Category = "SelfRotation")
-	void EnableMovementOrientation(bool Enable);
-
 	/* Rotate the character to match same forward rotation as the camera*/
 	UFUNCTION()
 	void RotateWithCamera();
 
-
 	UFUNCTION(BlueprintImplementableEvent, Category = "SelfRotation")
 	void OnYawInputRecieved(float Val);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "SelfRotation")
+	void OnPitchInputRecieved(float Val);
 
 	// Stat related function
 	
@@ -224,5 +222,9 @@ public:
 	/** Called when the character finishes leaving special mode */
 	UFUNCTION(BlueprintCallable, Category = "SpecialMode")
 	void OnSpecialModeLeave();
+
+	/* Called to set whether the character is in special mode rotation (rotate with camera)*/
+	UFUNCTION(BlueprintCallable, Category = "SelfRotation")
+	void EnableSpecialModeRotation(bool Enable);
 };
 

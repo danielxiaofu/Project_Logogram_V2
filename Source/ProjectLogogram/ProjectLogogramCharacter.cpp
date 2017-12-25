@@ -140,6 +140,9 @@ void AProjectLogogramCharacter::Tick(float DeltaTime)
 
 	OnYawInputRecieved(TotalYawInput);
 	TotalYawInput = 0.0;
+
+	float CameraPitch = FollowCamera->GetForwardVector().Rotation().Pitch;
+	OnPitchInputRecieved(CameraPitch);
 }
 
 void AProjectLogogramCharacter::BeginPlay()
@@ -195,6 +198,12 @@ void AProjectLogogramCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVec
 		StopJumping();
 }
 
+void AProjectLogogramCharacter::EnableSpecialModeRotation(bool Enable)
+{
+	GetCharacterMovement()->bOrientRotationToMovement = !Enable;
+	bRotateWithCamera = Enable;
+}
+
 void AProjectLogogramCharacter::RotateWithCamera()
 {
 	FVector ActorForward = GetActorForwardVector();
@@ -228,15 +237,11 @@ void AProjectLogogramCharacter::RotateWithCamera()
 void AProjectLogogramCharacter::OnSpecialModeEnter()
 {
 	JumpMode = EJumpMode::VE_DODGE;
-	EnableMovementOrientation(false);
-	bRotateWithCamera = true;
 }
 
 void AProjectLogogramCharacter::OnSpecialModeLeave()
 {
 	JumpMode = EJumpMode::VE_JUMP;
-	EnableMovementOrientation(true);
-	bRotateWithCamera = false;
 }
 
 void AProjectLogogramCharacter::Turn(float Val)

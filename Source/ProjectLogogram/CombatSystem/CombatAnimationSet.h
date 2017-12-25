@@ -36,10 +36,15 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CombatAnimation")
 	UAnimMontage* SheathAnimation;
 
-	/** Animation played before the character plays hold animation
+	/** Animation played when the character enters special mode
 	*/
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CombatAnimation")
 	UAnimMontage* EnterHold;
+
+	/** Animation played when the character exits special mode
+	*/
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CombatAnimation")
+	UAnimMontage* ExitHold;
 
 	/** Animation played when the character performs attack combo
 	*/

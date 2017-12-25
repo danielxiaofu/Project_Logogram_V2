@@ -20,6 +20,14 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "WeaponProperty")
 	EWeaponType WeaponType;
 
+	/* Name of the socket this weapon will attach to in sheath mode */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "WeaponProperty")
+	FName SheathSocket;
+
+	/* Name of the socket this weapon will attach to in draw mode */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "WeaponProperty")
+	FName DrawSocket;
+
 	/** Called when this item is picked by a character
 	* @param NewOwner the character who picked up the item
 	*/
