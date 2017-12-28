@@ -14,7 +14,7 @@ enum class EItemType : uint8
 	VE_Spell UMETA(DisplayName = "Spell"),
 	VE_Melee UMETA(DisplayName = "Melee"),
 	VE_Range UMETA(DisplayName = "Range"),
-	VE_Ammo UMETA(DisplayName = "Ammo"),
+	VE_Bullet UMETA(DisplayName = "Bullet"),
 	VE_Throwable UMETA(DisplayName = "Throwable"),
 	VE_Shield UMETA(DisplayName = "Shield")
 };
