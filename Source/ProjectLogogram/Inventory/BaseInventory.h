@@ -8,6 +8,8 @@
 #include "Item/Item.h"
 #include "BaseInventory.generated.h"
 
+// TODO: This class is no longer used, consider delete it in the future
+
 USTRUCT(BlueprintType)
 struct FInventoryItem
 {

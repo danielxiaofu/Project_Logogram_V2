@@ -7,6 +7,8 @@
 #include "ItemTypeEnum.h"
 #include "Item.generated.h"
 
+class AWorldItemActor;
+
 /**
  * 
  */
@@ -17,11 +19,16 @@ class PROJECTLOGOGRAM_API UItem : public UObject
 	
 public:
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ItemSystem)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = ItemSystem)
 	FName Name;
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ItemSystem)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = ItemSystem)
 	int32 ID;
+
+	/** The actor class that will be spawned if this item needs to be in the world
+	*/
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = ItemSystem)
+	TSubclassOf<AWorldItemActor> WorldActor;
 
 	UFUNCTION(BlueprintCallable, Category = ItemSystem)
 	bool Equals(UItem* Rhs);
