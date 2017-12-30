@@ -17,6 +17,7 @@ class PROJECTLOGOGRAM_API AWorldWeaponActor : public AWorldItemActor
 	
 public:
 
+	/* Type of the weapon actor, this property determines the animation set played during combat*/
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "WeaponProperty")
 	EWeaponType WeaponType;
 

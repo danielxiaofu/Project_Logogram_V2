@@ -10,7 +10,7 @@ UItemBagManager::UItemBagManager()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	BulletBag = NewObject<UItemBag>();
+	
 	// ...
 }
 
@@ -19,7 +19,7 @@ UItemBagManager::UItemBagManager()
 void UItemBagManager::BeginPlay()
 {
 	Super::BeginPlay();
-
+	BulletBag = NewObject<UItemBag>();
 	// ...
 	
 }

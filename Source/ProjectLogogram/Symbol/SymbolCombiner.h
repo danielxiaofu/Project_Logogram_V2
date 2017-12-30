@@ -7,7 +7,7 @@
 #include "SymbolTypeEnum.h"
 #include "SymbolCombiner.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnItemCreated, FString, Name);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnItemCreated, FSymbolicItem, Item);
 
 /** This class is responsible for recieving click events from symbol button 
 * and combine those symbols' ID together to determine the item they represent

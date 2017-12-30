@@ -59,7 +59,7 @@ void USymbolCombiner::OnButtonClicked(ESymbolType SymbolType, int32 ID)
 	FSymbolicItem Item = USymbolicItemLibrary::GetSymbolicItem(UnlockedID);
 
 	UE_LOG(LogTemp, Warning, TEXT("Result item = %s"), *(Item.Name))
-	OnItemCreated.Broadcast(Item.Name);
+	OnItemCreated.Broadcast(Item);
 }
 
 void USymbolCombiner::ResetID()

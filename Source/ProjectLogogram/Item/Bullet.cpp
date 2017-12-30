@@ -2,6 +2,9 @@
 
 #include "Bullet.h"
 
-
+EItemType UBullet::GetType()
+{
+	return EItemType::VE_Bullet;
+}
 
 

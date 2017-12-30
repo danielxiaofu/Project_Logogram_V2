@@ -17,6 +17,9 @@ class PROJECTLOGOGRAM_API UBulletFactory : public UItemFactory
 	GENERATED_BODY()
 	
 public:
+	/** List of bullet classes that can be created by this factory
+	 *
+	 */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ItemFactory")
 	TMap<int32, TSubclassOf<UBullet>> BulletList;
 
@@ -26,6 +29,6 @@ public:
 	 * return bullet pointer, null if ID doesn't exist
 	 */
 	UFUNCTION(BlueprintCallable, Category = "ItemFactory")
-	UBullet* CreateItem(int32 ID, FName Name);
+	UBullet* CreateItem(int32 ID, FString Name);
 	
 };

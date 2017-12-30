@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "Item/Item.h"
-#include "Bullet.generated.h"
+#include "RangeWeapon.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class PROJECTLOGOGRAM_API UBullet : public UItem
+class PROJECTLOGOGRAM_API URangeWeapon : public UItem
 {
 	GENERATED_BODY()
 	
