@@ -11,7 +11,7 @@ class URangeWeapon;
 /**
  * 
  */
-UCLASS()
+UCLASS(BlueprintType, Blueprintable)
 class PROJECTLOGOGRAM_API URangeFactory : public UItemFactory
 {
 	GENERATED_BODY()

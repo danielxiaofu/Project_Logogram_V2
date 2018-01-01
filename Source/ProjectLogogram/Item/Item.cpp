@@ -11,3 +11,14 @@ EItemType UItem::GetType()
 {
 	return EItemType::VE_Undefined;
 }
+
+int32 UItem::GetTypeInt()
+{
+	return 0;
+}
+
+AWorldItemActor * UItem::SpawnActor()
+{
+	AWorldItemActor* ItemActor = NewObject<AWorldItemActor>(this, WorldActor);
+	return ItemActor;
+}

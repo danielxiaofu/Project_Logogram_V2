@@ -25,3 +25,8 @@ EItemType UConsumable::GetType()
 	return EItemType::VE_Consumable;
 }
 
+int32 UConsumable::GetTypeInt()
+{
+	return 1;
+}
+

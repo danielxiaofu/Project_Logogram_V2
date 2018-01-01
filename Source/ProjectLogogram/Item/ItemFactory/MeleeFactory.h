@@ -11,7 +11,7 @@ class UMeleeWeapon;
 /**
  * 
  */
-UCLASS()
+UCLASS(BlueprintType, Blueprintable)
 class PROJECTLOGOGRAM_API UMeleeFactory : public UItemFactory
 {
 	GENERATED_BODY()

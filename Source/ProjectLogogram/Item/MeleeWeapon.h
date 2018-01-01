@@ -18,5 +18,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = ItemSystem)
 	EItemType GetType() override;
 	
-	
+	UFUNCTION(BlueprintCallable, Category = ItemSystem)
+	int32 GetTypeInt() override;
 };

@@ -13,11 +13,23 @@ struct FItemEntry
 {
 	GENERATED_BODY()
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 	UItem* Item;
 
-	UPROPERTY()
-	int32 Number;
+	UPROPERTY(BlueprintReadOnly)
+	int32 Amount;
+
+	FItemEntry()
+	{
+		Item = nullptr;
+		Amount = 0;
+	}
+
+	FItemEntry(UItem* Item_)
+	{
+		Item = Item_;
+		Amount = 1;
+	}
 
 	bool operator== (const FItemEntry& Rhs) const {
 		bool Result;
@@ -30,6 +42,8 @@ struct FItemEntry
 	}
 
 };
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FUpdateDelegate, const TArray<FItemEntry>&, ItemArray);
 
 /** Base class for all kinds of item bags
  * 
@@ -45,13 +59,23 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	bool Stackable;
 
+	/** Called when the item array is updated
+	 *  @param ItemArray a reference to the item array
+	 */
+	UPROPERTY(BlueprintAssignable, Category = "ItemBag")
+	FUpdateDelegate UpdateDelegate;
+
 	UFUNCTION()
 	void AddItem(UItem* Item);
+
+	UFUNCTION(BlueprintCallable)
+	int32 ItemCount() { return Items.Num(); }
 
 protected:
 
 	UPROPERTY(BlueprintReadOnly)
 	TArray<FItemEntry> Items;
 	
+
 	
 };

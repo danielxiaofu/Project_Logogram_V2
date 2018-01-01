@@ -8,6 +8,8 @@
 #include "ItemFactoryManager.generated.h"
 
 class UBulletFactory;
+class UMeleeFactory;
+class URangeFactory;
 class UItemBagManager;
 
 /** This actor component is responsible for recieving item creation event
@@ -27,11 +29,23 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ItemFactory")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ItemFactoryClass")
 	TSubclassOf<UBulletFactory> BulletFactoryClass;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ItemFactoryClass")
+	TSubclassOf<UMeleeFactory> MeleeFactoryClass;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ItemFactoryClass")
+	TSubclassOf<URangeFactory> RangeFactoryClass;
 
 	UPROPERTY()
 	UBulletFactory* BulletFactory;
+
+	UPROPERTY()
+	UMeleeFactory* MeleeFactory;
+
+	UPROPERTY()
+	URangeFactory* RangeFactory;
 
 public:	
 	// Called every frame

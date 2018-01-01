@@ -2,8 +2,13 @@
 
 #include "ItemFactoryManager.h"
 #include "BulletFactory.h"
+#include "MeleeFactory.h"
+#include "RangeFactory.h"
 #include "../../Inventory/ItemBagManager.h"
 #include "../Item.h"
+#include "../Bullet.h"
+#include "../MeleeWeapon.h"
+#include "../RangeWeapon.h"
 
 // Sets default values for this component's properties
 UItemFactoryManager::UItemFactoryManager()
@@ -23,6 +28,8 @@ void UItemFactoryManager::BeginPlay()
 	Super::BeginPlay();
 
 	BulletFactory = NewObject<UBulletFactory>(this, BulletFactoryClass);
+	MeleeFactory = NewObject<UMeleeFactory>(this, MeleeFactoryClass);
+	RangeFactory = NewObject<URangeFactory>(this, RangeFactoryClass);
 	// ...
 	
 }
@@ -38,18 +45,18 @@ void UItemFactoryManager::TickComponent(float DeltaTime, ELevelTick TickType, FA
 
 void UItemFactoryManager::CreateItem(FSymbolicItem Item, UItemBagManager* ItemBagManager)
 {
-	UItem* NewItem = BulletFactory->CreateItem(Item.ID, Item.Name);
-	if (!NewItem)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Item creation failed, ID does not exist in the factory"))
-		return;
-	}
 
 	switch (Item.Type)
 	{
-	case (5):
-		
-		ItemBagManager->AddToBulletBag(NewItem);
+	case (3):
+		ItemBagManager->AddToWeaponBag(MeleeFactory->CreateItem(Item.ID, Item.Name));
 		break;
+	case (4):
+		ItemBagManager->AddToWeaponBag(RangeFactory->CreateItem(Item.ID, Item.Name));
+		break;
+	case (5):
+		ItemBagManager->AddToBulletBag(BulletFactory->CreateItem(Item.ID, Item.Name));
+		break;
+	
 	}
 }

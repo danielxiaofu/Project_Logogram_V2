@@ -11,6 +11,7 @@
 class UCharStatusEntry;
 class UCombatAnimationSet;
 class AWorldWeaponActor;
+class UItemBag;
 
 UENUM(BlueprintType)
 enum class EJumpMode : uint8
@@ -223,8 +224,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "SpecialMode")
 	void OnSpecialModeLeave();
 
-	/* Called to set whether the character is in special mode rotation (rotate with camera)*/
+	/* Called to set whether the character is in special mode rotation (rotate with camera) */
 	UFUNCTION(BlueprintCallable, Category = "SelfRotation")
 	void EnableSpecialModeRotation(bool Enable);
+
+	/* Called when the initialization of item bag manager is finished, and created bag objects are passed */
+	UFUNCTION(BlueprintImplementableEvent, Category = "Inventory")
+	void OnBagInitializationFinished(UItemBag* BulletBag, UItemBag* WeaponBag);
 };
 

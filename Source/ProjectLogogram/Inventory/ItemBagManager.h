@@ -24,6 +24,9 @@ protected:
 	UPROPERTY()
 	UItemBag* BulletBag;
 
+	UPROPERTY()
+	UItemBag* WeaponBag;
+
 public:	
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
@@ -34,4 +37,10 @@ public:
 	UFUNCTION()
 	void AddToBulletBag(UItem* Bullet);
 	
+	/** Add a weapon item to weapon bag
+	* @param Weapon weapon to be added
+	*/
+	UFUNCTION()
+	void AddToWeaponBag(UItem* Weapon);
+
 };

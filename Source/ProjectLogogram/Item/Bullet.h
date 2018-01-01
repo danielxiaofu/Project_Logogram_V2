@@ -14,8 +14,10 @@ class PROJECTLOGOGRAM_API UBullet : public UItem
 {
 	GENERATED_BODY()
 	
+public:
 	UFUNCTION(BlueprintCallable, Category = ItemSystem)
 	EItemType GetType() override;
 	
-	
+	UFUNCTION(BlueprintCallable, Category = ItemSystem)
+	int32 GetTypeInt() override;
 };

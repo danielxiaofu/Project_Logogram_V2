@@ -2,6 +2,7 @@
 
 #include "ItemBagManager.h"
 #include "ItemBag.h"
+#include "../ProjectLogogramCharacter.h"
 
 // Sets default values for this component's properties
 UItemBagManager::UItemBagManager()
@@ -20,6 +21,14 @@ void UItemBagManager::BeginPlay()
 {
 	Super::BeginPlay();
 	BulletBag = NewObject<UItemBag>();
+	WeaponBag = NewObject<UItemBag>();
+
+	BulletBag->Stackable = true;
+	WeaponBag->Stackable = false;
+
+	AProjectLogogramCharacter* Owner = dynamic_cast<AProjectLogogramCharacter*>(GetOwner());
+	if (Owner)
+		Owner->OnBagInitializationFinished(BulletBag, WeaponBag);
 	// ...
 	
 }
@@ -36,8 +45,15 @@ void UItemBagManager::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 void UItemBagManager::AddToBulletBag(UItem * Bullet)
 {
 	check(BulletBag && "Instantiate BulletBag before adding items");
-
+	// TODO: check if the item is bullet
 	BulletBag->AddItem(Bullet);
 
+}
+
+void UItemBagManager::AddToWeaponBag(UItem * Weapon)
+{
+	check(WeaponBag && "Instantiate WeaponBag before adding items");
+	// TODO: check if the item is melee, range or shield
+	WeaponBag->AddItem(Weapon);
 }
 

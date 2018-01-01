@@ -36,6 +36,13 @@ public:
 	UFUNCTION(BlueprintCallable, Category = ItemSystem)
 	virtual EItemType GetType();
 
+	UFUNCTION(BlueprintCallable, Category = ItemSystem)
+	virtual int32 GetTypeInt();
 
+	/** Spawn the actor of this item using WorldActor property.
+	 * If WorldActor is not specified, a nullptr will be returned.
+	 */
+	UFUNCTION(BlueprintCallable, Category = ItemSystem)
+	AWorldItemActor* SpawnActor();
 };
 

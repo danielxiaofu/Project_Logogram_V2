@@ -7,4 +7,7 @@ EItemType UMeleeWeapon::GetType()
 	return EItemType::VE_Melee;
 }
 
-
+int32 UMeleeWeapon::GetTypeInt()
+{
+	return 3;
+}

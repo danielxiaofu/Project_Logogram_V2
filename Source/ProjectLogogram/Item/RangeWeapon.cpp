@@ -6,3 +6,8 @@ EItemType URangeWeapon::GetType()
 {
 	return EItemType::VE_Range;
 }
+
+int32 URangeWeapon::GetTypeInt()
+{
+	return 4;
+}

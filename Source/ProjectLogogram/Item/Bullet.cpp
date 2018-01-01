@@ -7,4 +7,7 @@ EItemType UBullet::GetType()
 	return EItemType::VE_Bullet;
 }
 
-
+int32 UBullet::GetTypeInt()
+{
+	return 5;
+}
