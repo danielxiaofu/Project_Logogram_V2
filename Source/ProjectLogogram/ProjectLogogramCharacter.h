@@ -99,11 +99,11 @@ public:
 
 	/** Current equiped main weapon*/
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon")
-	AWorldWeaponActor* ActiveMain;
+	AWorldWeaponActor* ActiveMain = nullptr;
 
 	/** Current equiped secondary weapon */
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon")
-	AWorldWeaponActor* ActiveSecondary;
+	AWorldWeaponActor* ActiveSecondary = nullptr;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Jump")
 	EJumpMode JumpMode;
@@ -230,6 +230,6 @@ public:
 
 	/* Called when the initialization of item bag manager is finished, and created bag objects are passed */
 	UFUNCTION(BlueprintImplementableEvent, Category = "Inventory")
-	void OnBagInitializationFinished(UItemBag* BulletBag, UItemBag* WeaponBag);
+	void OnBagInitializationFinished(UItemBag* BulletBag, UItemBag* MainWeaponBag, UItemBag* SecondaryWeaponBag);
 };
 

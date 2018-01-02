@@ -25,6 +25,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ItemSystem)
 	int32 ID;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = ItemSystem)
+	int32 Type;
+
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = ItemSystem)
 	UItem* ItemReference;
@@ -42,4 +45,7 @@ public:
 	UFUNCTION()
 	virtual void OnItemPickUp(AProjectLogogramCharacter* NewOwner);
 	
+	UFUNCTION(BlueprintCallable)
+	void SetInfo(FName _Name, int32 _ID, int32 _Type);
+
 };

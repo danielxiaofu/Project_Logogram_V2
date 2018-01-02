@@ -20,5 +20,6 @@ int32 UItem::GetTypeInt()
 AWorldItemActor * UItem::SpawnActor()
 {
 	AWorldItemActor* ItemActor = NewObject<AWorldItemActor>(this, WorldActor);
+
 	return ItemActor;
 }

@@ -49,10 +49,10 @@ void UItemFactoryManager::CreateItem(FSymbolicItem Item, UItemBagManager* ItemBa
 	switch (Item.Type)
 	{
 	case (3):
-		ItemBagManager->AddToWeaponBag(MeleeFactory->CreateItem(Item.ID, Item.Name));
+		ItemBagManager->AddToMainWeaponBag(MeleeFactory->CreateItem(Item.ID, Item.Name));
 		break;
 	case (4):
-		ItemBagManager->AddToWeaponBag(RangeFactory->CreateItem(Item.ID, Item.Name));
+		ItemBagManager->AddToMainWeaponBag(RangeFactory->CreateItem(Item.ID, Item.Name));
 		break;
 	case (5):
 		ItemBagManager->AddToBulletBag(BulletFactory->CreateItem(Item.ID, Item.Name));

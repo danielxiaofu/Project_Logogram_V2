@@ -2,6 +2,7 @@
 
 #include "ItemBagManager.h"
 #include "ItemBag.h"
+#include "Item/Item.h"
 #include "../ProjectLogogramCharacter.h"
 
 // Sets default values for this component's properties
@@ -21,14 +22,17 @@ void UItemBagManager::BeginPlay()
 {
 	Super::BeginPlay();
 	BulletBag = NewObject<UItemBag>();
-	WeaponBag = NewObject<UItemBag>();
+	MainWeaponBag = NewObject<UItemBag>();
+	SecondaryWeaponBag = NewObject<UItemBag>();
 
 	BulletBag->Stackable = true;
-	WeaponBag->Stackable = false;
+	MainWeaponBag->Stackable = false;
+	SecondaryWeaponBag->Stackable = false;
 
 	AProjectLogogramCharacter* Owner = dynamic_cast<AProjectLogogramCharacter*>(GetOwner());
+
 	if (Owner)
-		Owner->OnBagInitializationFinished(BulletBag, WeaponBag);
+		Owner->OnBagInitializationFinished(BulletBag, MainWeaponBag, SecondaryWeaponBag);
 	// ...
 	
 }
@@ -45,15 +49,48 @@ void UItemBagManager::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 void UItemBagManager::AddToBulletBag(UItem * Bullet)
 {
 	check(BulletBag && "Instantiate BulletBag before adding items");
-	// TODO: check if the item is bullet
-	BulletBag->AddItem(Bullet);
 
+	if (!Bullet)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Fail to add to bullet bag, item does not exist"))
+			return;
+	}
+
+	if (Bullet->GetTypeInt() == 5)
+		BulletBag->AddItem(Bullet);
+	else
+		UE_LOG(LogTemp, Warning, TEXT("Fail to add to bullet bag, incorrect item type"))
 }
 
-void UItemBagManager::AddToWeaponBag(UItem * Weapon)
+void UItemBagManager::AddToMainWeaponBag(UItem * MainWeapon)
 {
-	check(WeaponBag && "Instantiate WeaponBag before adding items");
-	// TODO: check if the item is melee, range or shield
-	WeaponBag->AddItem(Weapon);
+	check(MainWeaponBag && "Instantiate MainWeaponBag before adding items");
+
+	if (!MainWeapon)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Fail to add to main weapon bag, item does not exist"))
+		return;
+	}
+
+	if (MainWeapon->GetTypeInt() == 3 || MainWeapon->GetTypeInt() == 4)
+		MainWeaponBag->AddItem(MainWeapon);
+	else
+		UE_LOG(LogTemp, Warning, TEXT("Fail to add to main weapon bag, incorrect item type"))
+}
+
+void UItemBagManager::AddToSecondaryWeaponBag(UItem * SecondaryWeapon)
+{
+	check(SecondaryWeaponBag && "Instantiate SecondaryWeaponBag before adding items");
+
+	if (!SecondaryWeapon)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Fail to add to secondary weapon bag, item does not exist"))
+			return;
+	}
+
+	if (SecondaryWeapon->GetTypeInt() == 6)
+		SecondaryWeaponBag->AddItem(SecondaryWeapon);
+	else
+		UE_LOG(LogTemp, Warning, TEXT("Fail to add to secondary weapon bag, incorrect item type"))
 }
 

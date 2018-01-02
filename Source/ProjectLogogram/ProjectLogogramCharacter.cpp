@@ -97,6 +97,8 @@ AProjectLogogramCharacter::AProjectLogogramCharacter()
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
 
 	bRotateWithCamera = false;
+	ActiveMain = nullptr;
+	ActiveSecondary = nullptr;
 }
 
 //////////////////////////////////////////////////////////////////////////

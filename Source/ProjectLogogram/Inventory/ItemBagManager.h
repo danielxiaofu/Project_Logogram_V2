@@ -25,7 +25,10 @@ protected:
 	UItemBag* BulletBag;
 
 	UPROPERTY()
-	UItemBag* WeaponBag;
+	UItemBag* MainWeaponBag;
+
+	UPROPERTY()
+	UItemBag* SecondaryWeaponBag;
 
 public:	
 	// Called every frame
@@ -37,10 +40,15 @@ public:
 	UFUNCTION()
 	void AddToBulletBag(UItem* Bullet);
 	
-	/** Add a weapon item to weapon bag
+	/** Add a weapon item to main weapon bag
 	* @param Weapon weapon to be added
 	*/
 	UFUNCTION()
-	void AddToWeaponBag(UItem* Weapon);
+	void AddToMainWeaponBag(UItem* Weapon);
 
+	/** Add a weapon item to secondary weapon bag
+	* @param Weapon weapon to be added
+	*/
+	UFUNCTION()
+	void AddToSecondaryWeaponBag(UItem* Weapon);
 };
