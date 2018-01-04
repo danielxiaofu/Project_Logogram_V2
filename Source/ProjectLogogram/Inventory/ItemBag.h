@@ -66,10 +66,10 @@ public:
 	FUpdateDelegate UpdateDelegate;
 
 	UFUNCTION()
-	void AddItem(UItem* Item);
+	virtual void AddItem(UItem* Item);
 
 	UFUNCTION(BlueprintCallable)
-	int32 ItemCount() { return Items.Num(); }
+	virtual int32 ItemCount() { return Items.Num(); }
 
 protected:
 

@@ -57,6 +57,8 @@ void UItemFactoryManager::CreateItem(FSymbolicItem Item, UItemBagManager* ItemBa
 	case (5):
 		ItemBagManager->AddToBulletBag(BulletFactory->CreateItem(Item.ID, Item.Name));
 		break;
-	
+	case (6):
+		ItemBagManager->AddToSecondaryWeaponBag(MeleeFactory->CreateItem(Item.ID, Item.Name));
+
 	}
 }

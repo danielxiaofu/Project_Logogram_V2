@@ -3,21 +3,23 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Item/Item.h"
-#include "MeleeWeapon.generated.h"
+#include "Item/MeleeWeapon.h"
+#include "Shield.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class PROJECTLOGOGRAM_API UMeleeWeapon : public UItem
+class PROJECTLOGOGRAM_API UShield : public UMeleeWeapon
 {
 	GENERATED_BODY()
 	
 public:
 	UFUNCTION(BlueprintCallable, Category = ItemSystem)
-	virtual EItemType GetType() override;
-	
+	EItemType GetType() override;
+
 	UFUNCTION(BlueprintCallable, Category = ItemSystem)
-	virtual int32 GetTypeInt() override;
+	int32 GetTypeInt() override;
+	
+	
 };
