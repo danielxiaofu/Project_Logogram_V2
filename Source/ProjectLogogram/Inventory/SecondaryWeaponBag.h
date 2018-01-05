@@ -29,6 +29,7 @@ public:
 	void AddItem(UItem* Item) override;
 	
 	/** Set the active type of the bag and fire an update event.
+	  * @param ItemType type of the item to activate, pass 0 if no weapon will be active
 	  */
 	UFUNCTION(BlueprintCallable)
 	void SetActiveType(int32 ItemType);

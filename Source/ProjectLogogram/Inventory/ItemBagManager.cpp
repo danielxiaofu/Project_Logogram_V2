@@ -2,6 +2,7 @@
 
 #include "ItemBagManager.h"
 #include "ItemBag.h"
+#include "SecondaryWeaponBag.h"
 #include "Item/Item.h"
 #include "../ProjectLogogramCharacter.h"
 
@@ -23,7 +24,7 @@ void UItemBagManager::BeginPlay()
 	Super::BeginPlay();
 	BulletBag = NewObject<UItemBag>();
 	MainWeaponBag = NewObject<UItemBag>();
-	SecondaryWeaponBag = NewObject<UItemBag>();
+	SecondaryWeaponBag = NewObject<USecondaryWeaponBag>();
 
 	BulletBag->Stackable = true;
 	MainWeaponBag->Stackable = false;

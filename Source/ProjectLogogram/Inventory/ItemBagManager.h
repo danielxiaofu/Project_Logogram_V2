@@ -7,6 +7,7 @@
 #include "ItemBagManager.generated.h"
 
 class UItemBag;
+class USecondaryWeaponBag;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PROJECTLOGOGRAM_API UItemBagManager : public UActorComponent
@@ -28,7 +29,7 @@ protected:
 	UItemBag* MainWeaponBag;
 
 	UPROPERTY()
-	UItemBag* SecondaryWeaponBag;
+	USecondaryWeaponBag* SecondaryWeaponBag;
 
 public:	
 	// Called every frame
