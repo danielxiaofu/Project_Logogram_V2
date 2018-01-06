@@ -2,12 +2,12 @@
 
 #include "Bullet.h"
 
-EItemType UBullet::GetType()
+EItemType UBullet::GetType() const
 {
 	return EItemType::VE_Bullet;
 }
 
-int32 UBullet::GetTypeInt()
+int32 UBullet::GetTypeInt() const
 {
 	return 5;
 }

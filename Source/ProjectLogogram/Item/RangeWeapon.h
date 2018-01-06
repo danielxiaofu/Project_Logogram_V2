@@ -15,8 +15,8 @@ class PROJECTLOGOGRAM_API URangeWeapon : public UItem
 	GENERATED_BODY()
 	
 	UFUNCTION(BlueprintCallable, Category = ItemSystem)
-	EItemType GetType() override;
+	EItemType GetType() const override;
 	
 	UFUNCTION(BlueprintCallable, Category = ItemSystem)
-	int32 GetTypeInt() override;
+	int32 GetTypeInt() const override;
 };

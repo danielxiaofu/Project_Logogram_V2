@@ -2,12 +2,12 @@
 
 #include "MeleeWeapon.h"
 
-EItemType UMeleeWeapon::GetType()
+EItemType UMeleeWeapon::GetType() const
 {
 	return EItemType::VE_Melee;
 }
 
-int32 UMeleeWeapon::GetTypeInt()
+int32 UMeleeWeapon::GetTypeInt() const
 {
 	return 3;
 }

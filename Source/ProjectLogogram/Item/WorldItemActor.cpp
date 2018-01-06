@@ -30,10 +30,11 @@ void AWorldItemActor::OnItemPickUp(AProjectLogogramCharacter * NewOwner)
 	check(0 && "Must override this");
 }
 
-void AWorldItemActor::SetInfo(FName _Name, int32 _ID, int32 _Type)
+void AWorldItemActor::SetInfo(FName _Name, int32 _ID, int32 _Type, UItem* _BaseItem)
 {
 	Name = _Name;
 	ID = _ID;
 	Type = _Type;
+	BaseItem = _BaseItem;
 }
 

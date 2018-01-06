@@ -26,10 +26,10 @@ public:
 	void Use();
 
 	UFUNCTION(BlueprintCallable, Category = ItemSystem)
-	EItemType GetType() override;
+	EItemType GetType() const override;
 
 	UFUNCTION(BlueprintCallable, Category = ItemSystem)
-	int32 GetTypeInt() override;
+	int32 GetTypeInt() const override;
 
 protected:
 

@@ -20,12 +20,12 @@ void UConsumable::Initialize(AProjectLogogramCharacter* TargetCharacter, FName I
 	StatModifiers = Modifiers;
 }
 
-EItemType UConsumable::GetType()
+EItemType UConsumable::GetType() const
 {
 	return EItemType::VE_Consumable;
 }
 
-int32 UConsumable::GetTypeInt()
+int32 UConsumable::GetTypeInt() const
 {
 	return 1;
 }

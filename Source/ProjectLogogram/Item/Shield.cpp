@@ -2,12 +2,12 @@
 
 #include "Shield.h"
 
-EItemType UShield::GetType()
+EItemType UShield::GetType() const
 {
 	return EItemType::VE_Shield;
 }
 
-int32 UShield::GetTypeInt()
+int32 UShield::GetTypeInt() const
 {
 	return 6;
 }

@@ -34,6 +34,5 @@ public:
 	*/
 	UFUNCTION()
 	virtual void OnItemPickUp(AProjectLogogramCharacter* NewOwner);
-	
-	
+
 };

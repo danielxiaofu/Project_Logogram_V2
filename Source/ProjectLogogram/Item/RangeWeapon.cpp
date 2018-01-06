@@ -2,12 +2,12 @@
 
 #include "RangeWeapon.h"
 
-EItemType URangeWeapon::GetType()
+EItemType URangeWeapon::GetType() const
 {
 	return EItemType::VE_Range;
 }
 
-int32 URangeWeapon::GetTypeInt()
+int32 URangeWeapon::GetTypeInt() const
 {
 	return 4;
 }

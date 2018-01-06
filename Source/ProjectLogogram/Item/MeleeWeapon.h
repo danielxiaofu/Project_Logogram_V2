@@ -16,8 +16,8 @@ class PROJECTLOGOGRAM_API UMeleeWeapon : public UItem
 	
 public:
 	UFUNCTION(BlueprintCallable, Category = ItemSystem)
-	virtual EItemType GetType() override;
+	virtual EItemType GetType() const override;
 	
 	UFUNCTION(BlueprintCallable, Category = ItemSystem)
-	virtual int32 GetTypeInt() override;
+	virtual int32 GetTypeInt() const override;
 };

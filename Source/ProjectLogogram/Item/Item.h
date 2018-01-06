@@ -34,10 +34,10 @@ public:
 	bool Equals(UItem* Rhs);
 
 	UFUNCTION(BlueprintCallable, Category = ItemSystem)
-	virtual EItemType GetType();
+	virtual EItemType GetType() const;
 
 	UFUNCTION(BlueprintCallable, Category = ItemSystem)
-	virtual int32 GetTypeInt();
+	virtual int32 GetTypeInt() const;
 
 	/** Spawn the actor of this item using WorldActor property.
 	 * If WorldActor is not specified, a nullptr will be returned.

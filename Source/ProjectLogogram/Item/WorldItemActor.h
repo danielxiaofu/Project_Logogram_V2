@@ -30,7 +30,7 @@ public:
 
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = ItemSystem)
-	UItem* ItemReference;
+	UItem* BaseItem;
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -46,6 +46,5 @@ public:
 	virtual void OnItemPickUp(AProjectLogogramCharacter* NewOwner);
 	
 	UFUNCTION(BlueprintCallable)
-	void SetInfo(FName _Name, int32 _ID, int32 _Type);
-
+	void SetInfo(FName _Name, int32 _ID, int32 _Type, UItem* _BaseItem);
 };

@@ -7,12 +7,12 @@ bool UItem::Equals(UItem * Rhs)
 	return ID == Rhs->ID;
 }
 
-EItemType UItem::GetType()
+EItemType UItem::GetType() const
 {
 	return EItemType::VE_Undefined;
 }
 
-int32 UItem::GetTypeInt()
+int32 UItem::GetTypeInt() const
 {
 	return 0;
 }
