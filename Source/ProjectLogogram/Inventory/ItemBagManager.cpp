@@ -33,7 +33,7 @@ void UItemBagManager::BeginPlay()
 	AProjectLogogramCharacter* Owner = dynamic_cast<AProjectLogogramCharacter*>(GetOwner());
 
 	if (Owner)
-		Owner->OnBagInitializationFinished(BulletBag, MainWeaponBag, SecondaryWeaponBag);
+		Owner->OnBagInitializationFinished(this);
 	// ...
 	
 }

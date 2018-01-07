@@ -22,13 +22,13 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 	UItemBag* BulletBag;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 	UItemBag* MainWeaponBag;
 
-	UPROPERTY()
+	UPROPERTY(BlueprintReadOnly)
 	USecondaryWeaponBag* SecondaryWeaponBag;
 
 public:	
