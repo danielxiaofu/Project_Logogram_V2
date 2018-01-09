@@ -65,17 +65,28 @@ public:
 	UPROPERTY(BlueprintAssignable, Category = "ItemBag")
 	FUpdateDelegate UpdateDelegate;
 
+	/* Current selected item */
+	UPROPERTY(BlueprintReadOnly, Category = "ItemBag")
+	FItemEntry SelectedItem;
+
 	UFUNCTION()
 	virtual void AddItem(UItem* Item);
 
 	UFUNCTION(BlueprintCallable)
 	virtual int32 ItemCount() { return Items.Num(); }
 
+	UFUNCTION(BlueprintCallable)
+	void SetSeletedItem(FItemEntry _SelectedItem) { SelectedItem = _SelectedItem; }
+
+	/* Call this to fire an update event without modifying anything in the bag */
+	UFUNCTION(BlueprintCallable)
+	void RefreshBag();
+
 protected:
 
 	UPROPERTY(BlueprintReadOnly)
 	TArray<FItemEntry> Items;
 	
-
+	
 	
 };

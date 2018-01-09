@@ -35,6 +35,10 @@ protected:
 
 public:
 	
+	/* Type of bullet this range weapon support */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TArray<TSubclassOf<UBullet>> SupportBulletType;
+
 	/** Called when the character requests aim, child class can implement this to 
 	 * perform different behavior.
 	 * @param TargetAnimInstance the anim instance needed to play montage

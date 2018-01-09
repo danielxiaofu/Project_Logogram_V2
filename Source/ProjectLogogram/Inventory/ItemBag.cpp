@@ -28,3 +28,8 @@ void UItemBag::AddItem(UItem * Item)
 
 
 }
+
+void UItemBag::RefreshBag()
+{
+	UpdateDelegate.Broadcast(Items);
+}

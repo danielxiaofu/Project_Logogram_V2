@@ -48,11 +48,20 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CombatAnimation")
 	UAnimMontage* ExitHold;
 
-	/** Animation played when the weapon needs to reload, only apply to range weapon
+	/** Animation played when the weapon needs to reload, only apply to gun and crossbow
 	 *
 	 */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CombatAnimation")
 	UAnimMontage* Reload;
+
+	/** Combination of reload and aim, only apply to bow and slingshot
+	*/
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CombatAnimation")
+	UAnimMontage* LoadAndAim;
+
+	/* Aim weapon, only apply to range weapon */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CombatAnimation")
+	UAnimMontage* Aim;
 
 	/** Animation played when the character performs attack combo
 	*/
