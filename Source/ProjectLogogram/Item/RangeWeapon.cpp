@@ -12,8 +12,3 @@ int32 URangeWeapon::GetTypeInt() const
 	return 4;
 }
 
-void URangeWeapon::RequestAim(UAnimInstance * TargetAnimInstance)
-{
-	OnAimRequested(TargetAnimInstance);
-}
-

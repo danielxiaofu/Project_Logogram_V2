@@ -64,6 +64,8 @@ struct FCharacterStat
 
 };
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FFireWeaponDelegate);
+
 UCLASS(config=Game)
 class AProjectLogogramCharacter : public ACharacter
 {
@@ -78,6 +80,10 @@ class AProjectLogogramCharacter : public ACharacter
 	class UCameraComponent* FollowCamera;
 public:
 	AProjectLogogramCharacter();
+
+	/** Called when the character fires a range weapon */
+	UPROPERTY(BlueprintAssignable)
+	FFireWeaponDelegate OnWeaponFire;
 
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
@@ -164,6 +170,10 @@ protected:
 
 	/** Handler for when a touch input stops. */
 	void TouchStopped(ETouchIndex::Type FingerIndex, FVector Location);
+
+	/** Fire the range weapon if there is any. */
+	UFUNCTION()
+	void FireRangeWeapon();
 
 	/* Rotate the character to match same forward rotation as the camera*/
 	UFUNCTION()

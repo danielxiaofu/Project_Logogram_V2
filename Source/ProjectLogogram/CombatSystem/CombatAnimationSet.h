@@ -36,17 +36,10 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CombatAnimation")
 	UAnimMontage* SheathAnimation;
 
-	/** Animation played when the character enters special mode
+	/** Animation played when the character enters special mode, only applies to melee weapon
 	*/
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CombatAnimation")
 	UAnimMontage* EnterHold;
-
-	
-	/** Animation played when the character exits special mode
-     * TODO May remove this variable since it is replaced by blending
-	 */
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CombatAnimation")
-	UAnimMontage* ExitHold;
 
 	/** Animation played when the weapon needs to reload, only apply to gun and crossbow
 	 *
@@ -62,6 +55,10 @@ public:
 	/* Aim weapon, only apply to range weapon */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CombatAnimation")
 	UAnimMontage* Aim;
+
+	/* Play fire animation, only apply to range weapon */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CombatAnimation")
+	UAnimMontage* Fire;
 
 	/** Animation played when the character performs attack combo
 	*/

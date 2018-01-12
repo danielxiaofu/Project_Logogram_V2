@@ -8,6 +8,7 @@
 
 class UBullet;
 class UAnimInstance;
+class UItemBag;
 
 /**
  * 
@@ -43,13 +44,14 @@ public:
 	 * perform different behavior.
 	 * @param TargetAnimInstance the anim instance needed to play montage
 	 */
-	UFUNCTION(BlueprintImplementableEvent)
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void OnAimRequested(UAnimInstance* TargetAnimInstance);
 	
-	/** Call this to request aim
-	 * @param TargetAnimInstance the anim instance needed to play montage
-	 */
-	UFUNCTION(BlueprintCallable)
-	void RequestAim(UAnimInstance* TargetAnimInstance);
-
+	/** Called when the character needs to load bullets into this weapon, 
+	  * implement this event to perform different behavior with different weapon.
+	  * @param BulletBag the bulletbag to retrieve bullets from
+	  * return bool true if reload succeed
+	  */
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	bool OnReloadRequested(UItemBag* BulletBag);
 };

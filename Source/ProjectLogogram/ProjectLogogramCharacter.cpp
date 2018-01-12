@@ -112,6 +112,7 @@ void AProjectLogogramCharacter::SetupPlayerInputComponent(class UInputComponent*
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &ACharacter::StopJumping);
 
 	PlayerInputComponent->BindAction("Attack", IE_Pressed, this, &AProjectLogogramCharacter::OnAttack);
+	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AProjectLogogramCharacter::FireRangeWeapon);
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &AProjectLogogramCharacter::MoveForward);
 	PlayerInputComponent->BindAxis("MoveRight", this, &AProjectLogogramCharacter::MoveRight);
@@ -198,6 +199,11 @@ void AProjectLogogramCharacter::TouchStarted(ETouchIndex::Type FingerIndex, FVec
 void AProjectLogogramCharacter::TouchStopped(ETouchIndex::Type FingerIndex, FVector Location)
 {
 		StopJumping();
+}
+
+void AProjectLogogramCharacter::FireRangeWeapon()
+{
+	OnWeaponFire.Broadcast();
 }
 
 void AProjectLogogramCharacter::EnableSpecialModeRotation(bool Enable)

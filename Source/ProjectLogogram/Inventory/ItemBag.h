@@ -67,7 +67,7 @@ public:
 
 	/* Current selected item */
 	UPROPERTY(BlueprintReadOnly, Category = "ItemBag")
-	FItemEntry SelectedItem;
+	UItem* SelectedItem;
 
 	UFUNCTION()
 	virtual void AddItem(UItem* Item);
@@ -76,7 +76,7 @@ public:
 	virtual int32 ItemCount() { return Items.Num(); }
 
 	UFUNCTION(BlueprintCallable)
-	void SetSeletedItem(FItemEntry _SelectedItem) { SelectedItem = _SelectedItem; }
+	void SetSeletedItem(UItem* _SelectedItem) { SelectedItem = _SelectedItem; }
 
 	/* Call this to fire an update event without modifying anything in the bag */
 	UFUNCTION(BlueprintCallable)

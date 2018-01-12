@@ -7,6 +7,8 @@
 #include "WeaponTypeEnum.h"
 #include "WorldWeaponActor.generated.h"
 
+class ACharacter;
+
 /**
  * 
  */
@@ -30,9 +32,21 @@ public:
 	FName DrawSocket;
 
 	/** Called when this item is picked by a character
-	* @param NewOwner the character who picked up the item
-	*/
+	 * @param NewOwner the character who picked up the item
+	 */
 	UFUNCTION()
 	virtual void OnItemPickUp(AProjectLogogramCharacter* NewOwner);
+
+	/** Called when this weapon actor is set as the active weapon
+	 * @param Owner the character who activated this weapon
+	 */
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnActivate(ACharacter* OwnerCharacter);
+
+	/* Called when this weapon is no longer the active weapon 
+	 * @param Owner the character who deactivated this weapon
+	 */
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnDeactivate(ACharacter* OwnerCharacter);
 
 };
