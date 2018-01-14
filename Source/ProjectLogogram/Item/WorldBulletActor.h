@@ -6,6 +6,8 @@
 #include "Item/WorldWeaponActor.h"
 #include "WorldBulletActor.generated.h"
 
+class UProjectileMovementComponent;
+
 /**
  * 
  */
@@ -13,8 +15,11 @@ UCLASS()
 class PROJECTLOGOGRAM_API AWorldBulletActor : public AWorldWeaponActor
 {
 	GENERATED_BODY()
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
+	UProjectileMovementComponent* ProjectileMovement;
 	
-	
-	
-	
+public:
+	AWorldBulletActor();
+
 };

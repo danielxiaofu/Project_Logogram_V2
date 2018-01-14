@@ -7,8 +7,7 @@
 #include "RangeWeapon.generated.h"
 
 class UBullet;
-class UAnimInstance;
-class UItemBag;
+class ACharacter;
 
 /**
  * 
@@ -27,7 +26,7 @@ class PROJECTLOGOGRAM_API URangeWeapon : public UItem
 protected:
 
 	/* Bullet spawned before the weapon fires (e.g. arrow) */
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadWrite)
 	UBullet* PreSpawnBullet;
 
 	/* Bullets in the clip  */
@@ -37,7 +36,7 @@ protected:
 public:
 	
 	/* Type of bullet this range weapon support */
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	TArray<TSubclassOf<UBullet>> SupportBulletType;
 
 	/** Called when the character requests aim, child class can implement this to 
@@ -49,9 +48,24 @@ public:
 	
 	/** Called when the character needs to load bullets into this weapon, 
 	  * implement this event to perform different behavior with different weapon.
-	  * @param BulletBag the bulletbag to retrieve bullets from
+	  * @param WeaponOwner the character that owns the weapon
 	  * return bool true if reload succeed
 	  */
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
-	bool OnReloadRequested(UItemBag* BulletBag);
+	bool OnReloadRequested(ACharacter* WeaponOwner);
+
+	/** Called when the character fires the weapon,
+	  * implement this event to perform different behavior with different weapon.
+	  * @param WeaponOwner the character that owns the weapon
+	  */
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnFireRequested(ACharacter* WeaponOwner);
+
+	/** Check whether there is any support bullet in the bullet bag of owner character 
+	  * @param WeaponOwner the character that owns the weapon
+	  * return bool true if there is bullets to use
+	  */
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	bool HasBulletToUse(ACharacter* WeaponOwner);
+
 };
