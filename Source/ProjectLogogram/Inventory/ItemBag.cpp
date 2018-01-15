@@ -20,13 +20,47 @@ void UItemBag::AddItem(UItem * Item)
 			Items.Add(NewEntry);
 
 		UpdateDelegate.Broadcast(Items);
-		UE_LOG(LogTemp, Warning, TEXT("Bullet added, name: %s"), *(Item->Name.ToString()))
+		UE_LOG(LogTemp, Warning, TEXT("Item added, name: %s"), *(Item->Name.ToString()))
 
 	}	
 	else
 		UE_LOG(LogTemp, Warning, TEXT("AddItem failed, Item is nullptr"))
 
 
+}
+
+void UItemBag::RemoveItem(UItem * Item)
+{
+	if (Item)
+	{
+		if (Stackable)
+		{
+			for (int32 i = 0; i < Items.Num(); i++)
+			{
+				if (Items[i].Item->Equals(Item))
+				{
+					Items[i].Amount--;
+					if (Items[i].Amount <= 0)
+						Items.RemoveAt(i);
+					UE_LOG(LogTemp, Warning, TEXT("Item removed, name: %s"), *(Item->Name.ToString()))
+					break;
+				}
+			}
+		}
+		else
+		{
+			for (int32 i = 0; i < Items.Num(); i++)
+			{
+				if (Items[i].Item == Item)
+				{
+					Items.RemoveAt(i);
+					UE_LOG(LogTemp, Warning, TEXT("Item removed, name: %s"), *(Item->Name.ToString()))
+					break;
+				}
+			}
+		}
+		UpdateDelegate.Broadcast(Items);
+	}
 }
 
 void UItemBag::RefreshBag()

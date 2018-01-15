@@ -72,6 +72,9 @@ public:
 	UFUNCTION()
 	virtual void AddItem(UItem* Item);
 
+	UFUNCTION()
+	virtual void RemoveItem(UItem* Item);
+
 	UFUNCTION(BlueprintCallable)
 	virtual int32 ItemCount() { return Items.Num(); }
 

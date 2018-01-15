@@ -52,4 +52,10 @@ public:
 	*/
 	UFUNCTION()
 	void AddToSecondaryWeaponBag(UItem* Weapon);
+
+	/** Remove a bullet item from bullet bag 
+	 *  @param Bullet bullet to be removed 
+	 */
+	UFUNCTION(BlueprintCallable)
+	void RemoveFromBulletBag(UItem* Bullet);
 };

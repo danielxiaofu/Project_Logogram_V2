@@ -95,3 +95,13 @@ void UItemBagManager::AddToSecondaryWeaponBag(UItem * SecondaryWeapon)
 		UE_LOG(LogTemp, Warning, TEXT("Fail to add to secondary weapon bag, incorrect item type"))
 }
 
+void UItemBagManager::RemoveFromBulletBag(UItem * Bullet)
+{
+	check(BulletBag && "Instantiate BulletBag before removing items");
+
+	if (Bullet->GetTypeInt() == 5)
+		BulletBag->RemoveItem(Bullet);
+	else
+		UE_LOG(LogTemp, Warning, TEXT("Fail to remove from bullet bag, incorrect item type"))
+}
+
