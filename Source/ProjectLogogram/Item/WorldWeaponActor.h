@@ -38,15 +38,20 @@ public:
 	virtual void OnItemPickUp(AProjectLogogramCharacter* NewOwner);
 
 	/** Called when this weapon actor is set as the active weapon
-	 * @param Owner the character who activated this weapon
+	 * @param OwnerCharacter the character who activated this weapon
 	 */
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void OnActivate(ACharacter* OwnerCharacter);
 
 	/* Called when this weapon is no longer the active weapon 
-	 * @param Owner the character who deactivated this weapon
+	 * @param OwnerCharacter the character who deactivated this weapon
 	 */
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void OnDeactivate(ACharacter* OwnerCharacter);
 
+	/* Called when this weapon is sheathed
+	 * @param OwnerCharacter the character who deactivated this weapon
+	 */
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnSheath(ACharacter* OwnerCharacter);
 };
