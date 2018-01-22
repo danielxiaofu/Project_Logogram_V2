@@ -29,9 +29,10 @@ public:
 	
 	/** Called when current animation triggers an attack notify state
 	 * @param AttackStrength the hit strength of this attack
+	 * @param AttackDirection direction of the attack relative to character
 	 */
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "CanPerformAttack")
-	void AnimNotify_AttackBegin(EHitStrength AttackStrength);
+	void AnimNotify_AttackBegin(EHitStrength AttackStrength, ELocalHitDirection AttackDirection);
 
 	/** Called when current attack notify state ends
 	 * 

@@ -11,6 +11,7 @@
   */
 
 class ICanPerformAttack;
+class AActor;
 
 // This class does not need to be modified.
 UINTERFACE(BlueprintType)
@@ -30,11 +31,12 @@ class PROJECTLOGOGRAM_API ICanPerformHit
 public:
 
 	/** Called when the hit window of this actor is turn on
-	 * @param EventCaller the UCanPerformAttack interface who called this event
+	 * @param SourceActor the actor who is responsible for causing this hit
 	 * @param HitStrength strength of this hit
+	 * @param HitDirection direction of the hit in world space
 	 */
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "CanPerformHit")
-	void OnHitWindowOn(const TScriptInterface<ICanPerformAttack>& EventCaller, EHitStrength HitStrength);
+	void OnHitWindowOn(const AActor* SourceActor, EHitStrength HitStrength, FVector HitDirection);
 
 	/** Called when the hit window of this actor is turn off
 	 *

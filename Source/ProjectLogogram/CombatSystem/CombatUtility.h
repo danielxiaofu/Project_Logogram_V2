@@ -14,6 +14,14 @@ enum class EHitStrength : uint8
 	VE_Heavy UMETA(DisplayName = "Heavy")
 };
 
+UENUM(BlueprintType)
+enum class ELocalHitDirection : uint8
+{
+	VE_Left UMETA(DisplayName = "Left"),
+	VE_Right UMETA(DisplayName = "Right"),
+	VE_Straight UMETA(DisplayName = "Straight")
+};
+
 /**
  * 
  */

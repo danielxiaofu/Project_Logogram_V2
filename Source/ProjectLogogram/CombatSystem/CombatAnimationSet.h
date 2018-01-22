@@ -65,6 +65,26 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "CombatAnimation")
 	TArray<UAnimMontage*> AttackSequence;
 
+	/** Played when the character is hit towards left 
+	 */
+	UPROPERTY(EditDefaultsOnly, Category = "CombatAnimation")
+	UAnimMontage* HitLeft;
+
+	/** Played when the character is hit towards right
+	*/
+	UPROPERTY(EditDefaultsOnly, Category = "CombatAnimation")
+	UAnimMontage* HitRight;
+
+	/** Played when the character is hit towards left
+	*/
+	UPROPERTY(EditDefaultsOnly, Category = "CombatAnimation")
+	UAnimMontage* HitFront;
+
+	/** Played when the character is hit towards back
+	*/
+	UPROPERTY(EditDefaultsOnly, Category = "CombatAnimation")
+	UAnimMontage* HitBack;
+
 	/** Return the number of animations in AttackSequence
 	*/
 	UFUNCTION(BlueprintCallable, Category = "CombatAnimation")
