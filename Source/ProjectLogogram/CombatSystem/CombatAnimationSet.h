@@ -67,22 +67,22 @@ public:
 
 	/** Played when the character is hit towards left 
 	 */
-	UPROPERTY(EditDefaultsOnly, Category = "CombatAnimation")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CombatAnimation")
 	UAnimMontage* HitLeft;
 
 	/** Played when the character is hit towards right
 	*/
-	UPROPERTY(EditDefaultsOnly, Category = "CombatAnimation")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CombatAnimation")
 	UAnimMontage* HitRight;
 
 	/** Played when the character is hit towards left
 	*/
-	UPROPERTY(EditDefaultsOnly, Category = "CombatAnimation")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CombatAnimation")
 	UAnimMontage* HitFront;
 
 	/** Played when the character is hit towards back
 	*/
-	UPROPERTY(EditDefaultsOnly, Category = "CombatAnimation")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "CombatAnimation")
 	UAnimMontage* HitBack;
 
 	/** Return the number of animations in AttackSequence
