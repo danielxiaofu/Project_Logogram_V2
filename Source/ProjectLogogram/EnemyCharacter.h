@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "EnemyCharacter.generated.h"
 
+class AWorldWeaponActor;
+
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FTickDelegate, float, T);
 
 UCLASS()
@@ -26,6 +28,11 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
+
+	// The weapon this character will hold when spawned
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Equipment")
+	TSubclassOf<AWorldWeaponActor> StartMainWeapon;
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
