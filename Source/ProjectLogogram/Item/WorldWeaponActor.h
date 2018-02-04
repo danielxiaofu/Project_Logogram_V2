@@ -8,12 +8,14 @@
 #include "WorldWeaponActor.generated.h"
 
 class ACharacter;
+class AHitEffect_FB;
+class ICanPerformHit;
 
 /**
  * 
  */
 UCLASS()
-class PROJECTLOGOGRAM_API AWorldWeaponActor : public AWorldItemActor
+class PROJECTLOGOGRAM_API AWorldWeaponActor : public AWorldItemActor, public ICanPerformHit
 {
 	GENERATED_BODY()
 	
@@ -30,6 +32,10 @@ public:
 	/* Name of the socket this weapon will attach to in draw mode */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "WeaponProperty")
 	FName DrawSocket;
+
+	/* The hit effect played when this weapon hits others */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "HitEffect")
+	TSubclassOf<AHitEffect_FB> HitEffectClass;
 
 	/** Called when this item is picked by a character
 	 * @param NewOwner the character who picked up the item
@@ -54,4 +60,9 @@ public:
 	 */
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void OnSheath(ACharacter* OwnerCharacter);
+
+protected:
+
+	UPROPERTY(BlueprintReadWrite, Category = "HitEffect")
+	AHitEffect_FB* HitEffect;
 };

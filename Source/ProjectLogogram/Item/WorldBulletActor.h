@@ -22,8 +22,13 @@ class PROJECTLOGOGRAM_API AWorldBulletActor : public AWorldWeaponActor
 	
 public:
 
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float LaunchSpeed;
+
+
 
 	AWorldBulletActor();
 
@@ -33,11 +38,23 @@ public:
 	void OnVelocitySet(FVector Velocity);
 
 	/** Called when this bullet is launched by a player character.
-	 * Velocity is calculated in this function.
-	 * @param FollowCamera the camera component of the player, useful in calibrating bullet path
-	 */
-	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
-	void OnFireByPlayer(UCameraComponent* FollowCamera);
+	* Velocity is calculated in this function.
+	* @param FollowCamera the camera component of the player, useful in calibrating bullet path
+	*/
+	UFUNCTION(BlueprintCallable)
+	void FireByPlayer(UCameraComponent* FollowCamera);
+
+	/* Event called when this bullet is launched by a player character.
+	*/
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnFireByPlayer();
+
+	/**
+	* Called when this bullet is launched by a character controlled by AI.
+	* Velocity is not calculated, should call FindVelocityTo to suggest a velocity.
+	*/
+	UFUNCTION(BlueprintCallable)
+	void FireByAI();
 
 	/**
 	 * Called when this bullet is launched by a character controlled by AI.
@@ -45,4 +62,30 @@ public:
 	 */
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
 	void OnFireByAI();
+
+	/** Activate the projectile component and enable hit collision
+	*/
+	UFUNCTION()
+	void Launch();
+
+	/** Suggest a projectile velocity to given location and set the velocity to suggested velocity 
+	 * @param Destination destination location
+	 * return true if there is a solution, otherwise false
+	 */
+	UFUNCTION(BlueprintCallable)
+	bool FindVelocityTo(FVector Destination);
+
+protected:
+
+	UPROPERTY(BlueprintReadWrite)
+	FVector LaunchVelocity;
+
+	UPROPERTY(BlueprintReadOnly)
+	bool CalibrationFinished;
+
+	UPROPERTY()
+	FVector CameraLocation;
+
+	UPROPERTY()
+	FVector CameraFront;
 };

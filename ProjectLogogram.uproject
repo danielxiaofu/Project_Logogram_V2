@@ -12,7 +12,8 @@
 				"CoreUObject",
 				"UMG",
 				"Engine",
-				"SlateCore"
+				"SlateCore",
+				"Paper2D"
 			]
 		}
 	]
