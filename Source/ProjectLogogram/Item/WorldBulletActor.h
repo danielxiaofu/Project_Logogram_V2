@@ -8,6 +8,7 @@
 
 class UProjectileMovementComponent;
 class UCameraComponent;
+class AActor;
 
 /**
  * 
@@ -19,7 +20,7 @@ class PROJECTLOGOGRAM_API AWorldBulletActor : public AWorldWeaponActor
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
 	UProjectileMovementComponent* ProjectileMovement;
-	
+
 public:
 
 	// Called every frame
@@ -28,21 +29,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float LaunchSpeed;
 
-
-
 	AWorldBulletActor();
-
-	/** Set the launch velocity, no need to call this if the bullet is launched by the player
-	*/
-	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
-	void OnVelocitySet(FVector Velocity);
 
 	/** Called when this bullet is launched by a player character.
 	* Velocity is calculated in this function.
 	* @param FollowCamera the camera component of the player, useful in calibrating bullet path
 	*/
 	UFUNCTION(BlueprintCallable)
-	void FireByPlayer(UCameraComponent* FollowCamera);
+	void FireByPlayer(UCameraComponent* FollowCamera, AActor* _ItemOwner);
 
 	/* Event called when this bullet is launched by a player character.
 	*/
@@ -54,13 +48,13 @@ public:
 	* Velocity is not calculated, should call FindVelocityTo to suggest a velocity.
 	*/
 	UFUNCTION(BlueprintCallable)
-	void FireByAI();
+	void FireByAI(AActor* _ItemOwner);
 
 	/**
 	 * Called when this bullet is launched by a character controlled by AI.
 	 * Velocity is not calculated, should call OnVelocitySet to provide a velocity before calling this function.
 	 */
-	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+	UFUNCTION(BlueprintImplementableEvent)
 	void OnFireByAI();
 
 	/** Activate the projectile component and enable hit collision
@@ -82,6 +76,9 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly)
 	bool CalibrationFinished;
+
+	UPROPERTY(BlueprintReadOnly)
+	bool DamageWindowOn;
 
 	UPROPERTY()
 	FVector CameraLocation;

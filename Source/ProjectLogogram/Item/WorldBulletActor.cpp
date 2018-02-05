@@ -5,22 +5,16 @@
 #include "Camera/CameraComponent.h"
 #include "Kismet/GameplayStatics.h"
 
+
 AWorldBulletActor::AWorldBulletActor()
 {
 	ProjectileMovement = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovement"));
 	CalibrationFinished = false;
 }
 
-void AWorldBulletActor::Launch()
-{
-	ProjectileMovement->Activate();
-	
-	// Activate hit volume collision
-
-}
-
 void AWorldBulletActor::Tick(float DeltaTime)
 {
+	Super::Tick(DeltaTime);
 	if (!ProjectileMovement->IsActive())
 		return;
 	if (CalibrationFinished)
@@ -42,12 +36,12 @@ void AWorldBulletActor::Tick(float DeltaTime)
 	}
 }
 
-void AWorldBulletActor::FireByPlayer(UCameraComponent * FollowCamera)
+void AWorldBulletActor::FireByPlayer(UCameraComponent * FollowCamera, AActor* _ItemOwner)
 {
 	CameraLocation = FollowCamera->GetComponentLocation();
 	CameraFront = FollowCamera->GetForwardVector();
 	FHitResult HitResult;
-
+	ItemOwner = _ItemOwner;
 	//Compute a trace that leads the arrow to the crosshair
 	GetWorld()->LineTraceSingleByChannel(
 		HitResult,
@@ -57,32 +51,18 @@ void AWorldBulletActor::FireByPlayer(UCameraComponent * FollowCamera)
 	);
 	FVector EndLocation = HitResult.bBlockingHit ? HitResult.Location : HitResult.TraceEnd;
 	
-	FVector TossVelocity = FVector(0.0, 0.0, 0.0);
-	bool Result = UGameplayStatics::SuggestProjectileVelocity(
-		GetWorld(),
-		TossVelocity,
-		GetActorLocation(),
-		EndLocation,
-		LaunchSpeed,
-		false,
-		1.0f,
-		0.0f,
-		ESuggestProjVelocityTraceOption::DoNotTrace,
-		FCollisionResponseParams::DefaultResponseParam,
-		TArray<AActor*>(),
-		false
-	);
-	FVector Delta = GetActorLocation() - EndLocation;
-
-	//UE_LOG(LogTemp, Warning, TEXT("TossVelocity = %f, %f, %f"), TossVelocity.X, TossVelocity.Y, TossVelocity.Z)
-	ProjectileMovement->Velocity = TossVelocity;
-	ProjectileMovement->Activate();
+	FindVelocityTo(EndLocation);
+	Launch();
 	OnFireByPlayer();
 }
 
-void AWorldBulletActor::FireByAI()
+void AWorldBulletActor::FireByAI(AActor* _ItemOwner)
 {
-
+	CalibrationFinished = true; // no need to calibrate when fired by ai
+	DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
+	ItemOwner = _ItemOwner;
+	Launch();
+	OnFireByAI();
 }
 
 bool AWorldBulletActor::FindVelocityTo(FVector Destination)
@@ -107,4 +87,11 @@ bool AWorldBulletActor::FindVelocityTo(FVector Destination)
 
 	ProjectileMovement->Velocity = TossVelocity;
 	return Result;
+}
+
+void AWorldBulletActor::Launch()
+{
+	ProjectileMovement->Activate();
+	// Activate hit volume collision
+	DamageWindowOn = true;
 }

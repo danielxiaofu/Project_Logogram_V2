@@ -180,9 +180,13 @@ UCombatAnimationSet * AProjectLogogramCharacter::GetActiveAnimationSet()
 	if (ActiveMain)
 	{
 		ActiveCombatAnimationSet = CombatAnimationSets[ActiveMain->WeaponType];
-		return ActiveCombatAnimationSet;
 	}
-	return nullptr;
+	else
+	{
+		ActiveCombatAnimationSet = CombatAnimationSets[EWeaponType::VE_Undefined];
+
+	}
+	return ActiveCombatAnimationSet;
 }
 
 

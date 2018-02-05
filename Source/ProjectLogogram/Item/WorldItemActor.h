@@ -8,6 +8,7 @@
 
 class UItem;
 class AProjectLogogramCharacter;
+class AActor;
 
 // World representation of item object
 UCLASS(Blueprintable)
@@ -31,6 +32,9 @@ public:
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = ItemSystem)
 	UItem* BaseItem;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = ItemSystem)
+	AActor* ItemOwner;
 
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;

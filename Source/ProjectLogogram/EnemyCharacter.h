@@ -7,11 +7,12 @@
 #include "EnemyCharacter.generated.h"
 
 class AWorldWeaponActor;
+class ICanPerformAttack;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FTickDelegate, float, T);
 
 UCLASS()
-class PROJECTLOGOGRAM_API AEnemyCharacter : public ACharacter
+class PROJECTLOGOGRAM_API AEnemyCharacter : public ACharacter, public ICanPerformAttack
 {
 	GENERATED_BODY()
 
