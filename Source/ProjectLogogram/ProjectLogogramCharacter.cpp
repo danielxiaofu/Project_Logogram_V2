@@ -8,56 +8,10 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/Controller.h"
 #include "GameFramework/SpringArmComponent.h"
-#include "Status/CharStatusEntry.h"
 #include "CombatSystem/CombatAnimationSet.h"
 #include "Item/WorldWeaponActor.h"
+#include "Status/StatComponent.h"
 
-void FCharacterStat::InitializeStatusObject()
-{
-	for (auto& Elem : StatEntryMap)
-	{
-		FCharStatEntryStruct CharStat = Elem.Value;
-		UCharStatusEntry* NewStatEntry = NewObject<UCharStatusEntry>();
-		NewStatEntry->Initialize(CharStat.StatType, CharStat.MaxAmount);
-		StatusMap.Add(NewStatEntry->StatType, NewStatEntry);
-	}
-}
-
-FCharStatModifier& FCharacterStat::AddModifier(FCharStatModifier Modifier)
-{
-	// If a 0 life modifier is added, instantly apply its effect and kill
-	if (Modifier.LifeSpan == 0)
-	{
-		StatusMap.FindRef(Modifier.TargetStatus)->ApplyModification(Modifier.Bias, Modifier.ModifyRate);
-		Modifier.Kill();
-	}
-
-	int32 index = Modifiers.Add(Modifier);
-	return Modifiers[index];
-}
-
-void FCharacterStat::UpdateModifiers(float Delta)
-{
-
-	// Remove dead modifiers
-	for (int32 i = Modifiers.Num() - 1; i >= 0; i--)
-	{
-		if (!Modifiers[i].IsAlive)
-			Modifiers.RemoveAt(i);
-	}
-
-	for (FCharStatModifier& Modifier : Modifiers)
-	{
-		if (Modifier.IsAlive)
-		{
-			StatusMap.FindRef(Modifier.TargetStatus)->ApplyModification(Modifier.Bias, Modifier.ModifyRate * Delta);
-			
-			Modifier.LifeSpan -= Delta;
-			if (Modifier.LifeSpan <= 0)
-				Modifier.Kill();
-		}
-	}
-}
 
 //////////////////////////////////////////////////////////////////////////
 // AProjectLogogramCharacter
@@ -92,6 +46,8 @@ AProjectLogogramCharacter::AProjectLogogramCharacter()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("FollowCamera"));
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName); // Attach the camera to the end of the boom and let the boom adjust to match the controller orientation
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
+
+	StatComponent = CreateDefaultSubobject<UStatComponent>(TEXT("StatComponent"));
 
 	// Note: The skeletal mesh and anim blueprint references on the Mesh component (inherited from Character) 
 	// are set in the derived blueprint asset named MyCharacter (to avoid direct content references in C++)
@@ -136,7 +92,6 @@ void AProjectLogogramCharacter::SetupPlayerInputComponent(class UInputComponent*
 void AProjectLogogramCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	Stat.UpdateModifiers(DeltaTime);
 
 	if (bRotateWithCamera)
 		RotateWithCamera();
@@ -151,7 +106,6 @@ void AProjectLogogramCharacter::Tick(float DeltaTime)
 void AProjectLogogramCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	Stat.InitializeStatusObject();
 	CanMove = true;
 
 	// Instantiate CombatAnimSet classes
@@ -163,16 +117,6 @@ void AProjectLogogramCharacter::BeginPlay()
 		UE_LOG(LogTemp, Warning, TEXT("%s"), *Name)
 	}
 	
-}
-
-float AProjectLogogramCharacter::GetHealth() const
-{
-	return Stat.StatusMap.FindRef(ECharStatus::VE_Health)->Amount;
-}
-
-FCharStatModifier & AProjectLogogramCharacter::AddStatModifier(FCharStatModifier Modifier)
-{
-	return Stat.AddModifier(Modifier);
 }
 
 UCombatAnimationSet * AProjectLogogramCharacter::GetActiveAnimationSet()
@@ -289,6 +233,7 @@ void AProjectLogogramCharacter::MoveForward(float Value)
 		// get forward vector
 		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 		AddMovementInput(Direction, Value);
+		UE_LOG(LogTemp, Warning, TEXT("Moveforward = %f"), Value)
 	}
 }
 

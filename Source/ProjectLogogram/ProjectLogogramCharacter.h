@@ -12,56 +12,13 @@ class UCharStatusEntry;
 class UCombatAnimationSet;
 class AWorldWeaponActor;
 class UItemBagManager;
+class UStatComponent;
 
 UENUM(BlueprintType)
 enum class EJumpMode : uint8
 {
 	VE_JUMP UMETA(DisplayName = "Jump"),
 	VE_DODGE UMETA(DisplayName ="Dodge")
-};
-
-// A struct version of CharStatusEntry 
-USTRUCT(BlueprintType)
-struct FCharStatEntryStruct
-{
-	GENERATED_BODY()
-
-	// Type of status, should be same as the key
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CharacterStat")
-	ECharStatus StatType = ECharStatus::VE_Undefined;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CharacterStat")
-	float MaxAmount = 100;
-
-};
-
-USTRUCT(BlueprintType)
-struct FCharacterStat
-{
-	GENERATED_BODY()
-
-	// Map of CharStatEntryStruct, exposed in blueprint for data-driven purpose
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "CharacterStat")
-	TMap<ECharStatus, FCharStatEntryStruct> StatEntryMap;
-
-	// Actual map that stores CharStat
-	UPROPERTY()
-	TMap<ECharStatus, UCharStatusEntry*> StatusMap;
-
-	UPROPERTY()
-	TArray<FCharStatModifier> Modifiers;
-
-	// Copy every element from StatEntryMap to StatusMap
-	void InitializeStatusObject();
-
-	/** Add a modifier to actor
-	 * @param Modifier modifier to add
-	 * return reference to added modifier
-	 */
-	FCharStatModifier& AddModifier(FCharStatModifier Modifier);
-	
-	void UpdateModifiers(float Delta);
-
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FFireWeaponDelegate);
@@ -78,6 +35,11 @@ class AProjectLogogramCharacter : public ACharacter
 	/** Follow camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 	class UCameraComponent* FollowCamera;
+
+	/** StatComponent */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = CharacterStat, meta = (AllowPrivateAccess = "true"))
+	UStatComponent* StatComponent;
+
 public:
 	AProjectLogogramCharacter();
 
@@ -92,9 +54,6 @@ public:
 	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
 	float BaseLookUpRate;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = CharacterStat)
-	FCharacterStat Stat;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = CombatAnimationSet)
 	TArray<TSubclassOf<UCombatAnimationSet>> CombatAnimationSetClasses;
@@ -205,13 +164,6 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
-
-	UFUNCTION(BlueprintCallable, Category = "CharacterStat")
-	float GetHealth() const;
-
-	// Stat related function
-	UFUNCTION(BlueprintCallable, Category = "CharacterStat")
-	FCharStatModifier& AddStatModifier(FCharStatModifier Modifier);
 
 	/** Set whether this character can accept movement input */
 	UFUNCTION(BlueprintCallable, Category = "CharacterMovement")

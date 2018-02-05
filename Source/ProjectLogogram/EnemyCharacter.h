@@ -7,6 +7,7 @@
 #include "EnemyCharacter.generated.h"
 
 class AWorldWeaponActor;
+class UStatComponent;
 class ICanPerformAttack;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FTickDelegate, float, T);
@@ -15,6 +16,10 @@ UCLASS()
 class PROJECTLOGOGRAM_API AEnemyCharacter : public ACharacter, public ICanPerformAttack
 {
 	GENERATED_BODY()
+
+	/** StatComponent */
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = CharacterStat, meta = (AllowPrivateAccess = "true"))
+	UStatComponent* StatComponent;
 
 public:
 	// Sets default values for this character's properties
