@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -11,7 +11,8 @@ enum class EWeaponType : uint8
 {
 	VE_Undefined UMETA(DisplayName = "Undefined"),
 	VE_SwordShield UMETA(DisplayName = "SwordShield"),
-	VE_Bow UMETA(DisplayName = "Bow")
+	VE_Bow UMETA(DisplayName = "Bow"),
+	VE_Greatsword UMETA(DisplayName = "Greatsword")
 };
 
 /**
