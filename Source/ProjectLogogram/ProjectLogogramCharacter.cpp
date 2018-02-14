@@ -105,9 +105,6 @@ void AProjectLogogramCharacter::Tick(float DeltaTime)
 
 void AProjectLogogramCharacter::BeginPlay()
 {
-	Super::BeginPlay();
-	CanMove = true;
-
 	// Instantiate CombatAnimSet classes
 	for (TSubclassOf<UCombatAnimationSet> AnimSet : CombatAnimationSetClasses)
 	{
@@ -116,7 +113,10 @@ void AProjectLogogramCharacter::BeginPlay()
 		FString Name = NewAnimSet->Name;
 		UE_LOG(LogTemp, Warning, TEXT("%s"), *Name)
 	}
-	
+
+	Super::BeginPlay();
+	CanMove = true;
+
 }
 
 UCombatAnimationSet * AProjectLogogramCharacter::GetActiveAnimationSet()
