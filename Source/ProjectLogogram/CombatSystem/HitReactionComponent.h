@@ -30,7 +30,7 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 
-	/** Plays a four-direction based hit reaction animation based on hit direction
+	/** Plays a four-direction based hit reaction animation based on hit direction. The result react direction is returned in world space.
 	 * @param HitDirection direction of the hit
 	 * @param ActorLeftDirection actor's left direction
 	 * @param ActorFrontDirection actor's front direction
@@ -40,5 +40,5 @@ public:
 	 */
 	UFUNCTION(BlueprintCallable)
 	FVector PlayFourDirectionHitAnimation(FVector HitDirection, FVector ActorLeftDirection, FVector ActorFrontDirection, UCombatAnimationSet* ActiveAnimationSet, UAnimInstance* AnimationBlueprint);
-	
+
 };

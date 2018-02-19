@@ -11,6 +11,8 @@
  * 
  */
 
+class UCharStatusEntry;
+
  // A struct version of CharStatusEntry 
 USTRUCT(BlueprintType)
 struct FCharStatEntryStruct
@@ -83,4 +85,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "CharacterStat")
 	FCharStatModifier& AddStatModifier(FCharStatModifier Modifier);
 	
+	UFUNCTION(BlueprintCallable, Category = "CharacterStat")
+	UCharStatusEntry* GetStatusEntry(ECharStatus CharStatus) const;
 };

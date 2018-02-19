@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Status/HasStatEntry.h"
 #include "EnemyCharacter.generated.h"
 
 class AWorldWeaponActor;
@@ -13,7 +14,7 @@ class ICanPerformAttack;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FTickDelegate, float, T);
 
 UCLASS()
-class PROJECTLOGOGRAM_API AEnemyCharacter : public ACharacter, public ICanPerformAttack
+class PROJECTLOGOGRAM_API AEnemyCharacter : public ACharacter, public ICanPerformAttack, public IHasStatEntry
 {
 	GENERATED_BODY()
 
@@ -44,7 +45,5 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	
 	
 };

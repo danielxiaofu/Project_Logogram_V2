@@ -34,6 +34,6 @@ public:
 	  * @param HitStrength strength of the hit
 	  */
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "HitReaction")
-		void ReactToPhysicalHit(FVector HitDirection, FVector SourceActorLocation, EHitStrength HitStrength);
+	void ReactToPhysicalHit(FVector HitDirection, FVector SourceActorLocation, EHitStrength HitStrength, ELocalHitDirection LocalHitDirection);
 	
 };

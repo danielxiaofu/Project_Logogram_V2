@@ -16,6 +16,7 @@ void UCharStatusEntry::ApplyModification(EModifierBias Bias, float ByAmount){
 		default:
 			break;
 		}
+	StatUpdateDelegate.Broadcast(Amount);
 }
 
 void UCharStatusEntry::Initialize(ECharStatus Type, float Max){

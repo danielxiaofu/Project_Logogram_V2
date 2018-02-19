@@ -34,9 +34,10 @@ public:
 	 * @param SourceActor the actor who is responsible for causing this hit
 	 * @param HitStrength strength of this hit
 	 * @param HitDirection direction of the hit in world space
+	 * @param LocalHitDirection hit direction in local space
 	 */
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "CanPerformHit")
-	void OnHitWindowOn(const AActor* SourceActor, EHitStrength HitStrength, FVector HitDirection);
+	void OnHitWindowOn(const AActor* SourceActor, EHitStrength HitStrength, FVector HitDirection, ELocalHitDirection LocalHitDirection);
 
 	/** Called when the hit window of this actor is turn off
 	 *

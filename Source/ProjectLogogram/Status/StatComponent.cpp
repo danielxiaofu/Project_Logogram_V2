@@ -1,7 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "StatComponent.h"
+#include "HasStatEntry.h"
 #include "CharStatusEntry.h"
+#include "GameFramework/Actor.h"
 
 void FCharacterStat::InitializeStatusObject()
 {
@@ -64,8 +66,12 @@ UStatComponent::UStatComponent()
 // Called when the game starts
 void UStatComponent::BeginPlay()
 {
+	
 	Super::BeginPlay();
 	Stat.InitializeStatusObject();
+	IHasStatEntry* OwnerCharacter = Cast<IHasStatEntry>(GetOwner());
+	if (OwnerCharacter)
+		OwnerCharacter->Execute_OnStatEntryInitialized(GetOwner());
 	// ...
 	
 }
@@ -88,4 +94,9 @@ float UStatComponent::GetHealth() const
 FCharStatModifier & UStatComponent::AddStatModifier(FCharStatModifier Modifier)
 {
 	return Stat.AddModifier(Modifier);
+}
+
+UCharStatusEntry* UStatComponent::GetStatusEntry(ECharStatus CharStatus) const
+{
+	return Stat.StatusMap.FindRef(CharStatus);
 }
