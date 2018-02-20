@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "Status/StatModifier.h"
 #include "Item/WeaponTypeEnum.h"
+#include "Status/HasStatEntry.h"
 #include "ProjectLogogramCharacter.generated.h"
 
 class UCharStatusEntry;
@@ -24,7 +25,7 @@ enum class EJumpMode : uint8
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FFireWeaponDelegate);
 
 UCLASS(config=Game)
-class AProjectLogogramCharacter : public ACharacter
+class AProjectLogogramCharacter : public ACharacter, public IHasStatEntry
 {
 	GENERATED_BODY()
 

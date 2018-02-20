@@ -61,6 +61,12 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void OnSheath(ACharacter* OwnerCharacter);
 
+	/* Enable physics simulation of the root static mesh component, nothing
+	 * happen if the root is not a static mesh
+	 */
+	UFUNCTION(BlueprintCallable)
+	void EnablePhysicsSimulation();
+
 protected:
 
 	UPROPERTY(BlueprintReadWrite, Category = "HitEffect")

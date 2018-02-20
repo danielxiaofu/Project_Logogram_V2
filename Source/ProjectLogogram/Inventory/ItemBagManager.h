@@ -58,4 +58,9 @@ public:
 	 */
 	UFUNCTION(BlueprintCallable)
 	void RemoveFromBulletBag(UItem* Bullet);
+
+	/** Explicitly set bags, warning: calling this function will wipe original bag objects in this manager
+	*/
+	UFUNCTION(BlueprintCallable)
+	void SetBags(UItemBag* _BulletBag, UItemBag* _MainWeaponBag, USecondaryWeaponBag* _SecondaryWeaponBag);
 };

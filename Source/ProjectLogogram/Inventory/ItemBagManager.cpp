@@ -22,6 +22,7 @@ UItemBagManager::UItemBagManager()
 void UItemBagManager::BeginPlay()
 {
 	Super::BeginPlay();
+	UE_LOG(LogTemp, Warning, TEXT("ItemBags start initialization"))
 	BulletBag = NewObject<UItemBag>();
 	MainWeaponBag = NewObject<UItemBag>();
 	SecondaryWeaponBag = NewObject<USecondaryWeaponBag>();
@@ -103,5 +104,15 @@ void UItemBagManager::RemoveFromBulletBag(UItem * Bullet)
 		BulletBag->RemoveItem(Bullet);
 	else
 		UE_LOG(LogTemp, Warning, TEXT("Fail to remove from bullet bag, incorrect item type"))
+}
+
+void UItemBagManager::SetBags(UItemBag* _BulletBag, UItemBag* _MainWeaponBag, USecondaryWeaponBag* _SecondaryWeaponBag)
+{
+	BulletBag = _BulletBag;
+	MainWeaponBag = _MainWeaponBag;
+	SecondaryWeaponBag = _SecondaryWeaponBag;
+	BulletBag->RefreshBag();
+	MainWeaponBag->RefreshBag();
+	SecondaryWeaponBag->RefreshBag();
 }
 
