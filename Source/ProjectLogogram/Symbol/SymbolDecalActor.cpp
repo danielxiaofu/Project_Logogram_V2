@@ -2,6 +2,7 @@
 
 #include "SymbolDecalActor.h"
 
+void ASymbolDecalActor::BeginActivate()
+{
 
-
-
+}

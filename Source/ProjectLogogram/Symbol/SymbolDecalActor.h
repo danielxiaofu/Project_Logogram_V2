@@ -24,4 +24,14 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item Info")
 	FName Name;
 
+	// Time to activate the symbol
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Decal Info")
+	float ActivateTime;
+
+	UFUNCTION(BlueprintCallable)
+	void BeginActivate();
+
+private:
+
+	bool ActivateBegin;
 };
