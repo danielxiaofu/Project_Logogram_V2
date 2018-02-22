@@ -25,10 +25,12 @@ void UItemBagManager::BeginPlay()
 	UE_LOG(LogTemp, Warning, TEXT("ItemBags start initialization"))
 	BulletBag = NewObject<UItemBag>();
 	MainWeaponBag = NewObject<UItemBag>();
+	ConsumableBag = NewObject<UItemBag>();
 	SecondaryWeaponBag = NewObject<USecondaryWeaponBag>();
 
 	BulletBag->Stackable = true;
 	MainWeaponBag->Stackable = false;
+	ConsumableBag->Stackable = true;
 	SecondaryWeaponBag->Stackable = false;
 
 	AProjectLogogramCharacter* Owner = dynamic_cast<AProjectLogogramCharacter*>(GetOwner());
@@ -80,6 +82,22 @@ void UItemBagManager::AddToMainWeaponBag(UItem * MainWeapon)
 		UE_LOG(LogTemp, Warning, TEXT("Fail to add to main weapon bag, incorrect item type"))
 }
 
+void UItemBagManager::AddToConsumableBag(UItem * Consumable)
+{
+	check(ConsumableBag && "Instantiate ConsumableBag before adding items");
+	
+	if (!Consumable)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Fail to add to main weapon bag, item does not exist"))
+		return;
+	}
+	if (Consumable->GetTypeInt() == 1)
+		ConsumableBag->AddItem(Consumable);
+	else
+		UE_LOG(LogTemp, Warning, TEXT("Fail to add to consumable bag, incorrect item type"))
+
+}
+
 void UItemBagManager::AddToSecondaryWeaponBag(UItem * SecondaryWeapon)
 {
 	check(SecondaryWeaponBag && "Instantiate SecondaryWeaponBag before adding items");
@@ -106,13 +124,15 @@ void UItemBagManager::RemoveFromBulletBag(UItem * Bullet)
 		UE_LOG(LogTemp, Warning, TEXT("Fail to remove from bullet bag, incorrect item type"))
 }
 
-void UItemBagManager::SetBags(UItemBag* _BulletBag, UItemBag* _MainWeaponBag, USecondaryWeaponBag* _SecondaryWeaponBag)
+void UItemBagManager::SetBags(UItemBag* _BulletBag, UItemBag* _MainWeaponBag, UItemBag* _ConsumableBag, USecondaryWeaponBag* _SecondaryWeaponBag)
 {
 	BulletBag = _BulletBag;
 	MainWeaponBag = _MainWeaponBag;
 	SecondaryWeaponBag = _SecondaryWeaponBag;
+	ConsumableBag = _ConsumableBag;
 	BulletBag->RefreshBag();
 	MainWeaponBag->RefreshBag();
+	ConsumableBag->RefreshBag();
 	SecondaryWeaponBag->RefreshBag();
 }
 

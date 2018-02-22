@@ -29,6 +29,9 @@ protected:
 	UItemBag* MainWeaponBag;
 
 	UPROPERTY(BlueprintReadOnly)
+	UItemBag* ConsumableBag;
+
+	UPROPERTY(BlueprintReadOnly)
 	USecondaryWeaponBag* SecondaryWeaponBag;
 
 public:	
@@ -47,6 +50,12 @@ public:
 	UFUNCTION()
 	void AddToMainWeaponBag(UItem* Weapon);
 
+	/** Add a consumable item to consumable bag
+	* @param Consumable consumable to be added
+	*/
+	UFUNCTION()
+	void AddToConsumableBag(UItem* Consumable);
+
 	/** Add a weapon item to secondary weapon bag
 	* @param Weapon weapon to be added
 	*/
@@ -62,5 +71,5 @@ public:
 	/** Explicitly set bags, warning: calling this function will wipe original bag objects in this manager
 	*/
 	UFUNCTION(BlueprintCallable)
-	void SetBags(UItemBag* _BulletBag, UItemBag* _MainWeaponBag, USecondaryWeaponBag* _SecondaryWeaponBag);
+	void SetBags(UItemBag* _BulletBag, UItemBag* _MainWeaponBag, UItemBag* _ConsumableBag, USecondaryWeaponBag* _SecondaryWeaponBag);
 };

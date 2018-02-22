@@ -20,10 +20,10 @@ class PROJECTLOGOGRAM_API UConsumable : public UItem
 public:
 
 	UFUNCTION(BlueprintCallable, Category = Consumable)
-	void Initialize(AProjectLogogramCharacter* TargetCharacter, FName ItemName, int32 ItemID, TArray<FCharStatModifier> Modifiers);
+	void Initialize(FName ItemName, int32 ItemID);
 
-	UFUNCTION(BlueprintCallable, Category = Consumable)
-	void Use();
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = Consumable)
+	void OnUse();
 
 	UFUNCTION(BlueprintCallable, Category = ItemSystem)
 	EItemType GetType() const override;
@@ -31,12 +31,4 @@ public:
 	UFUNCTION(BlueprintCallable, Category = ItemSystem)
 	int32 GetTypeInt() const override;
 
-protected:
-
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Consumable)
-	AProjectLogogramCharacter* Target = nullptr;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Consumable)
-	TArray<FCharStatModifier> StatModifiers;
 };

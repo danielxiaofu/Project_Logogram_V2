@@ -15,6 +15,14 @@ class PROJECTLOGOGRAM_API ASymbolDecalActor : public ADecalActor
 	GENERATED_BODY()
 	
 public:
+
+	ASymbolDecalActor();
+
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
+
+	virtual void BeginPlay() override;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item Info")
 	int32 ID;
 
@@ -31,7 +39,14 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void BeginActivate();
 
+	UFUNCTION(BlueprintCallable)
+	void StopActivate();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void OnActivateFinish();
+
 private:
 
-	bool ActivateBegin;
+	bool ActivateBegin, ActivateFinished;
+	float RemainTime;
 };
