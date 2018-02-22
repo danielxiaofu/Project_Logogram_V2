@@ -53,7 +53,7 @@ void AWorldBulletActor::FireByPlayer(UCameraComponent * FollowCamera, AActor* _I
 	
 	FindVelocityTo(EndLocation);
 	Launch();
-	OnFireByPlayer();
+	OnFireByPlayer(ItemOwner->GetActorLocation());
 }
 
 void AWorldBulletActor::FireByAI(AActor* _ItemOwner)
@@ -62,7 +62,7 @@ void AWorldBulletActor::FireByAI(AActor* _ItemOwner)
 	DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
 	ItemOwner = _ItemOwner;
 	Launch();
-	OnFireByAI();
+	OnFireByAI(ItemOwner->GetActorLocation());
 }
 
 bool AWorldBulletActor::FindVelocityTo(FVector Destination)

@@ -38,10 +38,11 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void FireByPlayer(UCameraComponent* FollowCamera, AActor* _ItemOwner);
 
-	/* Event called when this bullet is launched by a player character.
-	*/
+	/** Event called when this bullet is launched by a player character.
+	 * @param ActorFireLocation location of the player when he fired the bullet. 
+	 */
 	UFUNCTION(BlueprintImplementableEvent)
-	void OnFireByPlayer();
+	void OnFireByPlayer(FVector ActorFireLocation);
 
 	/**
 	* Called when this bullet is launched by a character controlled by AI.
@@ -51,11 +52,11 @@ public:
 	void FireByAI(AActor* _ItemOwner);
 
 	/**
-	 * Called when this bullet is launched by a character controlled by AI.
-	 * Velocity is not calculated, should call OnVelocitySet to provide a velocity before calling this function.
+	 * Event called when this bullet is launched by a character controlled by AI.
+	 * @param ActorFireLocation location of the AI character when he fired the bullet. 
 	 */
 	UFUNCTION(BlueprintImplementableEvent)
-	void OnFireByAI();
+	void OnFireByAI(FVector ActorFireLocation);
 
 	/** Activate the projectile component and enable hit collision
 	*/
