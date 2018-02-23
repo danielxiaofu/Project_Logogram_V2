@@ -68,6 +68,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void RemoveFromBulletBag(UItem* Bullet);
 
+	/** Remove a consumable item from consumable bag
+	*  @param Consumable consumable to be removed
+	*/
+	UFUNCTION(BlueprintCallable)
+	void RemoveFromConsumableBag(UItem* Consumable);
+
 	/** Explicitly set bags, warning: calling this function will wipe original bag objects in this manager
 	*/
 	UFUNCTION(BlueprintCallable)

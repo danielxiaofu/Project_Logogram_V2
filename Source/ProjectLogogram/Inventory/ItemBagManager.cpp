@@ -116,12 +116,22 @@ void UItemBagManager::AddToSecondaryWeaponBag(UItem * SecondaryWeapon)
 
 void UItemBagManager::RemoveFromBulletBag(UItem * Bullet)
 {
-	check(BulletBag && "Instantiate BulletBag before removing items");
+	check(ConsumableBag && "Instantiate BulletBag before removing items");
 
 	if (Bullet->GetTypeInt() == 5)
-		BulletBag->RemoveItem(Bullet);
+		ConsumableBag->RemoveItem(Bullet);
 	else
 		UE_LOG(LogTemp, Warning, TEXT("Fail to remove from bullet bag, incorrect item type"))
+}
+
+void UItemBagManager::RemoveFromConsumableBag(UItem * Consumable)
+{
+	check(ConsumableBag && "Instantiate BulletBag before removing items");
+
+	if (Consumable->GetTypeInt() == 1)
+		ConsumableBag->RemoveItem(Consumable);
+	else
+		UE_LOG(LogTemp, Warning, TEXT("Fail to remove from consumable bag, incorrect item type"))
 }
 
 void UItemBagManager::SetBags(UItemBag* _BulletBag, UItemBag* _MainWeaponBag, UItemBag* _ConsumableBag, USecondaryWeaponBag* _SecondaryWeaponBag)

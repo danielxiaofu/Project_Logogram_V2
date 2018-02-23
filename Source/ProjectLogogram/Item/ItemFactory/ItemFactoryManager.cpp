@@ -4,11 +4,13 @@
 #include "BulletFactory.h"
 #include "MeleeFactory.h"
 #include "RangeFactory.h"
+#include "ConsumableFactory.h"
 #include "../../Inventory/ItemBagManager.h"
 #include "../Item.h"
 #include "../Bullet.h"
 #include "../MeleeWeapon.h"
 #include "../RangeWeapon.h"
+#include "../Consumable.h"
 
 // Sets default values for this component's properties
 UItemFactoryManager::UItemFactoryManager()
@@ -30,6 +32,7 @@ void UItemFactoryManager::BeginPlay()
 	BulletFactory = NewObject<UBulletFactory>(this, BulletFactoryClass);
 	MeleeFactory = NewObject<UMeleeFactory>(this, MeleeFactoryClass);
 	RangeFactory = NewObject<URangeFactory>(this, RangeFactoryClass);
+	ConsumableFactory = NewObject<UConsumableFactory>(this, ConsumableFactoryClass);
 	// ...
 	
 }
@@ -48,6 +51,9 @@ void UItemFactoryManager::CreateItem(FSymbolicItem Item, UItemBagManager* ItemBa
 
 	switch (Item.Type)
 	{
+	case (1):
+		ItemBagManager->AddToConsumableBag(ConsumableFactory->CreateItem(Item.ID, Item.Name));
+		break;
 	case (3):
 		ItemBagManager->AddToMainWeaponBag(MeleeFactory->CreateItem(Item.ID, Item.Name));
 		break;

@@ -7,7 +7,7 @@
 #include "Status/StatModifier.h"
 #include "Consumable.generated.h"
 
-class AProjectLogogramCharacter;
+class ACharacter;
 
 /**
  * 
@@ -23,7 +23,7 @@ public:
 	void Initialize(FName ItemName, int32 ItemID);
 
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = Consumable)
-	void OnUse();
+	void OnUse(ACharacter* ItemUser);
 
 	UFUNCTION(BlueprintCallable, Category = ItemSystem)
 	EItemType GetType() const override;

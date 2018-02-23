@@ -36,4 +36,12 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "HitReaction")
 	void ReactToPhysicalHit(FVector HitDirection, FVector SourceActorLocation, EHitStrength HitStrength, ELocalHitDirection LocalHitDirection);
 	
+	/** Called when this actor parried an attack. This event should only be implemented
+	  * to create visual hit reaction. Do not use this to change actor's stat.
+	  * @param HitDirection direction of the hit
+	  * @param SourceActorLocation location of the actor who dealt the hit
+	  * @param HitStrength strength of the hit
+	  */
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable, Category = "HitReaction")
+	void ReactToParry(FVector HitDirection, FVector SourceActorLocation, EHitStrength HitStrength, ELocalHitDirection LocalHitDirection);
 };

@@ -61,6 +61,18 @@ public:
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void OnSheath(ACharacter* OwnerCharacter);
 
+	/* Called when enters special mode
+	 * @param OwnerCharacter the character who deactivated this weapon
+	 */
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnSpecialModeEnter(ACharacter* OwnerCharacter);
+
+	/* Called when exits special mode
+	* @param OwnerCharacter the character who deactivated this weapon
+	*/
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnSpecialModeExit(ACharacter* OwnerCharacter);
+
 	/* Enable physics simulation of the root static mesh component, nothing
 	 * happen if the root is not a static mesh
 	 */

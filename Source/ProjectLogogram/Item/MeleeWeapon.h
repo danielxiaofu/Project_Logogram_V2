@@ -15,6 +15,13 @@ class PROJECTLOGOGRAM_API UMeleeWeapon : public UItem
 	GENERATED_BODY()
 	
 public:
+
+	/* The secondary weapon that this weapon supports,
+	 * ignore this variable if this weapon is considered to be a secondary.
+	 */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	int32  SupportedSecondaryWeaponType;
+
 	UFUNCTION(BlueprintCallable, Category = ItemSystem)
 	virtual EItemType GetType() const override;
 	

@@ -25,4 +25,6 @@ public:
 	// Called when the StatComponent of the actor has finished initializing stat entry
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
 	void OnStatEntryInitialized();
+
+
 };

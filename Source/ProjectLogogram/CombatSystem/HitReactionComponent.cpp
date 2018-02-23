@@ -20,7 +20,7 @@ UHitReactionComponent::UHitReactionComponent()
 void UHitReactionComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
+	bIsGuarding = false;
 	// ...
 	
 }

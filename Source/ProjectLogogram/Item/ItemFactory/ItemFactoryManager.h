@@ -10,6 +10,7 @@
 class UBulletFactory;
 class UMeleeFactory;
 class URangeFactory;
+class UConsumableFactory;
 class UItemBagManager;
 
 /** This actor component is responsible for recieving item creation event
@@ -38,6 +39,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ItemFactoryClass")
 	TSubclassOf<URangeFactory> RangeFactoryClass;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "ItemFactoryClass")
+	TSubclassOf<UConsumableFactory> ConsumableFactoryClass;
+
 	UPROPERTY()
 	UBulletFactory* BulletFactory;
 
@@ -46,6 +50,9 @@ protected:
 
 	UPROPERTY()
 	URangeFactory* RangeFactory;
+
+	UPROPERTY()
+	UConsumableFactory* ConsumableFactory;
 
 public:	
 	// Called every frame
