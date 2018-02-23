@@ -87,7 +87,7 @@ public:
 
 protected:
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadWrite)
 	TArray<FItemEntry> Items;
 	
 	
