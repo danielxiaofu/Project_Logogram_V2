@@ -53,7 +53,7 @@ public:
 	float BaseTurnRate;
 
 	/** Base look up/down rate, in deg/sec. Other scaling may affect final rate. */
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera)
 	float BaseLookUpRate;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = CombatAnimationSet)
@@ -78,12 +78,15 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "SelfRotation")
 	bool bRotateWithCamera;
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Weapon")
+	bool bDrawWeapon;
 
 protected:
 
 	/** Whether this character can process move input */
 	UPROPERTY(BlueprintReadOnly, Category = CharacterMovement)
 	bool CanMove;
+
 
 	UPROPERTY(BlueprintReadOnly, Category = CombatAnimationSet)
 	TMap<EWeaponType, UCombatAnimationSet*> CombatAnimationSets;

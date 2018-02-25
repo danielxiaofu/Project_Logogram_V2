@@ -193,19 +193,27 @@ void AProjectLogogramCharacter::RotateWithCamera()
 void AProjectLogogramCharacter::OnSpecialModeEnter()
 {
 	JumpMode = EJumpMode::VE_DODGE;
-	if (ActiveMain)
-		ActiveMain->OnSpecialModeEnter(this);
-	if (ActiveSecondary)
-		ActiveSecondary->OnSpecialModeExit(this);
+	if (bDrawWeapon)
+	{
+		if (ActiveMain)
+			ActiveMain->OnSpecialModeEnter(this);
+		if (ActiveSecondary)
+			ActiveSecondary->OnSpecialModeEnter(this);
+	}
+	
 }
 
 void AProjectLogogramCharacter::OnSpecialModeLeave()
 {
 	JumpMode = EJumpMode::VE_JUMP;
-	if (ActiveMain)
-		ActiveMain->OnSpecialModeExit(this);
-	if (ActiveSecondary)
-		ActiveSecondary->OnSpecialModeExit(this);
+	if (bDrawWeapon)
+	{
+		if (ActiveMain)
+			ActiveMain->OnSpecialModeExit(this);
+		if (ActiveSecondary)
+			ActiveSecondary->OnSpecialModeExit(this);
+	}
+	
 }
 
 void AProjectLogogramCharacter::Turn(float Val)

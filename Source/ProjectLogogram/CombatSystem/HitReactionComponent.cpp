@@ -20,7 +20,7 @@ UHitReactionComponent::UHitReactionComponent()
 void UHitReactionComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	bIsGuarding = false;
+	bIsFrontGuarding = false;
 	// ...
 	
 }
@@ -57,5 +57,17 @@ FVector UHitReactionComponent::PlayFourDirectionHitAnimation(FVector HitDirectio
 		AnimationBlueprint->Montage_Play(MontageToPlay);
 
 	return ReactionDirection;
+}
+
+bool UHitReactionComponent::FrontGuardCheck(FVector AttackerLocation)
+{
+	FVector Forward = GetOwner()->GetActorForwardVector();
+	Forward.Z = 0.0;
+	Forward.Normalize();
+	FVector AttackerDirection = AttackerLocation - GetOwner()->GetActorLocation();
+	AttackerDirection.Z = 0.0;
+	AttackerDirection.Normalize();
+
+	return FVector::DotProduct(Forward, AttackerDirection) > 0 ? true : false;
 }
 

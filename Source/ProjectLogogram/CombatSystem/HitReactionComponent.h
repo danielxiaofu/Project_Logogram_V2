@@ -29,7 +29,7 @@ protected:
 public:	
 
 	UPROPERTY(BlueprintReadWrite)
-	bool bIsGuarding;
+	bool bIsFrontGuarding;
 
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
@@ -45,4 +45,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	FVector PlayFourDirectionHitAnimation(FVector HitDirection, FVector ActorLeftDirection, FVector ActorFrontDirection, UCombatAnimationSet* ActiveAnimationSet, UAnimInstance* AnimationBlueprint);
 
+	/** Check whether an attack to this component's owner is parried in the front 
+	 *  @param AttackerLocation position of the actor that is attacking
+	 *  return true if the attack is parried
+	 */
+	UFUNCTION(BlueprintCallable)
+	bool FrontGuardCheck(FVector AttackerLocation);
 };
