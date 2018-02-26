@@ -11,21 +11,25 @@ void FCharacterStat::InitializeStatusObject()
 	{
 		FCharStatEntryStruct CharStat = Elem.Value;
 		UCharStatusEntry* NewStatEntry = NewObject<UCharStatusEntry>();
-		NewStatEntry->Initialize(CharStat.StatType, CharStat.MaxAmount);
+		NewStatEntry->Initialize(CharStat.StatType, CharStat.MaxAmount, CharStat.MinAmount, CharStat.StartAmount);
 		StatusMap.Add(NewStatEntry->StatType, NewStatEntry);
 	}
 }
 
-FCharStatModifier& FCharacterStat::AddModifier(FCharStatModifier Modifier)
+UStatModifier* FCharacterStat::AddModifier(FCharStatModifier Modifier)
 {
 	// If a 0 life modifier is added, instantly apply its effect and kill
-	if (Modifier.LifeSpan == 0)
+
+	UStatModifier* NewStatModifier = NewObject<UStatModifier>();
+	NewStatModifier->Initialize(Modifier);
+
+	if (NewStatModifier->LifeSpan == 0)
 	{
-		StatusMap.FindRef(Modifier.TargetStatus)->ApplyModification(Modifier.Bias, Modifier.ModifyRate);
-		Modifier.Kill();
+		StatusMap.FindRef(NewStatModifier->TargetStatus)->ApplyModification(NewStatModifier->Bias, NewStatModifier->ModifyRate);
+		NewStatModifier->Kill();
 	}
 
-	int32 index = Modifiers.Add(Modifier);
+	int32 index = Modifiers.Add(NewStatModifier);
 	return Modifiers[index];
 }
 
@@ -35,19 +39,19 @@ void FCharacterStat::UpdateModifiers(float Delta)
 	// Remove dead modifiers
 	for (int32 i = Modifiers.Num() - 1; i >= 0; i--)
 	{
-		if (!Modifiers[i].IsAlive)
+		if (!Modifiers[i]->IsAlive)
 			Modifiers.RemoveAt(i);
 	}
 
-	for (FCharStatModifier& Modifier : Modifiers)
+	for (UStatModifier* Modifier : Modifiers)
 	{
-		if (Modifier.IsAlive)
+		if (Modifier->IsAlive)
 		{
-			StatusMap.FindRef(Modifier.TargetStatus)->ApplyModification(Modifier.Bias, Modifier.ModifyRate * Delta);
+			StatusMap.FindRef(Modifier->TargetStatus)->ApplyModification(Modifier->Bias, Modifier->ModifyRate * Delta);
 			
-			Modifier.LifeSpan -= Delta;
-			if (Modifier.LifeSpan <= 0)
-				Modifier.Kill();
+			Modifier->LifeSpan -= Delta;
+			if (Modifier->LifeSpan <= 0)
+				Modifier->Kill();
 		}
 	}
 }
@@ -91,7 +95,7 @@ float UStatComponent::GetHealth() const
 	return Stat.StatusMap.FindRef(ECharStatus::VE_Health)->Amount;
 }
 
-FCharStatModifier & UStatComponent::AddStatModifier(FCharStatModifier Modifier)
+UStatModifier* UStatComponent::AddStatModifier(FCharStatModifier Modifier)
 {
 	return Stat.AddModifier(Modifier);
 }

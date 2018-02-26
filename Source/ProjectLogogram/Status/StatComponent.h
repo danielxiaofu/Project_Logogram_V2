@@ -26,6 +26,12 @@ struct FCharStatEntryStruct
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CharacterStat")
 	float MaxAmount = 100;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CharacterStat")
+	float MinAmount = 0;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "CharacterStat")
+	float StartAmount = 100;
+
 };
 
 USTRUCT(BlueprintType)
@@ -42,16 +48,16 @@ struct FCharacterStat
 	TMap<ECharStatus, UCharStatusEntry*> StatusMap;
 
 	UPROPERTY()
-	TArray<FCharStatModifier> Modifiers;
+	TArray<UStatModifier*> Modifiers;
 
 	// Copy every element from StatEntryMap to StatusMap
 	void InitializeStatusObject();
 
 	/** Add a modifier to actor
 	* @param Modifier modifier to add
-	* return reference to added modifier
+	* return pointer to added modifier
 	*/
-	FCharStatModifier& AddModifier(FCharStatModifier Modifier);
+	UStatModifier* AddModifier(FCharStatModifier Modifier);
 
 	void UpdateModifiers(float Delta);
 
@@ -83,7 +89,7 @@ public:
 
 	// Stat related function
 	UFUNCTION(BlueprintCallable, Category = "CharacterStat")
-	FCharStatModifier& AddStatModifier(FCharStatModifier Modifier);
+	UStatModifier* AddStatModifier(FCharStatModifier Modifier);
 	
 	UFUNCTION(BlueprintCallable, Category = "CharacterStat")
 	UCharStatusEntry* GetStatusEntry(ECharStatus CharStatus) const;

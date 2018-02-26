@@ -74,11 +74,6 @@ struct FCharStatModifier : public FBaseStatModifier
 		Instant = false;
 	}
 
-	void Activate()
-	{
-		IsAlive = true;
-	}
-
 	void Kill()
 	{
 		IsAlive = false;
@@ -86,18 +81,47 @@ struct FCharStatModifier : public FBaseStatModifier
 
 };
 
-
-
-
 /**
  * 
  */
-UCLASS()
+UCLASS(BlueprintType)
 class PROJECTLOGOGRAM_API UStatModifier : public UObject
 {
 	GENERATED_BODY()
 	
+public:
+
+	UPROPERTY()
+	EModifierBias Bias;
+
+	UPROPERTY()
+	ECharStatus TargetStatus;
+
+	UPROPERTY()
+	float LifeSpan;
+
+	UPROPERTY()
+	float ModifyRate;
+
+	UPROPERTY()
+	bool NoLife;
+
+	UPROPERTY()
+	bool Instant;
+
+	UPROPERTY()
+	bool IsAlive;
+
+	UStatModifier();
+
+	UStatModifier(EModifierBias _Bias, ECharStatus _TargetStatus, float _LifeSpan, float _ModifyRate, bool _NoLife, bool _Instant);
 	
-	
-	
+	UFUNCTION()
+	void Initialize(FCharStatModifier& StatModifierStruct);
+
+	UFUNCTION()
+	void Kill() { IsAlive = false; }
+
+
+protected:
 };

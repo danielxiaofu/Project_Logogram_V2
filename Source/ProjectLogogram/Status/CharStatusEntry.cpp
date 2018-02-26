@@ -11,7 +11,7 @@ void UCharStatusEntry::ApplyModification(EModifierBias Bias, float ByAmount){
 			break;
 		case EModifierBias::VE_Decrease:
 			Amount -= ByAmount;
-			Amount = Amount < 0 ? 0 : Amount;
+			Amount = Amount < MinAmount ? MinAmount : Amount;
 			break;
 		default:
 			break;
@@ -19,10 +19,11 @@ void UCharStatusEntry::ApplyModification(EModifierBias Bias, float ByAmount){
 	StatUpdateDelegate.Broadcast(Amount);
 }
 
-void UCharStatusEntry::Initialize(ECharStatus Type, float Max){
+void UCharStatusEntry::Initialize(ECharStatus Type, float Max, float Min, float StartAmount){
 	StatType = Type;
 	MaxAmount = Max;
-	Amount = MaxAmount;
+	MinAmount = Min;
+	Amount = StartAmount;
 }
 
 

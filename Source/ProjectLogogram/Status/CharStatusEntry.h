@@ -26,6 +26,9 @@ public:
 	float MaxAmount = 100;
 
 	UPROPERTY(BlueprintReadOnly)
+	float MinAmount = 0;
+
+	UPROPERTY(BlueprintReadOnly)
 	float Amount = 100;
 
 	// Called when the stat is updated
@@ -36,7 +39,7 @@ public:
 	void ApplyModification(EModifierBias Bias, float ByAmount);
 
 	UFUNCTION()
-	void Initialize(ECharStatus Type, float Max);
+	void Initialize(ECharStatus Type, float Max, float Min, float StartAmount);
 
 	
 };

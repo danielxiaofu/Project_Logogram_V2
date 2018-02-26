@@ -11,7 +11,8 @@ enum class ECharStatus : uint8
 {
 	VE_Undefined UMETA(DisplayName = "Undefined"),
 	VE_Health	UMETA(DisplayName = "Health"),
-	VE_Stamina	UMETA(DisplayName = "Stamina")
+	VE_Stamina	UMETA(DisplayName = "Stamina"),
+	VE_Temperature		UMETA(DisplayName = "Temperature")
 };
 
 /**
