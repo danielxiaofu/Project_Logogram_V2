@@ -74,6 +74,21 @@ struct FCharStatModifier : public FBaseStatModifier
 		Instant = false;
 	}
 
+	FCharStatModifier(EModifierBias bias,
+		ECharStatus _TargetStatus,
+		float _LifeSpan,
+		float _ModifyRate,
+		bool _NoLife,
+		bool _Instant)
+	{
+		TargetStatus = _TargetStatus;
+		LifeSpan = _LifeSpan;
+		ModifyRate = _ModifyRate;
+		IsAlive = true;
+		NoLife = _NoLife;
+		Instant = _Instant;
+	}
+
 	void Kill()
 	{
 		IsAlive = false;

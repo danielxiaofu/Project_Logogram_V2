@@ -47,10 +47,12 @@ void FCharacterStat::UpdateModifiers(float Delta)
 	{
 		if (Modifier->IsAlive)
 		{
-			StatusMap.FindRef(Modifier->TargetStatus)->ApplyModification(Modifier->Bias, Modifier->ModifyRate * Delta);
+			UCharStatusEntry* TargetStatus = StatusMap.FindRef(Modifier->TargetStatus);
+			if(TargetStatus)
+				TargetStatus->ApplyModification(Modifier->Bias, Modifier->ModifyRate * Delta);
 			
 			Modifier->LifeSpan -= Delta;
-			if (Modifier->LifeSpan <= 0)
+			if (Modifier->LifeSpan <= 0 && !Modifier->NoLife)
 				Modifier->Kill();
 		}
 	}

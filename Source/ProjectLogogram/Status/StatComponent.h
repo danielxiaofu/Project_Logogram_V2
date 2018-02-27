@@ -90,7 +90,7 @@ public:
 	// Stat related function
 	UFUNCTION(BlueprintCallable, Category = "CharacterStat")
 	UStatModifier* AddStatModifier(FCharStatModifier Modifier);
-	
+
 	UFUNCTION(BlueprintCallable, Category = "CharacterStat")
 	UCharStatusEntry* GetStatusEntry(ECharStatus CharStatus) const;
 };
