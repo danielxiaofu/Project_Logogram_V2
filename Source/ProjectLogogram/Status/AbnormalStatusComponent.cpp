@@ -1,7 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "AbnormalStatusComponent.h"
-
+#include "StatComponent.h"
+#include "GameFramework/Actor.h"
 
 // Sets default values for this component's properties
 UAbnormalStatusComponent::UAbnormalStatusComponent()
@@ -18,7 +19,7 @@ UAbnormalStatusComponent::UAbnormalStatusComponent()
 void UAbnormalStatusComponent::BeginPlay()
 {
 	Super::BeginPlay();
-
+	StatComponent = GetOwner()->FindComponentByClass<UStatComponent>();
 	// ...
 	
 }

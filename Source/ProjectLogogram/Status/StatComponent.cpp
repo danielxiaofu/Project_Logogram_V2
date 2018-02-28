@@ -23,14 +23,18 @@ UStatModifier* FCharacterStat::AddModifier(FCharStatModifier Modifier)
 	UStatModifier* NewStatModifier = NewObject<UStatModifier>();
 	NewStatModifier->Initialize(Modifier);
 
+	UCharStatusEntry* StatusEntry = StatusMap.FindRef(NewStatModifier->TargetStatus);
+	if (!StatusEntry)
+		return nullptr;
+
 	if (NewStatModifier->LifeSpan == 0)
 	{
-		StatusMap.FindRef(NewStatModifier->TargetStatus)->ApplyModification(NewStatModifier->Bias, NewStatModifier->ModifyRate);
+		StatusEntry->ApplyModification(NewStatModifier->Bias, NewStatModifier->ModifyRate);
 		NewStatModifier->Kill();
 	}
 
-	int32 index = Modifiers.Add(NewStatModifier);
-	return Modifiers[index];
+	Modifiers.Add(NewStatModifier);
+	return NewStatModifier;
 }
 
 void FCharacterStat::UpdateModifiers(float Delta)

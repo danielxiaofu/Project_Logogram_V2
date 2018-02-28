@@ -21,8 +21,6 @@ public:
 	
 protected:
 
-	UStatModifier* HealthStatModifierObj = nullptr;
-
 	/* The temperature that causes the character to be on fire */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	float FireTemperature;

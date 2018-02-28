@@ -55,7 +55,7 @@ struct FCharacterStat
 
 	/** Add a modifier to actor
 	* @param Modifier modifier to add
-	* return pointer to added modifier
+	* return pointer to added modifier, if the target status does not exist in this StatComponent, a null pointer will be returned.
 	*/
 	UStatModifier* AddModifier(FCharStatModifier Modifier);
 

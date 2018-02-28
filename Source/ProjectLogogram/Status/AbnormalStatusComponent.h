@@ -6,6 +6,8 @@
 #include "Components/ActorComponent.h"
 #include "AbnormalStatusComponent.generated.h"
 
+class UStatComponent;
+
 /* An AbnormalStatusComponent observes a stat entry of its owner character and 
  * does something to the owner based on the observed stat entry.
  */
@@ -20,6 +22,9 @@ public:
 	UAbnormalStatusComponent();
 
 protected:
+	UPROPERTY()
+	UStatComponent* StatComponent;
+
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
@@ -33,5 +38,4 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void OnValueUpdate(float Value);
 	
-
 };
