@@ -26,10 +26,10 @@ public:
 protected:
 
 	UPROPERTY(BlueprintReadOnly, Category = Temperature)
-	bool bIsChilling;
+	bool bIsChilling = false;
 
 	UPROPERTY(BlueprintReadOnly, Category = Temperature)
-	bool bIsFrozen;
+	bool bIsFrozen = false;
 
 	// Maximum temp to trigger chill, also minimum temp to recover from frozen
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Temperature)
