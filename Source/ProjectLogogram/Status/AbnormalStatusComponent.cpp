@@ -33,12 +33,8 @@ void UAbnormalStatusComponent::TickComponent(float DeltaTime, ELevelTick TickTyp
 	// ...
 }
 
-void UAbnormalStatusComponent::ValueUpdate(float Value)
-{
-}
-
 void UAbnormalStatusComponent::OnValueUpdate(float Value)
 {
-	ValueUpdate(Value);
+	
 }
 

@@ -27,7 +27,7 @@ UStatModifier* FCharacterStat::AddModifier(FCharStatModifier Modifier)
 	if (!StatusEntry)
 		return nullptr;
 
-	if (NewStatModifier->LifeSpan == 0)
+	if (NewStatModifier->Instant)
 	{
 		StatusEntry->ApplyModification(NewStatModifier->Bias, NewStatModifier->ModifyRate);
 		NewStatModifier->Kill();
@@ -44,7 +44,11 @@ void FCharacterStat::UpdateModifiers(float Delta)
 	for (int32 i = Modifiers.Num() - 1; i >= 0; i--)
 	{
 		if (!Modifiers[i]->IsAlive)
+		{
+			Modifiers[i]->ConditionalBeginDestroy();
 			Modifiers.RemoveAt(i);
+		}
+
 	}
 
 	for (UStatModifier* Modifier : Modifiers)
@@ -103,7 +107,9 @@ float UStatComponent::GetHealth() const
 
 UStatModifier* UStatComponent::AddStatModifier(FCharStatModifier Modifier)
 {
-	return Stat.AddModifier(Modifier);
+	UStatModifier* AddedModifier = Stat.AddModifier(Modifier);
+
+	return AddedModifier;
 }
 
 UCharStatusEntry* UStatComponent::GetStatusEntry(ECharStatus CharStatus) const

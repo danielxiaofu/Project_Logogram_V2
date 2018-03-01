@@ -46,7 +46,7 @@ struct FCharStatModifier : public FBaseStatModifier
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatModifier)
 	float LifeSpan;
 
-	// How much amount does it modify by per second. If life span is 0, this will be the total amount that got modified  
+	// How much amount does it modify by per second. If Instant is true, this will be the total amount that got modified  
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatModifier)
 	float ModifyRate;
 
@@ -81,6 +81,7 @@ struct FCharStatModifier : public FBaseStatModifier
 		bool _NoLife,
 		bool _Instant)
 	{
+		Bias = bias;
 		TargetStatus = _TargetStatus;
 		LifeSpan = _LifeSpan;
 		ModifyRate = _ModifyRate;

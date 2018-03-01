@@ -7,6 +7,7 @@
 
 void UTemperatureWatcher::BeginWatchTemperature(UStatComponent * TargetStatComponent)
 {
+
 	FCharStatModifier TempStatModifierStruct = FCharStatModifier(EModifierBias::VE_Increase,
 		ECharStatus::VE_Temperature,
 		0.0,
@@ -15,11 +16,16 @@ void UTemperatureWatcher::BeginWatchTemperature(UStatComponent * TargetStatCompo
 		false);
 	TempStatModifier = TargetStatComponent->AddStatModifier(TempStatModifierStruct);
 
-	if(!TempStatModifier)
+	if(!TempStatModifier.IsValid())
 		UE_LOG(LogTemp, Warning, TEXT("BeginWatchTemperature failed in %s. Temperature stat not found in target StatComponent"), *(GetOwner()->GetName()))
 }
 
 void UTemperatureWatcher::TemperatureUpdate(float Value)
 {
-
+	if (!TempStatModifier.IsValid())
+		return;
+	if (Value > 0)
+		TempStatModifier->Bias = EModifierBias::VE_Decrease;
+	else
+		TempStatModifier->Bias = EModifierBias::VE_Increase;
 }

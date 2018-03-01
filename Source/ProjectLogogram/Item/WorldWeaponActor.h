@@ -9,7 +9,21 @@
 
 class ACharacter;
 class AHitEffect_FB;
+class UDamageType;
 class ICanPerformHit;
+
+USTRUCT(BlueprintType)
+struct FDamageTypeStruct
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DamageType")
+	TSubclassOf<UDamageType> DamageType;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DamageType")
+	float DamageValue;
+
+};
 
 /**
  * 
@@ -36,6 +50,9 @@ public:
 	/* The hit effect played when this weapon hits others */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "HitEffect")
 	TSubclassOf<AHitEffect_FB> HitEffectClass;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "DamageType")
+	TArray<FDamageTypeStruct> DamageTypes;
 
 	/** Called when this item is picked by a character
 	 * @param NewOwner the character who picked up the item

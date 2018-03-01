@@ -32,8 +32,6 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	virtual void ValueUpdate(float Value);
-
 	/* Bind this function to the update delegate in a stat entry */
 	UFUNCTION(BlueprintCallable)
 	void OnValueUpdate(float Value);
