@@ -101,6 +101,7 @@ void AProjectLogogramCharacter::Tick(float DeltaTime)
 
 	float CameraPitch = FollowCamera->GetForwardVector().Rotation().Pitch;
 	OnPitchInputRecieved(CameraPitch);
+	OnPitchUpdate.Broadcast(CameraPitch);
 }
 
 void AProjectLogogramCharacter::BeginPlay()

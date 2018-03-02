@@ -23,6 +23,7 @@ enum class EJumpMode : uint8
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FFireWeaponDelegate);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FPitchUpdateDelegate, float, PitchValue);
 
 UCLASS(config=Game)
 class AProjectLogogramCharacter : public ACharacter, public IHasStatEntry
@@ -47,6 +48,10 @@ public:
 	/** Called when the character fires a range weapon */
 	UPROPERTY(BlueprintAssignable)
 	FFireWeaponDelegate OnWeaponFire;
+
+	/** Called when the camera pitch is updated */
+	UPROPERTY(BlueprintAssignable)
+	FPitchUpdateDelegate OnPitchUpdate;
 
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
