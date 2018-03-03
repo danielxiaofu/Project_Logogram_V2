@@ -161,6 +161,11 @@ void AProjectLogogramCharacter::EnableSpecialModeRotation(bool Enable)
 	bRotateWithCamera = Enable;
 }
 
+void AProjectLogogramCharacter::ExecuteInteraction()
+{
+	OnInteractionExecuted.Broadcast(this);
+}
+
 void AProjectLogogramCharacter::RotateWithCamera()
 {
 	FVector ActorForward = GetActorForwardVector();

@@ -24,6 +24,7 @@ enum class EJumpMode : uint8
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FFireWeaponDelegate);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FPitchUpdateDelegate, float, PitchValue);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FInteractionDelegate, AActor*, InteractionActor);
 
 UCLASS(config=Game)
 class AProjectLogogramCharacter : public ACharacter, public IHasStatEntry
@@ -52,6 +53,10 @@ public:
 	/** Called when the camera pitch is updated */
 	UPROPERTY(BlueprintAssignable)
 	FPitchUpdateDelegate OnPitchUpdate;
+
+	/** Called when the interaction executed */
+	UPROPERTY(BlueprintAssignable)
+	FInteractionDelegate OnInteractionExecuted;
 
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
@@ -202,5 +207,9 @@ public:
 	/* Called when the initialization of item bag manager is finished, the finished bag manager is passed*/
 	UFUNCTION(BlueprintImplementableEvent, Category = "Inventory")
 	void OnBagInitializationFinished(UItemBagManager* ItemBagManager);
+
+	/* Execute interaction, OnInteractionExecuted delegate will broadcast */
+	UFUNCTION(BlueprintCallable, Category = "Interaction")
+	void ExecuteInteraction();
 };
 
