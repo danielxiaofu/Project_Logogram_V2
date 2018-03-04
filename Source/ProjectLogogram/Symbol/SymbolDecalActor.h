@@ -30,6 +30,9 @@ public:
 	int32 Type;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item Info")
+	int32 Amount;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Item Info")
 	FName Name;
 
 	// Time to activate the symbol
@@ -45,8 +48,12 @@ public:
 	UFUNCTION(BlueprintImplementableEvent)
 	void OnActivateFinish();
 
+protected:
+	UPROPERTY(BlueprintReadOnly)
+		bool bActivateFinished;
+
 private:
 
-	bool ActivateBegin, ActivateFinished;
+	bool bActivateBegin;
 	float RemainTime;
 };

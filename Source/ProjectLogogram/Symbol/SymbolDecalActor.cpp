@@ -12,8 +12,8 @@ void ASymbolDecalActor::BeginPlay()
 {
 	Super::BeginPlay();
 
-	ActivateBegin = false;
-	ActivateFinished = false;
+	bActivateBegin = false;
+	bActivateFinished = false;
 	RemainTime = ActivateTime;
 	
 }
@@ -22,13 +22,13 @@ void ASymbolDecalActor::Tick(float DeltaTime)
 {
 	
 	Super::Tick(DeltaTime);
-	if (ActivateBegin && !ActivateFinished)
+	if (bActivateBegin && !bActivateFinished)
 	{
 		RemainTime -= DeltaTime;
 		
 		if (RemainTime <= 0.0)
 		{
-			ActivateFinished = true;
+			bActivateFinished = true;
 			OnActivateFinish();
 		}
 	}
@@ -36,12 +36,12 @@ void ASymbolDecalActor::Tick(float DeltaTime)
 
 void ASymbolDecalActor::BeginActivate()
 {
-	ActivateBegin = true;
+	bActivateBegin = true;
 }
 
 void ASymbolDecalActor::StopActivate()
 {
-	ActivateBegin = false;
+	bActivateBegin = false;
 	RemainTime = ActivateTime;
 }
 
