@@ -7,7 +7,9 @@
 #include "StatModifier.h"
 #include "CharStatusEntry.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FStatUpdateDelegate, float, Value);
+class UDamageType;
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FStatUpdateDelegate, float, Value, UDamageType*, DamageType);
 
 /**
  * 
@@ -36,7 +38,7 @@ public:
 	FStatUpdateDelegate StatUpdateDelegate;
 
 	UFUNCTION()
-	void ApplyModification(EModifierBias Bias, float ByAmount);
+	void ApplyModification(EModifierBias Bias, float ByAmount, UDamageType* DamageType);
 
 	UFUNCTION()
 	void Initialize(ECharStatus Type, float Max, float Min, float StartAmount);

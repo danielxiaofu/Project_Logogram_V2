@@ -23,6 +23,7 @@ enum class EJumpMode : uint8
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FFireWeaponDelegate);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDieDelegate);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FPitchUpdateDelegate, float, PitchValue);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FInteractionDelegate, AActor*, InteractionActor);
 
@@ -57,6 +58,11 @@ public:
 	/** Called when the interaction executed */
 	UPROPERTY(BlueprintAssignable)
 	FInteractionDelegate OnInteractionExecuted;
+
+	/** Called when the character is pending die */
+	UPROPERTY(BlueprintAssignable)
+	FDieDelegate OnDie;
+
 
 	/** Base turn rate, in deg/sec. Other scaling may affect final turn rate. */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category=Camera)
@@ -157,6 +163,10 @@ protected:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "SelfRotation")
 	void OnPitchInputRecieved(float Val);
+
+	/*  */
+	UFUNCTION(BlueprintCallable)
+	void DieBroadCast();
 
 	// Stat related function
 	

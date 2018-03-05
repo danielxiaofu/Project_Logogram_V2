@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "StatModifier.h"
+#include "GameFramework/DamageType.h"
 
 UStatModifier::UStatModifier() {
 	Bias = EModifierBias::VE_Decrease;
@@ -10,9 +11,10 @@ UStatModifier::UStatModifier() {
 	IsAlive = true;
 	NoLife = false;
 	Instant = false;
+	DamageType = nullptr;
 }
 
-UStatModifier::UStatModifier(EModifierBias _Bias, ECharStatus _TargetStatus, float _LifeSpan, float _ModifyRate, bool _NoLife, bool _Instant)
+UStatModifier::UStatModifier(EModifierBias _Bias, ECharStatus _TargetStatus, float _LifeSpan, float _ModifyRate, bool _NoLife, bool _Instant, UDamageType* _DamageType)
 {
 	Bias = _Bias;
 	TargetStatus = _TargetStatus;
@@ -21,6 +23,7 @@ UStatModifier::UStatModifier(EModifierBias _Bias, ECharStatus _TargetStatus, flo
 	IsAlive = true;
 	NoLife = _NoLife;
 	Instant = _Instant;
+	DamageType = _DamageType;
 }
 
 void UStatModifier::Initialize(FCharStatModifier& StatModifierStruct)
@@ -32,6 +35,7 @@ void UStatModifier::Initialize(FCharStatModifier& StatModifierStruct)
 	IsAlive = true;
 	NoLife = StatModifierStruct.NoLife;
 	Instant = StatModifierStruct.Instant;
+	DamageType = StatModifierStruct.DamageType;
 }
 
 

@@ -1,8 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "CharStatusEntry.h"
+#include "GameFramework/DamageType.h"
 
-void UCharStatusEntry::ApplyModification(EModifierBias Bias, float ByAmount){
+void UCharStatusEntry::ApplyModification(EModifierBias Bias, float ByAmount, UDamageType* DamageType){
 	switch (Bias)
 		{
 		case EModifierBias::VE_Increase:
@@ -16,7 +17,7 @@ void UCharStatusEntry::ApplyModification(EModifierBias Bias, float ByAmount){
 		default:
 			break;
 		}
-	StatUpdateDelegate.Broadcast(Amount);
+	StatUpdateDelegate.Broadcast(Amount, DamageType);
 }
 
 void UCharStatusEntry::Initialize(ECharStatus Type, float Max, float Min, float StartAmount){

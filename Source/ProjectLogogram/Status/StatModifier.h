@@ -17,6 +17,8 @@ enum class EModifierBias : uint8
 /** 
 */
 
+class UDamageType;
+
 USTRUCT(BlueprintType)
 struct FBaseStatModifier
 {
@@ -61,6 +63,10 @@ struct FCharStatModifier : public FBaseStatModifier
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatModifier)
 	bool Instant;
 
+	/* The DamageType object, if there is any, that owns this modifier */
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = StatModifier)
+	UDamageType* DamageType;
+
 	UPROPERTY()
 	bool IsAlive;
 
@@ -72,6 +78,7 @@ struct FCharStatModifier : public FBaseStatModifier
 		IsAlive = true;
 		NoLife = false;
 		Instant = false;
+		DamageType = nullptr;
 	}
 
 	FCharStatModifier(EModifierBias bias,
@@ -79,7 +86,8 @@ struct FCharStatModifier : public FBaseStatModifier
 		float _LifeSpan,
 		float _ModifyRate,
 		bool _NoLife,
-		bool _Instant)
+		bool _Instant,
+		UDamageType* _DamageType)
 	{
 		Bias = bias;
 		TargetStatus = _TargetStatus;
@@ -88,6 +96,7 @@ struct FCharStatModifier : public FBaseStatModifier
 		IsAlive = true;
 		NoLife = _NoLife;
 		Instant = _Instant;
+		DamageType = _DamageType;
 	}
 
 	void Kill()
@@ -128,9 +137,13 @@ public:
 	UPROPERTY()
 	bool IsAlive;
 
+	/* The DamageType object, if there is any, that owns this modifier */
+	UPROPERTY()
+	UDamageType* DamageType = nullptr;
+
 	UStatModifier();
 
-	UStatModifier(EModifierBias _Bias, ECharStatus _TargetStatus, float _LifeSpan, float _ModifyRate, bool _NoLife, bool _Instant);
+	UStatModifier(EModifierBias _Bias, ECharStatus _TargetStatus, float _LifeSpan, float _ModifyRate, bool _NoLife, bool _Instant, UDamageType* _DamageType);
 	
 	UFUNCTION()
 	void Initialize(FCharStatModifier& StatModifierStruct);

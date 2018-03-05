@@ -196,6 +196,11 @@ void AProjectLogogramCharacter::RotateWithCamera()
 	SetActorRotation(FRotator(GetActorRotation().Pitch, ResultYaw, GetActorRotation().Roll));
 }
 
+void AProjectLogogramCharacter::DieBroadCast()
+{
+	OnDie.Broadcast();
+}
+
 void AProjectLogogramCharacter::OnSpecialModeEnter()
 {
 	JumpMode = EJumpMode::VE_DODGE;

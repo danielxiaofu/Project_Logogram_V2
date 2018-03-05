@@ -13,7 +13,8 @@ void UTemperatureWatcher::BeginWatchTemperature(UStatComponent * TargetStatCompo
 		0.0,
 		RecoverSpeed,
 		true,
-		false);
+		false,
+		nullptr);
 	TempStatModifier = TargetStatComponent->AddStatModifier(TempStatModifierStruct);
 
 	if(!TempStatModifier.IsValid())

@@ -4,6 +4,7 @@
 #include "HasStatEntry.h"
 #include "CharStatusEntry.h"
 #include "GameFramework/Actor.h"
+#include "GameFramework/DamageType.h"
 
 void FCharacterStat::InitializeStatusObject()
 {
@@ -29,7 +30,7 @@ UStatModifier* FCharacterStat::AddModifier(FCharStatModifier Modifier)
 
 	if (NewStatModifier->Instant)
 	{
-		StatusEntry->ApplyModification(NewStatModifier->Bias, NewStatModifier->ModifyRate);
+		StatusEntry->ApplyModification(NewStatModifier->Bias, NewStatModifier->ModifyRate, NewStatModifier->DamageType);
 		NewStatModifier->Kill();
 	}
 
@@ -57,7 +58,7 @@ void FCharacterStat::UpdateModifiers(float Delta)
 		{
 			UCharStatusEntry* TargetStatus = StatusMap.FindRef(Modifier->TargetStatus);
 			if(TargetStatus)
-				TargetStatus->ApplyModification(Modifier->Bias, Modifier->ModifyRate * Delta);
+				TargetStatus->ApplyModification(Modifier->Bias, Modifier->ModifyRate * Delta, Modifier->DamageType);
 			
 			Modifier->LifeSpan -= Delta;
 			if (Modifier->LifeSpan <= 0 && !Modifier->NoLife)

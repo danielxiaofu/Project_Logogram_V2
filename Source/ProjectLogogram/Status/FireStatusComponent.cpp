@@ -13,9 +13,10 @@ void UFireStatusComponent::TemperatureUpdate(float Value)
 			FCharStatModifier  HealthModifierStruct = FCharStatModifier(EModifierBias::VE_Decrease,
 				ECharStatus::VE_Health,
 				0.0,
-				2,
+				FireDamage,
 				true,
-				false);
+				false,
+				nullptr);
 			if (HealthModifier.IsValid() && HealthModifier->IsValidLowLevel())
 				HealthModifier.Reset();
 			HealthModifier = StatComponent->AddStatModifier(HealthModifierStruct);
