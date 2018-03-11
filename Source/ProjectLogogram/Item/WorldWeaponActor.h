@@ -54,6 +54,8 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "DamageType")
 	TArray<FDamageTypeStruct> DamageTypes;
 
+	virtual void K2_DestroyActor() override;
+
 	/** Called when this item is picked by a character
 	 * @param NewOwner the character who picked up the item
 	 */
@@ -99,5 +101,5 @@ public:
 protected:
 
 	UPROPERTY(BlueprintReadWrite, Category = "HitEffect")
-	AHitEffect_FB* HitEffect;
+	AHitEffect_FB* HitEffect = nullptr;
 };
