@@ -4,10 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Components/BoxComponent.h"
+#include "Status/DamageTypeCustom.h"
 #include "PainCausingBoxComponent.generated.h"
 
 class AActor;
-class UDamageType;
 
 /**
  * 
@@ -23,13 +23,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = PainCausingVolume)
 	uint32 bPainCausing : 1;
 
-	/** Damage done per second to actors in this volume when bPainCausing=true */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = PainCausingVolume)
-	float DamagePerSec;
-
 	/** Type of damage done */
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = PainCausingVolume)
-	TArray<TSubclassOf<UDamageType>> DamageTypes;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = PainCausingVolume)
+	TArray<FDamageTypeStruct> DamageTypes;
 
 	/** If pain causing, time between damage applications. */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = PainCausingVolume)

@@ -5,25 +5,13 @@
 #include "CoreMinimal.h"
 #include "Item/WorldItemActor.h"
 #include "WeaponTypeEnum.h"
+#include "Status/DamageTypeCustom.h"
 #include "WorldWeaponActor.generated.h"
 
 class ACharacter;
 class AHitEffect_FB;
 class UDamageType;
 class ICanPerformHit;
-
-USTRUCT(BlueprintType)
-struct FDamageTypeStruct
-{
-	GENERATED_BODY()
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DamageType")
-	TSubclassOf<UDamageType> DamageType;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DamageType")
-	float DamageValue;
-
-};
 
 /**
  * 

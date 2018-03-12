@@ -38,12 +38,9 @@ void UPainCausingBoxComponent::ActorEnter(UPrimitiveComponent* OtherComponent,
 
 void UPainCausingBoxComponent::CausePainTo(AActor * Other)
 {
-	if (DamagePerSec > 0.f)
+	for (FDamageTypeStruct DamageTypeStruct : DamageTypes)
 	{
-		for (TSubclassOf<UDamageType> DamageClass : DamageTypes)
-		{
-			Other->TakeDamage(DamagePerSec * PainInterval, FDamageEvent(DamageClass), nullptr, GetOwner());
-		}
+		Other->TakeDamage(DamageTypeStruct.DamageValue * PainInterval, FDamageEvent(DamageTypeStruct.DamageType), nullptr, GetOwner());
 	}
 }
 
