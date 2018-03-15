@@ -30,4 +30,6 @@ void AHitEffect_FB::PlayAtLocation(FVector Location)
 	SetActorRotation(LookAtRotation);
 
 	GetRenderComponent()->PlayFromStart();
+
+	
 }
