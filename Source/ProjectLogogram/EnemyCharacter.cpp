@@ -2,6 +2,10 @@
 
 #include "EnemyCharacter.h"
 #include "Status/StatComponent.h"
+#include "Perception/AISenseConfig_Sight.h"
+#include "Perception/AIPerceptionComponent.h"
+#include "Perception/AIPerceptionTypes.h"
+#include "AIController.h"
 
 // Sets default values
 AEnemyCharacter::AEnemyCharacter()
@@ -17,7 +21,22 @@ AEnemyCharacter::AEnemyCharacter()
 void AEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	InitializePerception();
+}
+
+void AEnemyCharacter::InitializePerception()
+{
+	FAISenseID Id = UAISense::GetSenseID(UAISense_Sight::StaticClass());
+	AAIController* AIController = Cast<AAIController>(GetController());
+	if (!AIController)
+		return;
+	auto Config = AIController->GetPerceptionComponent()->GetSenseConfig(Id);
+	if (!Config)
+		return;
+	auto ConfigSight = Cast<UAISenseConfig_Sight>(Config);
+	ConfigSight->SightRadius = SightRadius;
+	ConfigSight->LoseSightRadius = LoseSightRadius;
+	AIController->GetPerceptionComponent()->RequestStimuliListenerUpdate();
 }
 
 // Called every frame

@@ -34,11 +34,19 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	void InitializePerception();
+
 public:	
 
 	// The weapon this character will hold when spawned
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Equipment")
 	TSubclassOf<AWorldWeaponActor> StartMainWeapon;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Perception")
+	float SightRadius = 3000;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Perception")
+	float LoseSightRadius = 3600;
 
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
