@@ -6,8 +6,8 @@
 
 void AWorldWeaponActor::K2_DestroyActor()
 {
-	if(HitEffect)
-		HitEffect->K2_DestroyActor();
+	//if(HitEffect)
+		//HitEffect->K2_DestroyActor();
 	Super::K2_DestroyActor();
 }
 

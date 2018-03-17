@@ -23,5 +23,11 @@ public:
 	*/
 	UFUNCTION(BlueprintCallable)
 	void PlayAtLocation(FVector Location);
+	
+protected:
 
+	FTimerHandle TimerHandle_PlayTimer;
+
+	UFUNCTION()
+	void TimerEnd();
 };

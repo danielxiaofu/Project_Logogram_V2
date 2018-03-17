@@ -6,6 +6,7 @@
 #include "Camera/CameraComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "TimerManager.h"
 
 void AHitEffect_FB::BeginPlay()
 {
@@ -30,6 +31,15 @@ void AHitEffect_FB::PlayAtLocation(FVector Location)
 	SetActorRotation(LookAtRotation);
 
 	GetRenderComponent()->PlayFromStart();
-
+	GetWorldTimerManager().SetTimer(TimerHandle_PlayTimer, this, &AHitEffect_FB::TimerEnd, 1.0, false);
 	
 }
+
+void AHitEffect_FB::TimerEnd()
+{
+	GetWorldTimerManager().ClearTimer(TimerHandle_PlayTimer);
+	Destroy();
+}
+
+
+
