@@ -25,3 +25,14 @@ void ALaser::Tick(float DeltaTime)
 
 }
 
+void ALaser::ClearReflection()
+{
+	if (ReflectedLaser)
+	{
+		ReflectedLaser->ClearReflection();
+		ReflectedLaser->Destroy();
+		ReflectedLaser->ParticleSystem->SetFloatParameter(TEXT("Distance"), 0.0f);
+		ReflectedLaser = nullptr;
+	}
+}
+

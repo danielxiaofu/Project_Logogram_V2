@@ -20,11 +20,21 @@ public:
 	UPROPERTY(BlueprintReadWrite)
 	ALaser* ReflectedLaser = nullptr;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int MaxReflectionDepth;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int ReflectionDepth;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bIsActivate = false;
+
+	// Surface of the reflection, should be ignored by ReflectedLaser
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+	AActor* ReflectionSurface;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	UParticleSystemComponent* ParticleSystem;
 
 protected:
 	
@@ -32,11 +42,13 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
+
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(BlueprintReadOnly)
-	UParticleSystemComponent* ParticleSystem;
+	// Recursively destroy reflection laser and its reflection laser
+	UFUNCTION(BlueprintCallable)
+	void ClearReflection();
 	
 
 };
