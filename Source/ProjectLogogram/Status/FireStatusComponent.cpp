@@ -3,6 +3,9 @@
 #include "FireStatusComponent.h"
 #include "GameFramework/Actor.h"
 #include "StatComponent.h"
+#include "Components/MaterialBillboardComponent.h"
+#include "Components/StaticMeshComponent.h"
+#include "CanBeOnFire.h"
 
 void UFireStatusComponent::TemperatureUpdate(float Value)
 {
@@ -23,6 +26,9 @@ void UFireStatusComponent::TemperatureUpdate(float Value)
 			bIsOnFire = true;
 
 			// TODO: Call the owner actor to play fire effects
+			ICanBeOnFire* CanBeOnFire = Cast<ICanBeOnFire>(GetOwner());
+			CanBeOnFire->Execute_OnFire(GetOwner());
+				
 		}
 	}
 	else if (Value <= FireExtinguishTemperature && bIsOnFire)
@@ -33,7 +39,11 @@ void UFireStatusComponent::TemperatureUpdate(float Value)
 			HealthModifier.Reset();
 			bIsOnFire = false;
 			// TODO: Call the owner actor to stop playing fire effects
+			// TODO: Call the owner actor to play fire effects
+			ICanBeOnFire* CanBeOnFire = Cast<ICanBeOnFire>(GetOwner());
+			CanBeOnFire->Execute_OnExtinct(GetOwner());
 		}
 
 	}
 }
+

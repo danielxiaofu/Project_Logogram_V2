@@ -7,6 +7,7 @@
 #include "Status/StatModifier.h"
 #include "Item/WeaponTypeEnum.h"
 #include "Status/HasStatEntry.h"
+#include "Status/CanBeOnFire.h"
 #include "ProjectLogogramCharacter.generated.h"
 
 class UCharStatusEntry;
@@ -28,7 +29,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FPitchUpdateDelegate, float, PitchVa
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FInteractionDelegate, AActor*, InteractionActor);
 
 UCLASS(config=Game)
-class AProjectLogogramCharacter : public ACharacter, public IHasStatEntry
+class AProjectLogogramCharacter : public ACharacter, public IHasStatEntry, public ICanBeOnFire
 {
 	GENERATED_BODY()
 

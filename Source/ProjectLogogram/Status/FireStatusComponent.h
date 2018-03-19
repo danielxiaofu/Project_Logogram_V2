@@ -9,6 +9,7 @@
 
 class UStatComponent;
 class UStatModifier;
+class UMaterialInterface;
 
 /**	This AbnormalStatusComponent observes the character's temperature and 
   * set him on fire if the temp is too high.
@@ -19,6 +20,12 @@ class PROJECTLOGOGRAM_API UFireStatusComponent : public UAbnormalStatusComponent
 	GENERATED_BODY()
 	
 public:
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = FireSprite)
+	int32 NumberOfFireSprites;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = FireSprite)
+	UMaterialInterface* FireMaterial;
 
 	// Called when temperature is updated, bind this function to temperature stat update delegate
 	UFUNCTION(BlueprintCallable)
@@ -41,9 +48,12 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = Temperature)
 	float FireDamage = 2;
 
+
+
 private:
 
 	// The stat modifier to recover the temperature
 	UPROPERTY()
 	TWeakObjectPtr<UStatModifier> HealthModifier;
+
 };
