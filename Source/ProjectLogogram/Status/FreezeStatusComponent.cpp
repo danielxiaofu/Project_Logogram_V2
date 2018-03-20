@@ -1,32 +1,45 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "FreezeStatusComponent.h"
-
+#include "GameFramework/Actor.h"
+#include "CanBeFrozen.h"
 
 void UFreezeStatusComponent::TemperatureUpdate(float Value)
 {
-	if (Value <= ChillTemperature)
+	if (Value <= ChillTemperature && !bIsChilling)
 	{
 		bIsChilling = true;
-		// TODO: Activate chill effect
+
+		ICanBeFrozen* CanBeFrozen = Cast<ICanBeFrozen>(GetOwner());
+		if(CanBeFrozen)
+			CanBeFrozen->Execute_OnChill(GetOwner());
 	}
 
-	if (Value <= FreezeTemperature)
+	if (Value <= FreezeTemperature && !bIsFrozen)
 	{
 		bIsFrozen = true;
-		// TODO: Activate freeze effect
+		
+		ICanBeFrozen* CanBeFrozen = Cast<ICanBeFrozen>(GetOwner());
+		if (CanBeFrozen)
+			CanBeFrozen->Execute_OnFreeze(GetOwner());
 	}
 	
 	if (Value > ChillTemperature && bIsFrozen)
 	{
 		bIsFrozen = false;
-		// TODO: Deactivate freeze effect
+	
+		ICanBeFrozen* CanBeFrozen = Cast<ICanBeFrozen>(GetOwner());
+		if (CanBeFrozen)
+			CanBeFrozen->Execute_ExitFreeze(GetOwner());
 	}
 
 	if (Value > ChillRecoverTemperature && bIsChilling)
 	{
 		bIsChilling = false;
-		// TODO: Deactivate chill effect
+
+		ICanBeFrozen* CanBeFrozen = Cast<ICanBeFrozen>(GetOwner());
+		if (CanBeFrozen)
+			CanBeFrozen->Execute_ExitChill(GetOwner());
 	}
 
 }

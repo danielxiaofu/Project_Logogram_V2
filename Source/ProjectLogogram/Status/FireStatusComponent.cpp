@@ -25,9 +25,9 @@ void UFireStatusComponent::TemperatureUpdate(float Value)
 			HealthModifier = StatComponent->AddStatModifier(HealthModifierStruct);
 			bIsOnFire = true;
 
-			// TODO: Call the owner actor to play fire effects
 			ICanBeOnFire* CanBeOnFire = Cast<ICanBeOnFire>(GetOwner());
-			CanBeOnFire->Execute_OnFire(GetOwner());
+			if (CanBeOnFire)
+				CanBeOnFire->Execute_OnFire(GetOwner());
 				
 		}
 	}
@@ -38,10 +38,9 @@ void UFireStatusComponent::TemperatureUpdate(float Value)
 			HealthModifier->Kill();
 			HealthModifier.Reset();
 			bIsOnFire = false;
-			// TODO: Call the owner actor to stop playing fire effects
-			// TODO: Call the owner actor to play fire effects
 			ICanBeOnFire* CanBeOnFire = Cast<ICanBeOnFire>(GetOwner());
-			CanBeOnFire->Execute_OnExtinct(GetOwner());
+			if (CanBeOnFire)
+				CanBeOnFire->Execute_OnExtinct(GetOwner());
 		}
 
 	}

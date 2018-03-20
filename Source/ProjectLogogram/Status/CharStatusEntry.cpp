@@ -4,15 +4,16 @@
 #include "GameFramework/DamageType.h"
 
 void UCharStatusEntry::ApplyModification(EModifierBias Bias, float ByAmount, UDamageType* DamageType){
+	float NewAmount;
 	switch (Bias)
 		{
 		case EModifierBias::VE_Increase:
-			Amount += ByAmount;
-			Amount = Amount > MaxAmount ? MaxAmount : Amount;
+			NewAmount = Amount + ByAmount;
+			Amount = NewAmount > MaxAmount ? MaxAmount : NewAmount;
 			break;
 		case EModifierBias::VE_Decrease:
-			Amount -= ByAmount;
-			Amount = Amount < MinAmount ? MinAmount : Amount;
+			NewAmount = Amount - ByAmount;
+			Amount = NewAmount < MinAmount ? MinAmount : NewAmount;
 			break;
 		default:
 			break;
