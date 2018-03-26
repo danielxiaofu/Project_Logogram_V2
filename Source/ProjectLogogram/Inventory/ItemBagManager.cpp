@@ -22,11 +22,11 @@ UItemBagManager::UItemBagManager()
 void UItemBagManager::BeginPlay()
 {
 	Super::BeginPlay();
-	UE_LOG(LogTemp, Warning, TEXT("ItemBags start initialization"))
-	BulletBag = NewObject<UItemBag>();
-	MainWeaponBag = NewObject<UItemBag>();
-	ConsumableBag = NewObject<UItemBag>();
-	SecondaryWeaponBag = NewObject<USecondaryWeaponBag>();
+	//UE_LOG(LogTemp, Warning, TEXT("ItemBags start initialization"))
+	if(!BulletBag) BulletBag = NewObject<UItemBag>();
+	if (!MainWeaponBag) MainWeaponBag = NewObject<UItemBag>();
+	if (!ConsumableBag) ConsumableBag = NewObject<UItemBag>();
+	if (!SecondaryWeaponBag) SecondaryWeaponBag = NewObject<USecondaryWeaponBag>();
 
 	BulletBag->Stackable = true;
 	MainWeaponBag->Stackable = false;
@@ -36,7 +36,10 @@ void UItemBagManager::BeginPlay()
 	AProjectLogogramCharacter* Owner = dynamic_cast<AProjectLogogramCharacter*>(GetOwner());
 
 	if (Owner)
+	{
 		Owner->OnBagInitializationFinished(this);
+	}
+		
 	// ...
 	
 }

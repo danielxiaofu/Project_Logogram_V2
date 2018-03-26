@@ -5,6 +5,8 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Status/HasStatEntry.h"
+#include "Status/CanBeOnFire.h"
+#include "Status/CanBeFrozen.h"
 #include "EnemyCharacter.generated.h"
 
 class AWorldWeaponActor;
@@ -14,7 +16,7 @@ class ICanPerformAttack;
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FTickDelegate, float, T);
 
 UCLASS()
-class PROJECTLOGOGRAM_API AEnemyCharacter : public ACharacter, public ICanPerformAttack, public IHasStatEntry
+class PROJECTLOGOGRAM_API AEnemyCharacter : public ACharacter, public ICanPerformAttack, public IHasStatEntry, public ICanBeOnFire, public ICanBeFrozen
 {
 	GENERATED_BODY()
 

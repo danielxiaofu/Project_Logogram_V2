@@ -23,16 +23,16 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(BlueprintReadOnly)
-	UItemBag* BulletBag;
+	UItemBag* BulletBag = nullptr;
 
 	UPROPERTY(BlueprintReadOnly)
-	UItemBag* MainWeaponBag;
+	UItemBag* MainWeaponBag = nullptr;
 
 	UPROPERTY(BlueprintReadOnly)
-	UItemBag* ConsumableBag;
+	UItemBag* ConsumableBag = nullptr;
 
 	UPROPERTY(BlueprintReadOnly)
-	USecondaryWeaponBag* SecondaryWeaponBag;
+	USecondaryWeaponBag* SecondaryWeaponBag = nullptr;
 
 public:	
 	// Called every frame

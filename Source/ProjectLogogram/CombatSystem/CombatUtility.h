@@ -17,6 +17,7 @@ enum class EHitStrength : uint8
 UENUM(BlueprintType)
 enum class ELocalHitDirection : uint8
 {
+	VE_Undefined UMETA(DisplayName = "Undefined"),
 	VE_Left UMETA(DisplayName = "Left"),
 	VE_Right UMETA(DisplayName = "Right"),
 	VE_Straight UMETA(DisplayName = "Straight")
