@@ -74,6 +74,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void RemoveFromConsumableBag(UItem* Consumable);
 
+	/* Initialize bags, new bags will be created if there are none */
+	UFUNCTION(BlueprintCallable)
+	void InitializeBags();
+
 	/** Explicitly set bags, warning: calling this function will wipe original bag objects in this manager
 	*/
 	UFUNCTION(BlueprintCallable)

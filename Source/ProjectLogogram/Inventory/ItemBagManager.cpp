@@ -22,8 +22,14 @@ UItemBagManager::UItemBagManager()
 void UItemBagManager::BeginPlay()
 {
 	Super::BeginPlay();
-	//UE_LOG(LogTemp, Warning, TEXT("ItemBags start initialization"))
-	if(!BulletBag) BulletBag = NewObject<UItemBag>();
+	//UE_LOG(LogTemp, Warning, TEXT("ItemBags start initialization"))	
+	// ...
+	
+}
+
+void UItemBagManager::InitializeBags()
+{
+	if (!BulletBag) BulletBag = NewObject<UItemBag>();
 	if (!MainWeaponBag) MainWeaponBag = NewObject<UItemBag>();
 	if (!ConsumableBag) ConsumableBag = NewObject<UItemBag>();
 	if (!SecondaryWeaponBag) SecondaryWeaponBag = NewObject<USecondaryWeaponBag>();
@@ -39,9 +45,6 @@ void UItemBagManager::BeginPlay()
 	{
 		Owner->OnBagInitializationFinished(this);
 	}
-		
-	// ...
-	
 }
 
 
@@ -143,9 +146,9 @@ void UItemBagManager::SetBags(UItemBag* _BulletBag, UItemBag* _MainWeaponBag, UI
 	MainWeaponBag = _MainWeaponBag;
 	SecondaryWeaponBag = _SecondaryWeaponBag;
 	ConsumableBag = _ConsumableBag;
-	BulletBag->RefreshBag();
-	MainWeaponBag->RefreshBag();
-	ConsumableBag->RefreshBag();
-	SecondaryWeaponBag->RefreshBag();
+	if(BulletBag) BulletBag->RefreshBag();
+	if(MainWeaponBag) MainWeaponBag->RefreshBag();
+	if(ConsumableBag) ConsumableBag->RefreshBag();
+	if(SecondaryWeaponBag) SecondaryWeaponBag->RefreshBag();
 }
 
