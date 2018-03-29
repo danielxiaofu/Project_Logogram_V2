@@ -74,6 +74,10 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void RemoveFromConsumableBag(UItem* Consumable);
 
+	/* Remove all items from all bags*/
+	UFUNCTION(BlueprintCallable)
+	void RemoveAllItems();
+
 	/* Initialize bags, new bags will be created if there are none */
 	UFUNCTION(BlueprintCallable)
 	void InitializeBags();

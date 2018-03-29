@@ -44,5 +44,9 @@ public:
 	 */
 	UFUNCTION(BlueprintCallable, Category = ItemSystem)
 	AWorldItemActor* SpawnActor();
+
+	/* Initialize item, useful for deep copy*/
+	UFUNCTION(BlueprintCallable, Category = ItemSystem)
+	void InitializeItem(FName _Name, int32 _ID, TSubclassOf<AWorldItemActor> _WorldActor);
 };
 

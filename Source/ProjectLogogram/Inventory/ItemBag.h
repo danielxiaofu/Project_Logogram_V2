@@ -76,6 +76,9 @@ public:
 	virtual void RemoveItem(UItem* Item);
 
 	UFUNCTION(BlueprintCallable)
+	virtual void RemoveAllItems();
+
+	UFUNCTION(BlueprintCallable)
 	virtual int32 ItemCount() { return Items.Num(); }
 
 	UFUNCTION(BlueprintCallable)

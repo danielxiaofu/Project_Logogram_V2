@@ -63,6 +63,12 @@ void UItemBag::RemoveItem(UItem * Item)
 	}
 }
 
+void UItemBag::RemoveAllItems()
+{
+	Items.Empty();
+	UpdateDelegate.Broadcast(Items);
+}
+
 void UItemBag::RefreshBag()
 {
 	UpdateDelegate.Broadcast(Items);

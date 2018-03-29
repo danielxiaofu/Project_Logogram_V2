@@ -23,3 +23,10 @@ AWorldItemActor * UItem::SpawnActor()
 
 	return ItemActor;
 }
+
+void UItem::InitializeItem(FName _Name, int32 _ID, TSubclassOf<AWorldItemActor> _WorldActor)
+{
+	Name = _Name;
+	ID = _ID;
+	WorldActor = _WorldActor;
+}

@@ -27,6 +27,12 @@ void USecondaryWeaponBag::AddItem(UItem * Item)
 		UE_LOG(LogTemp, Warning, TEXT("AddItem failed, Item is nullptr"))
 }
 
+void USecondaryWeaponBag::RemoveAllItems()
+{
+	Super::RemoveAllItems();
+	UpdateActiveList();
+}
+
 void USecondaryWeaponBag::SetActiveType(int32 ItemType)
 {
 	ActiveType = ItemType;

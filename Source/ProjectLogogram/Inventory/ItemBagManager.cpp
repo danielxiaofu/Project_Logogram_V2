@@ -140,6 +140,14 @@ void UItemBagManager::RemoveFromConsumableBag(UItem * Consumable)
 		UE_LOG(LogTemp, Warning, TEXT("Fail to remove from consumable bag, incorrect item type"))
 }
 
+void UItemBagManager::RemoveAllItems()
+{
+	BulletBag->RemoveAllItems();
+	MainWeaponBag->RemoveAllItems();
+	SecondaryWeaponBag->RemoveAllItems();
+	ConsumableBag->RemoveAllItems();
+}
+
 void UItemBagManager::SetBags(UItemBag* _BulletBag, UItemBag* _MainWeaponBag, UItemBag* _ConsumableBag, USecondaryWeaponBag* _SecondaryWeaponBag)
 {
 	BulletBag = _BulletBag;
