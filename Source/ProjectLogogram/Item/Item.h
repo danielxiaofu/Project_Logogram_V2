@@ -8,6 +8,7 @@
 #include "Item.generated.h"
 
 class AWorldItemActor;
+class UTexture2D;
 
 /**
  * 
@@ -24,6 +25,10 @@ public:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = ItemSystem)
 	int32 ID;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = ItemSystem)
+	UTexture2D* Icon;
+
 
 	/** The actor class that will be spawned if this item needs to be in the world
 	*/
