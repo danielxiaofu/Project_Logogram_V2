@@ -4,17 +4,17 @@
 	"Category": "",
 	"Description": "",
 	"Modules": [
-		{
-			"Name": "ProjectLogogram",
-			"Type": "Runtime",
-			"LoadingPhase": "Default",
-			"AdditionalDependencies": [
-				"CoreUObject",
-				"UMG",
-				"Engine",
-				"SlateCore",
-				"Paper2D"
-			]
-		}
+    {
+      "Name": "ProjectLogogram",
+      "Type": "Runtime",
+      "LoadingPhase": "Default",
+      "AdditionalDependencies": [
+        "CoreUObject",
+        "UMG",
+        "Engine",
+        "SlateCore",
+        "Paper2D"
+      ]
+    }
 	]
 }
